@@ -9,12 +9,9 @@ app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api/', require('./route'));
-app.use('/api/tipos', require('./route/Tipo'));
-app.use('/api/usuarios', require('./route/Usuario'));
-app.use('/api/clientes', require('./route/Cliente'));
-app.use('/api/productos', require('./route/Producto'));
-app.use('/api/proveedores', require('./route/Proveedor'));
-app.use('/api/telefonos', require('./route/Telefono'));
+//aqui irian las rutas
+
+
 app.listen(app.get('port'), () => {
     console.log('Servidor iniciado en el puerto ' + app.get('port'));
     db.authenticate().then(() => {
