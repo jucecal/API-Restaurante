@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const db = require('./config/db');
 const Modelos = require('./model');
-
 const app = express();
 app.set('port', 3001);
 app.use(morgan("combined"));
