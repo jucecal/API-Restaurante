@@ -4,6 +4,8 @@ const db = require('./config/db');
 const Modelos = require('./model');
 //ESTO ES PARA LAS RUTAS
 //nuevo comentario
+
+//prueba real
 const app = express();
 app.set('port', 3001);
 app.use(morgan("combined"));
