@@ -1,13 +1,14 @@
-const { Sequelize } = require('sequelize');
-const sequelize = require('sequelize');
-const db = new Sequelize(
-  'prueba', //nombre de la base de datos
-  'root', //usuario 
-  '', //contraseña
-  {
-    host: 'localhost', //host
-    dialect: 'mysql',
-    port: '3306',
-  }  
-);
-module.exports=db;
+const { Sequelize } = require('sequelize')
+const sequelize = require('sequelize')
+const db = new sequelize(
+    'test', //NOMBRE DE LA BASE DE DATOS.
+    'root', //USUARIO DE BASE DE DATOS.
+    '', //CONTRASEÑA DE USUARIO.
+    {
+        host: 'localhost',
+        dialect: 'mysql',
+        port: '3306',
+
+    }
+)
+module.exports = db
