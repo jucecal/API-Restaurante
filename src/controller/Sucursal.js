@@ -36,6 +36,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloSucursal);
 }
+
 exports.Listar = async (req, res) => {
     const listarSucursal = await Sucursal.findAll();
     res.json(listarSucursal);

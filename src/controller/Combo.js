@@ -36,6 +36,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloCombo);
 }
+
 exports.Listar = async (req, res) => {
     const listarCombo = await Combo.findAll();
     res.json(listarCombo);

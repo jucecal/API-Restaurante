@@ -2,7 +2,6 @@ const Sucursal = require("./Sucursal");
 const Combo = require("./Combo");
 const Categoria = require("./Categoria");
 
-
 exports.CrearModelos = () => {
 
     Sucursal.sync().then(()=>{

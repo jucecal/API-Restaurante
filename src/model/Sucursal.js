@@ -18,7 +18,7 @@ const Sucursal = db.define(
         telefono:
         {
             type: DataTypes.STRING(20),
-            allowNull: true
+            allowNull: false
         },
     },
     {

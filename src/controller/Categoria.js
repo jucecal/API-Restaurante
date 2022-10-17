@@ -36,6 +36,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloCategoria);
 }
+
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll();
     res.json(listarCategoria);
