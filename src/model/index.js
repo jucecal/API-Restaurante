@@ -2,8 +2,6 @@ const Sucursal = require("./Sucursal");
 
 
 exports.CrearModelos = () => {
-    //aqui irian los modelos a crear
-
     Sucursal.sync().then(()=>{
         console.log('Modelo creado correctamente');
     })
