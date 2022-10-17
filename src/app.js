@@ -5,11 +5,11 @@ const Modelos = require('./model');
 const app = express();
 
 app.set('port', 3001);
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/api/', require('./route'));
+app.use('/api/', require('/route'));
 //aqui irian las rutas
 app.use('/api/sucursales', require('./route/Sucursal'));
 
