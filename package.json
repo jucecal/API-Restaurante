@@ -1,13 +1,13 @@
 {
   "name": "movil",
   "version": "1.0.0",
-  "description": "Sistema de gestión de menus para restaurantes",
+  "description": "API-Restaurante",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.js"
   },
-  "author": "Julio Caballero",
+  "author": "Grupo #6 - Programación Movil II",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
