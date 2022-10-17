@@ -12,6 +12,7 @@ app.use(express.json());
 app.use('/api/', require('./route'));
 //aqui irian las rutas
 app.use('/api/sucursales', require('./route/Sucursal'));
+app.use('/api/combos', require('./route/Combo'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {

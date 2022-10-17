@@ -1,44 +1,44 @@
-const Sucursal = require('../model/Sucursal');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
+const Combo = require('../model/Combo');
 
 exports.Inicio = (req, res) => {
-    const moduloSucursal = {
-        modulo: 'sucursales',
-        descripcion: 'Gestiona las operaciones con el modelo de sucursales',
+    const moduloCombo = {
+        modulo: 'combos',
+        descripcion: 'Gestiona las operaciones con el modelo de combos',
         rutas: [
             {
-                ruta: '/api/sucursales/listar',
-                descripcion: 'Listar los clientes',
+                ruta: '/api/combos/listar',
+                descripcion: 'Listar los combos',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/sucursales/guardar',
-                descripcion: 'Guardar los datos de una sucursal',
+                ruta: '/api/combos/guardar',
+                descripcion: 'Guardar los datos de un combo',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/sucursales/editar',
-                descripcion: 'Modifica los datos de una sucursal',
+                ruta: '/api/combos/editar',
+                descripcion: 'Modifica los datos de un combo',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/sucursales/eliminar',
-                descripcion: 'Elimina los datos de una sucursales',
+                ruta: '/api/combos/eliminar',
+                descripcion: 'Elimina los datos de un combo',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
         ]
     }
-    res.json(moduloSucursal);
+    res.json(moduloCombo);
 }
 exports.Listar = async (req, res) => {
-    const listarSucursal = await Sucursal.findAll();
-    res.json(listarSucursal);
+    const listarCombo = await Combo.findAll();
+    res.json(listarCombo);
 }
 
 exports.buscarId = async (req, res) => {
@@ -48,47 +48,24 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarSucursal = await Sucursal.findAll({
+        const listarCombo = await Combo.findAll({
             where: {
                 id
             }
         });
-        res.json(listarSucursal);
-    }
-}
-
-exports.buscarNombre = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { nombre } = req.query;
-        const listarSucursal = await Sucursal.findAll({
-            attributes:['nombre', 'ubicacion', 'telefono'],
-            where: {
-                [Op.and]: {
-                    nombre: {
-                        [Op.like]: nombre
-                    },
-                    activo: true
-                }
-            }
-        });
-        res.json(listarSucursal);
+        res.json(listarCombo);
     }
 }
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { nombre, ubicacion, telefono } = req.body;
-    if (!nombre || !ubicacion || !telefono) {
+    const { combo, precio } = req.body;
+    if (!combo || !precio ) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        await Sucursal.create({
-            nombre,
-            ubicacion,
-            telefono
+        await Combo.create({
+            combo,
+            precio
         }).then(data => {
             res.json({ msj: 'Registro guardado' });
         })
@@ -100,18 +77,17 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, ubicacion, telefono} = req.body;
-    if (!nombre || !ubicacion || !telefono || !id) {
+    const { combo, precio} = req.body;
+    if (!combo || !precio  || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarSucursal = await Sucursal.findOne({ where: { id: id } });
-        if (!buscarSucursal) {
+        var buscarCombo = await Combo.findOne({ where: { id: id } });
+        if (!buscarCombo) {
             res.send('El id del cliente no existe');
         } else {
-            buscarSucursal.nombre = nombre;
-            buscarSucursal.ubicacion = ubicacion;
-            buscarSucursal.telefono = telefono;
-            await buscarSucursal.save()
+            buscarCombo.combo = combo;
+            buscarCombo.precio = precio;
+            await buscarCombo.save()
                 .then((data) => {
                     console.log(data);
                     res.send('Actualizado correctamente');
@@ -129,7 +105,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await Sucursal.destroy({ where: { id: id } })
+        await Combo.destroy({ where: { id: id } })
             .then((data) => {
                 if(data==0){
                     res.send('El id no existe');
