@@ -13,6 +13,7 @@ app.use('/api/', require('./route'));
 //aqui irian las rutas
 app.use('/api/sucursales', require('./route/Sucursal'));
 app.use('/api/combos', require('./route/Combo'));
+app.use('/api/categorias', require('./route/Categoria'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
