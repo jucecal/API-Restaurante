@@ -8,59 +8,59 @@ const Reservaciones = require('./Reservaciones');
 exports.CrearModelos = () => {
 
     //primeras relaciones hechas por Rebirth
-    Clientes.hasMany(Reservaciones);
-    Reservaciones.belongsTo(Clientes);
-
     Sucursal.hasMany(Mesas);
     Mesas.belongsTo(Sucursal);
 
-    Sucursal.sync().then(()=>{
-        console.log('Modelo creado correctamente');
-    })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
-    })
+    Clientes.hasMany(Reservaciones);
+    Reservaciones.belongsTo(Clientes);
 
-    Combo.sync().then(()=>{
+    Sucursal.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
-    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 
-    Categoria.sync().then(()=>{
+    Combo.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+    Categoria.sync().then(() => {
+        console.log('Modelo creado correctamente');
     })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 
     //rebirth
-    Clientes.sync().then(()=>{
+    Clientes.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
-    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 
-    Reservaciones.sync().then(()=>{
+    Reservaciones.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
-    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 
-    Mesas.sync().then(()=>{
+    Mesas.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
-    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 
 }
