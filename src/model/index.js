@@ -14,6 +14,12 @@ exports.CrearModelos = () => {
     Clientes.hasMany(Reservaciones);
     Reservaciones.belongsTo(Clientes);
 
+    //PARA TABLA DE RELACIONES TBL_MESAS_x_RESERVA
+    Reservaciones.hasMany(Mesas);
+    Mesas.belongsTo(Reservaciones);
+
+
+
     Sucursal.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
