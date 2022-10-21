@@ -18,8 +18,6 @@ exports.CrearModelos = () => {
     Reservaciones.hasMany(Mesas);
     Mesas.belongsTo(Reservaciones);
 
-
-
     Sucursal.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
