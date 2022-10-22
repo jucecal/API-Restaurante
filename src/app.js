@@ -18,6 +18,9 @@ app.use('/api/clientes', require('./route/Clientes'));
 app.use('/api/mesas', require('./route/Mesas'));
 app.use('/api/reservaciones', require('./route/Reservaciones'));
 
+//Esto fue por Samuel Tovar
+
+
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
     console.log('Servidor iniciado en el puerto ' + app.get('port'));
