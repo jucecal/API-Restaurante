@@ -4,6 +4,7 @@ const Categoria = require("./Categoria");
 const Clientes = require('./Clientes');
 const Mesas = require('./Mesas');
 const Reservaciones = require('./Reservaciones');
+const Compra = require('./Compra');
 
 exports.CrearModelos = () => {
 
@@ -11,6 +12,11 @@ exports.CrearModelos = () => {
     Sucursal.hasMany(Mesas);
     Mesas.belongsTo(Sucursal);
 
+    //relacion entre sucursales y compras
+    Sucursal.hasMany(Compra);
+    Compra.belongsTo(Sucursal);
+
+    //
     Clientes.hasMany(Reservaciones);
     Reservaciones.belongsTo(Clientes);
 
@@ -67,4 +73,12 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
+    //----modelo de Compra-----
+    Compra.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 }
