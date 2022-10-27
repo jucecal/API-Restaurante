@@ -17,6 +17,7 @@ app.use('/api/categorias', require('./route/Categoria'));
 app.use('/api/clientes', require('./route/Clientes'));
 app.use('/api/mesas', require('./route/Mesas'));
 app.use('/api/reservaciones', require('./route/Reservaciones'));
+<<<<<<< Updated upstream
 app.use('/api/compras', require('./route/Compra'));
 
 
@@ -24,6 +25,9 @@ app.use('/api/compras', require('./route/Compra'));
 //Esto fue por Julio
 
 
+=======
+app.use('/api/pxcombo', require('./route/PxCombo'));
+>>>>>>> Stashed changes
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
     console.log('Servidor iniciado en el puerto ' + app.get('port'));
