@@ -12,7 +12,7 @@ const Compra = db.define(
             validate:{
                 isDate: true,
                 notEmpty: true,
-                isAfter: today.format('YYYY-MM-DD')
+                isBefore: today.format('YYYY-MM-DD')
             }
         },
         total_pagar:

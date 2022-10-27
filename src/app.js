@@ -17,6 +17,8 @@ app.use('/api/categorias', require('./route/Categoria'));
 app.use('/api/clientes', require('./route/Clientes'));
 app.use('/api/mesas', require('./route/Mesas'));
 app.use('/api/reservaciones', require('./route/Reservaciones'));
+app.use('/api/compras', require('./route/Compra'));
+
 
 //Esto fue por Samuel Tovar
 //Esto fue por Julio

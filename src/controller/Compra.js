@@ -16,6 +16,18 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/compras/buscarId',
+                descripcion: 'Muestra una compra con un Id específico',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/compras/buscarFecha',
+                descripcion: 'Lista las compras realizadas en un periodo de tiempo entre una fecha y otra',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/compras/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
@@ -39,7 +51,7 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarCompras = await Compra.findAll();
+    const listarCompras = await Compra.findAll({include: Sucursal});
     res.json(listarCompras);
 }
 
@@ -51,6 +63,7 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCompra = await Compra.findAll({
+            include: Sucursal,
             where: {
                 id
             }
@@ -59,25 +72,27 @@ exports.buscarId = async (req, res) => {
     }
 }
 
-exports.buscarNombre = async (req, res) => {
+exports.buscarFecha = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
+        const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes:['nombre', 'ubicacion', 'telefono'],
+            include: Sucursal,
             where: {
                 [Op.and]: {
-                    nombre: {
-                        [Op.like]: nombre
+                    fecha: {
+                        [Op.gte]: fecha1
                     },
-                    activo: true
+                    fecha: {
+                        [Op.lte]: fecha2
+                    }
                 }
             }
         });
-        res.json(listarSucursal);
+        res.json(listarCompra);
     }
 }
 
