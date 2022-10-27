@@ -1,4 +1,5 @@
 const Compra = require('../model/Compra');
+const Sucursal = require('../model/Sucursal');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
@@ -10,7 +11,7 @@ exports.Inicio = (req, res) => {
         rutas: [
             {
                 ruta: '/api/compras/listar',
-                descripcion: 'Listar las compras hechas',
+                descripcion: 'Listar las compras realizadas',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
@@ -49,12 +50,12 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarSucursal = await Sucursal.findAll({
+        const listarCompra = await Compra.findAll({
             where: {
                 id
             }
         });
-        res.json(listarSucursal);
+        res.json(listarCompra);
     }
 }
 
@@ -65,7 +66,7 @@ exports.buscarNombre = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombre } = req.query;
-        const listarSucursal = await Sucursal.findAll({
+        const listarCompra = await Compra.findAll({
             attributes:['nombre', 'ubicacion', 'telefono'],
             where: {
                 [Op.and]: {
@@ -81,38 +82,64 @@ exports.buscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { nombre, ubicacion, telefono } = req.body;
-    if (!nombre || !ubicacion || !telefono) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await Sucursal.create({
-            nombre,
-            ubicacion,
-            telefono
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
-            })
+    const validacion = validationResult(req);
+    if(!validacion.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        const {fecha, total_pagar, SucursalId} = req.body;
+        
+        if(!fecha || !total_pagar || !SucursalId){
+            res.json({msj:'Debe enviar los datos completos'})
+        }
+        else{
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            }else{
+                await Compra.create({
+                    fecha,
+                    total_pagar,
+                    SucursalId
+                }).then((data)=>{
+                    res.json({msj:'Registro guardado'})
+                })
+                .catch((er)=>{
+                    var errores = '';
+                    er.errors.forEach(element => {
+                        console.log(element.message)
+                        errores += element.message + '. ';
+                    });
+                    res.json({errores});
+                    
+                });
+            }
+            
+            
+        }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, ubicacion, telefono} = req.body;
-    if (!nombre || !ubicacion || !telefono || !id) {
+    const { fecha, total_pagar, SucursalId} = req.body;
+    if (!fecha || !total_pagar || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarSucursal = await Sucursal.findOne({ where: { id: id } });
-        if (!buscarSucursal) {
-            res.send('El id del cliente no existe');
+        var buscarCompra = await Compra.findOne({ where: { id: id } });
+        if (!buscarCompra) {
+            res.send('El id de la compra no existe');
         } else {
-            buscarSucursal.nombre = nombre;
-            buscarSucursal.ubicacion = ubicacion;
-            buscarSucursal.telefono = telefono;
-            await buscarSucursal.save()
+            buscarCompra.fecha = fecha;
+            buscarCompra.total_pagar = total_pagar;
+            buscarCompra.SucursalId = SucursalId;
+            
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            }else{
+                await buscarCompra.save()
                 .then((data) => {
                     console.log(data);
                     res.send('Actualizado correctamente');
@@ -121,6 +148,9 @@ exports.Editar = async (req, res) => {
                     console.log(er);
                     res.send('Error al actualizar');
                 });
+            }
+
+            
         }
     }
 }
@@ -130,7 +160,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await Sucursal.destroy({ where: { id: id } })
+        await Compra.destroy({ where: { id: id } })
             .then((data) => {
                 if(data==0){
                     res.send('El id no existe');

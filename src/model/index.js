@@ -5,6 +5,8 @@ const Clientes = require('./Clientes');
 const Mesas = require('./Mesas');
 const Reservaciones = require('./Reservaciones');
 const Compra = require('./Compra');
+const Menu = require('./Menu');
+const Cargo = require('./Cargo');
 
 exports.CrearModelos = () => {
 
@@ -24,6 +26,10 @@ exports.CrearModelos = () => {
     Reservaciones.hasMany(Mesas);
     Mesas.belongsTo(Reservaciones);
 
+    //relacion entre menu y categorias
+    Categoria.hasMany(Menu);
+    Menu.belongsTo(Categoria);   
+
     Sucursal.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -31,6 +37,16 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+
+    //----modelo de Cargos-----
+    Cargo.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+    //------------------------
 
     Combo.sync().then(() => {
         console.log('Modelo creado correctamente');
@@ -47,6 +63,16 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+
+    //----modelo de Menu-----
+    Menu.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+    //-----------------------
 
     //rebirth
     Clientes.sync().then(() => {
@@ -73,6 +99,7 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
+
     //----modelo de Compra-----
     Compra.sync().then(() => {
         console.log('Modelo creado correctamente');
@@ -81,4 +108,5 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+    //-----------------------
 }
