@@ -4,13 +4,13 @@ const Categoria = require("./Categoria");
 const Clientes = require('./Clientes');
 const Mesas = require('./Mesas');
 const Reservaciones = require('./Reservaciones');
-<<<<<<< Updated upstream
+
 const Compra = require('./Compra');
 const Menu = require('./Menu');
 const Cargo = require('./Cargo');
-=======
+
 const PxCombo = require('./PxCombo');
->>>>>>> Stashed changes
+
 const IxSucursal = require('./IxSucursal');
 const PxPlato = require("./PxPlato");
 const IxCompra = require("./IxCompra");
@@ -82,22 +82,27 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
-<<<<<<< Updated upstream
+
     //----modelo de Menu-----
     Menu.sync().then(() => {
-=======
-    PxCombo.sync().then(() => {
->>>>>>> Stashed changes
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-<<<<<<< Updated upstream
+
+
+        
+    PxCombo.sync().then(() => {
+
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
     //-----------------------
-=======
->>>>>>> Stashed changes
 
     //rebirth
     Clientes.sync().then(() => {
