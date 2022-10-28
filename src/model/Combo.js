@@ -4,16 +4,10 @@ const Combo = db.define(
     'Combo',
     {
         combo:
-        {
-            type: DataTypes.STRING(50),
-            allowNull: false
-        },
+        {type: DataTypes.STRING(50), allowNull: false },
 
         precio:
-        {
-            type: DataTypes.DOUBLE,
-            allowNull: false
-        },
+        {type: DataTypes.DOUBLE, allowNull: false }
     },
     {
         tableName: 'combos',

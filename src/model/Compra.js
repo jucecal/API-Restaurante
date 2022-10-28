@@ -7,8 +7,7 @@ const Compra = db.define(
     {        
         fecha: 
         {
-            type:DataTypes.DATE, 
-            allowNull:false, 
+            type:DataTypes.DATE, allowNull:false, 
             validate:{
                 isDate: true,
                 notEmpty: true,
@@ -17,8 +16,7 @@ const Compra = db.define(
         },
         total_pagar:
         {
-            type: DataTypes.DOUBLE,
-            allowNull: false,
+            type: DataTypes.DOUBLE,allowNull: false,
             validate:{
                 isDecimal: true, 
                 min: 1     

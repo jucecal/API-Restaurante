@@ -4,24 +4,15 @@ const IxCompra = db.define(
     'IxCompra',
     {
         nombre:
-        {
-            type: DataTypes.STRING(50), 
-            allowNull: false
-        },
+        { type: DataTypes.STRING(50), allowNull: false },
 
         marca:
-        {
-            type: DataTypes.STRING(50), 
-            allowNull: false
-        },
+        { type: DataTypes.STRING(50), allowNull: false },
 
         //TIPO DE FECHA
         //DE Vencimiento  == DD/MM/AAAA
         vencimiento:
-        {
-            type: DataTypes.STRING(10),
-            allowNull: false
-        },
+        { type: DataTypes.STRING(10), allowNull: false },
 
         preciounitario:
         {

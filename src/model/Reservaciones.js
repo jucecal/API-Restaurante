@@ -5,8 +5,7 @@ const Reservaciones = db.define(
     {
         fecha_hora:
         {
-            type: DataTypes.TEXT, 
-            allowNull: false
+            type: DataTypes.TEXT, allowNull: false
         }
     },
     {

@@ -3,7 +3,6 @@ const db = require('../config/db');
 const Usuario= db.define(
     'Usuario',
     {
-
         nombre: { type: DataTypes.STRING(50), allowNull: false },
         correo: { type: DataTypes.STRING(50), allowNull: false },
         password: { type: DataTypes.STRING(250), allowNull: false },

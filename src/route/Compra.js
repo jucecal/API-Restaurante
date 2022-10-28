@@ -2,7 +2,9 @@ const { Router } = require('express');
 const controladorCompra = require('../controller/Compra');
 const {body, query} = require('express-validator');
 const ruta = Router();
+
 ruta.get('/', controladorCompra.Inicio);
+
 ruta.get('/listar', controladorCompra.Listar);
 
 ruta.get('/buscarId', 

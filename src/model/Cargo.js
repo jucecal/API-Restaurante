@@ -14,7 +14,6 @@ const Cargo = db.define(
                     notEmpty: true
             }          
         }     
-        
     },
     {
         tableName: 'cargos'

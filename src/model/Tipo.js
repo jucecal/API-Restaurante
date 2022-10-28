@@ -5,8 +5,7 @@ const Tipo= db.define(
     {
         tipo:
         {
-            type: DataTypes.STRING(50), 
-            allowNull: false
+            type: DataTypes.STRING(50), allowNull: false
         }
     },
     {

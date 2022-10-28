@@ -6,8 +6,7 @@ const Menu = db.define(
     {        
         nombre: 
         {
-            type: DataTypes.STRING(50), 
-            allowNull: false,
+            type: DataTypes.STRING(50), allowNull: false,
             unique: {arg: true, msg: 'No se permiten nombres de producto duplicados'},
             validate:{
                     len:[3,50],
@@ -16,8 +15,7 @@ const Menu = db.define(
         },
         precio:
         {
-            type: DataTypes.DOUBLE,
-            allowNull: false,
+            type: DataTypes.DOUBLE, allowNull: false,
             validate:{
                 isDecimal: true, 
                 min: 1     
@@ -25,8 +23,7 @@ const Menu = db.define(
         },
         descripcion:
         {
-            type: DataTypes.STRING(250), 
-            allowNull: false,            
+            type: DataTypes.STRING(250), allowNull: false,            
             validate:{
                     len:[3,250],
                     notEmpty: true

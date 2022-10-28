@@ -4,10 +4,7 @@ const IxSucursal = db.define(
     'IxSucursal',
     {
         Stock:
-        {
-            type: DataTypes.STRING, 
-            allowNull: false
-        }
+        { type: DataTypes.STRING, allowNull: false }
     },
     {
         tableName: 'IxSucursales',

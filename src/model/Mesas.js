@@ -5,8 +5,7 @@ const Mesas = db.define(
     {
         capacidad:
         {
-            type: DataTypes.INTEGER, 
-            allowNull: false
+            type: DataTypes.INTEGER, allowNull: false
         }
     },
     {

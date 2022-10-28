@@ -37,10 +37,12 @@ exports.Inicio = (req, res) => {
     res.json(moduloCategoria);
 }
 
+
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll();
     res.json(listarCategoria);
 }
+
 
 exports.buscarId = async (req, res) => {
     const validacion = validationResult(req);
@@ -58,6 +60,7 @@ exports.buscarId = async (req, res) => {
     }
 }
 
+
 exports.Guardar = async (req, res) => {
     console.log(req);
     const { categoria } = req.body;
@@ -74,6 +77,7 @@ exports.Guardar = async (req, res) => {
             })
     }
 }
+
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
@@ -98,6 +102,7 @@ exports.Editar = async (req, res) => {
         }
     }
 }
+
 
 exports.Eliminar = async (req, res) => {
     const { id } = req.query;

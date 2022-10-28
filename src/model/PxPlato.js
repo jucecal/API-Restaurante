@@ -5,8 +5,7 @@ const PxPlato = db.define(
     {
         cantidad:
         {
-            type: DataTypes.INTEGER, 
-            allowNull: false
+            type: DataTypes.INTEGER, allowNull: false
         }
     },
     {
