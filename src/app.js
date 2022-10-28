@@ -10,24 +10,22 @@ app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api/', require('./route'));
-//aqui irian las rutas
+
+//AQUÍ IRAN LAS RUTAS DE 4 EN 4 PARA QUE SE VEA UN POCO ORDENADO
 app.use('/api/sucursales', require('./route/Sucursal'));
 app.use('/api/combos', require('./route/Combo'));
 app.use('/api/categorias', require('./route/Categoria'));
 app.use('/api/clientes', require('./route/Clientes'));
+
 app.use('/api/mesas', require('./route/Mesas'));
 app.use('/api/reservaciones', require('./route/Reservaciones'));
-<<<<<<< Updated upstream
 app.use('/api/compras', require('./route/Compra'));
-
-
-//Esto fue por Samuel Tovar
-//Esto fue por Julio
-
-
-=======
 app.use('/api/pxcombo', require('./route/PxCombo'));
->>>>>>> Stashed changes
+
+app.use('/api/tipos', require('./route/Tipo'));
+app.use('/api/detallefacturas', require('./route/Detallefactura'));
+app.use('/api/usuarios', require('./route/Usuario'));
+
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
     console.log('Servidor iniciado en el puerto ' + app.get('port'));

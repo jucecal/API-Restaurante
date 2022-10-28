@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 const Tipo= db.define(
-    'Tipos',
+    'Tipo',
     {
         tipo:
         {
