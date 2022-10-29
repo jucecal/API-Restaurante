@@ -1,5 +1,6 @@
 const Cargo = require('../model/Cargo');
 const {validationResult, body} = require('express-validator');
+const { Op } = require('sequelize');
 exports.Inicio = (req,res) =>{
     const moduloCargo = {
         modulo: 'cargos',

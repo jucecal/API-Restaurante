@@ -11,8 +11,8 @@ const Cargo = db.define(
             unique: {arg: true, msg: 'No se permiten nombres de cargo duplicados'},
             validate:{
                     len:[3,50],
-                    notEmpty: true,
-                    isAlpha: true
+                    notEmpty: true
+                    
 
             }          
         }     
