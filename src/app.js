@@ -25,6 +25,9 @@ app.use('/api/pxcombo', require('./route/PxCombo'));
 app.use('/api/tipos', require('./route/Tipo'));
 app.use('/api/detallefacturas', require('./route/Detallefactura'));
 app.use('/api/usuarios', require('./route/Usuario'));
+app.use('/api/cargos', require('./route/Cargo'));
+
+app.use('/api/menu', require('./route/Menu'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
