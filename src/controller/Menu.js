@@ -28,6 +28,12 @@ exports.Inicio = (req,res) =>{
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/menu/buscarporCategoria',
+                descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/menu/guardar',
                 descripcion: 'Guarda los datos de un producto del menu',
                 metodo: 'POST',
@@ -53,6 +59,9 @@ exports.Inicio = (req,res) =>{
 exports.Listar = async (req, res) =>{
     const listarMenu = await Menu.findAll({
         attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+        include: [
+            {model: Categoria, attributes: [['categoria','Categoría Producto']]}
+        ]
 
     });
     res.json(listarMenu);
@@ -71,7 +80,10 @@ exports.BuscarId = async (req, res) =>{
             where:{
                 
                 id:id
-            }
+            },
+            include: [
+                {model: Categoria, attributes: [['categoria','Categoría Producto']]}
+            ]
         });
         res.json(listarMenu);
     }
@@ -92,7 +104,30 @@ exports.BuscarNombre = async (req, res) =>{
 
                 nombre:{[Op.like]:nombre}                                   
                 
-            }
+            },
+            include: [
+                {model: Categoria, attributes: [['categoria','Categoría Producto']]}
+            ]
+
+        });
+        res.json(listarMenu);
+    }
+    
+}
+
+exports.BuscarPorCategoria = async (req, res) =>{
+    const validacion = validationResult(req);
+    if(!validacion.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        const {nombre} = req.query;
+        const listarMenu = await Menu.findAll({
+            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+            include: [
+                {model: Categoria, attributes: [['categoria','Categoría Producto']], where:{Categoria:{[Op.like]:nombre} }}
+            ]
 
         });
         res.json(listarMenu);
