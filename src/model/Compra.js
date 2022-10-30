@@ -7,7 +7,7 @@ const Compra = db.define(
     {        
         fecha: 
         {
-            type:DataTypes.DATE, allowNull:false, 
+            type:DataTypes.DATEONLY, allowNull:false, 
             validate:{
                 isDate: true,
                 notEmpty: true,

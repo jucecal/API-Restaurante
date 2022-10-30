@@ -28,6 +28,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/compras/buscarporSucursal',
+                descripcion: 'Lista las compras realizadas en una sucursal en específico',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/compras/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
@@ -51,7 +57,12 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarCompras = await Compra.findAll({include: Sucursal});
+    const listarCompras = await Compra.findAll({
+        attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],
+        include: [
+            {model: Sucursal, attributes: [['nombre','Nombre Sucursal']]}
+        ]
+    });
     res.json(listarCompras);
 }
 
@@ -62,11 +73,14 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarCompra = await Compra.findAll({
-            include: Sucursal,
+        const listarCompra = await Compra.findAll({  
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
             where: {
-                id
-            }
+                id:id
+            },
+            include: [
+                {model: Sucursal, attributes: [['nombre','Nombre Sucursal']]}
+            ]
         });
         res.json(listarCompra);
     }
@@ -80,7 +94,7 @@ exports.buscarFecha = async (req, res) => {
     } else {
         const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
-            include: Sucursal,
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
             where: {
                 [Op.and]: {
                     fecha: {
@@ -90,10 +104,33 @@ exports.buscarFecha = async (req, res) => {
                         [Op.lte]: fecha2
                     }
                 }
-            }
+            },
+            include: [
+                {model: Sucursal, attributes: [['nombre','Nombre Sucursal']]}
+            ]
         });
         res.json(listarCompra);
     }
+}
+
+exports.BuscarPorSucursal = async (req, res) =>{
+    const validacion = validationResult(req);
+    if(!validacion.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        const {nombre} = req.query;
+        const listarCompra = await Compra.findAll({
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            include: [
+                {model: Sucursal,  attributes: [['nombre','Nombre Sucursal']], where:{nombre:{[Op.like]:nombre} }}
+            ]
+
+        });
+        res.json(listarCompra);
+    }
+    
 }
 
 exports.Guardar = async (req, res) => {
@@ -146,14 +183,14 @@ exports.Editar = async (req, res) => {
         if (!buscarCompra) {
             res.send('El id de la compra no existe');
         } else {
-            buscarCompra.fecha = fecha;
-            buscarCompra.total_pagar = total_pagar;
-            buscarCompra.SucursalId = SucursalId;
-            
             var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
             if (!buscarSucursal) {
                 res.send('El id de la sucursal no existe');
             }else{
+                buscarCompra.fecha = fecha;
+                buscarCompra.total_pagar = total_pagar;
+                buscarCompra.SucursalId = SucursalId;                
+                
                 await buscarCompra.save()
                 .then((data) => {
                     console.log(data);
@@ -163,9 +200,8 @@ exports.Editar = async (req, res) => {
                     console.log(er);
                     res.send('Error al actualizar');
                 });
-            }
+            }    
 
-            
         }
     }
 }
