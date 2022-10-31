@@ -9,25 +9,25 @@ exports.Inicio = (req, res) => {
         rutas: [
             {
                 ruta: '/api/tipos/listar',
-                descripcion: 'Listar las Reservaciones',
+                descripcion: 'Listar los tipos',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/tipos/guardar',
-                descripcion: 'Guardar las Reservaciones',
+                descripcion: 'Guardar los tipos',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/tipos/editar',
-                descripcion: 'Modifica las Reservaciones',
+                descripcion: 'Modifica los tipos',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/tipos/eliminar',
-                descripcion: 'Elimina las Reservaciones',
+                descripcion: 'Elimina los tipos',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
