@@ -68,7 +68,7 @@ exports.CrearModelos = () => {
     Combo.hasMany(PlatoCombo);
     PlatoCombo.belongsTo(Combo);
 
-    
+
     //Relacion entre menu y PxCombo
     Menu.hasMany(PlatoCombo)
     PlatoCombo.belongsTo(Menu)
@@ -78,7 +78,6 @@ exports.CrearModelos = () => {
     //RELACIÓN ENTRE DETALLE COMPRA CON COMPRAS, PRODUCTOS, SUCURSAL
     Compra.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Compra)
-
 
     Insumo.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Insumo)
@@ -101,7 +100,29 @@ exports.CrearModelos = () => {
     Sucursal.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Sucursal)
 
+    //=========================
 
+    Combo.hasMany(DetalleFactura)
+    DetalleFactura.belongsTo(Combo)
+   
+
+/*
+  Factura.hasMany(DetalleFactura)
+    DetalleFactura.hasMany(Factura)
+
+    
+
+     Menu.hasMany(DetalleFactura)
+    DetalleFactura.belongsTo(Menu)
+
+
+*/
+
+  
+    
+    
+
+   
 
 
 //======================================================
@@ -320,23 +341,32 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
+
+
     //-----------MODELO FACTURA-------------
     Factura.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
+    
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
 
 
-   //-----------MODELO DETALLE FACTURA-------------
-   DetalleFactura.sync().then(() => {
-    console.log('Modelo creado correctamente');
-})
-    .catch((error) => {
-        console.log('Error al crear el modelo');
-        console.log(error);
+    //-----------MODELO DETALLE FACTURA-------------
+    DetalleFactura.sync().then(() => {
+        console.log('Modelo creado correctamente');
     })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+        
+
+    
+
+
+   
  
 }
