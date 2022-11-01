@@ -1,45 +1,45 @@
-const IxCompra = require('../model/IxCompra');
+const Insumo = require('../model/Insumo');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
 
 exports.Inicio = (req, res) => {
-    const moduloIxCompra = {
-        modulo: 'ixcompras',
+    const moduloInsumo = {
+        modulo: 'insumos',
         descripcion: 'Gestiona las operaciones con el modelo de compras',
         rutas: [
             {
-                ruta: '/api/ixcompras/listar',
+                ruta: '/api/insumos/listar',
                 descripcion: 'Listar las compras',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixcompras/guardar',
+                ruta: '/api/insumos/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixcompras/editar',
+                ruta: '/api/insumos/editar',
                 descripcion: 'Modifica los datos de una compra',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixcompras/eliminar',
+                ruta: '/api/insumos/eliminar',
                 descripcion: 'Elimina los datos de una compra',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
         ]
     }
-    res.json(moduloIxCompra);
+    res.json(moduloInsumo);
 }
 
 exports.Listar = async (req, res) => {
-    const listarIxCompra = await IxCompra.findAll();
-    res.json(listarIxCompra);
+    const listarInsumo = await Insumo.findAll();
+    res.json(listarInsumo);
 }
 
 exports.buscarId = async (req, res) => {
@@ -49,12 +49,12 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarIxCompra = await IxCompra.findAll({
+        const listarInsumo = await Insumo.findAll({
             where: {
                 id
             }
         });
-        res.json(listarIxCompra);
+        res.json(listarInsumo);
     }
 }
 
@@ -65,7 +65,7 @@ exports.buscarNombre = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombre } = req.query;
-        const listarIxCompra = await IxCompra.findAll({
+        const listarInsumo = await Insumo.findAll({
             attributes:['nombre', 'marca', 'vencimiento','preciounitario'],
             where: {
                 [Op.and]: {
@@ -76,7 +76,7 @@ exports.buscarNombre = async (req, res) => {
                 }
             }
         });
-        res.json(listarIxCompra);
+        res.json(listarInsumo);
     }
 }
 
@@ -86,7 +86,7 @@ exports.Guardar = async (req, res) => {
     if (!nombre || !marca || !vencimiento || !preciounitario) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        await IxCompra.create({
+        await Insumo.create({
             nombre,
             marca,
             vencimiento,
@@ -106,15 +106,15 @@ exports.Editar = async (req, res) => {
     if (!nombre || !marca || !vencimiento || !preciounitario) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarIxCompra = await IxCompra.findOne({ where: { id: id } });
-        if (!buscarIxCompra) {
+        var buscarInsumo = await Insumo.findOne({ where: { id: id } });
+        if (!buscarInsumo) {
             res.send('El id del cliente no existe');
         } else {
-            buscarIxCompra = nombre;
-            buscarIxCompra = marca;
-            buscarIxCompra = vencimiento;
-            buscarIxCompra = preciounitario;
-            await buscarSucursal.save()
+            buscarInsumo = nombre;
+            buscarInsumo = marca;
+            buscarInsumo = vencimiento;
+            buscarInsumo = preciounitario;
+            await buscarInsumo.save()
                 .then((data) => {
                     console.log(data);
                     res.send('Actualizado correctamente');
@@ -132,7 +132,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await IxCompra.destroy({ where: { id: id } })
+        await Insumo.destroy({ where: { id: id } })
             .then((data) => {
                 if(data==0){
                     res.send('El id no existe');
