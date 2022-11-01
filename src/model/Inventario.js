@@ -3,7 +3,7 @@ const db = require('../config/db');
 const Inventario = db.define(
     'Inventario',
     {
-        Stock:{ 
+        stock:{ 
         type: DataTypes.INTEGER, 
         allowNull: false 
         }
