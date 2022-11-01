@@ -30,6 +30,11 @@ exports.CrearModelos = () => {
 
     //CREACION DE LAS RELACIONES PARA LAS TABLAS
     //=========================================
+
+    //RELACIÓN ENTRE USUARIOS Y CLIENTES
+    Usuario.hasMany(Clientes)
+    Clientes.belongsTo(Usuario)
+
     //primeras relaciones hechas por Rebirth
     Sucursal.hasMany(Mesas);
     Mesas.belongsTo(Sucursal);
@@ -50,11 +55,6 @@ exports.CrearModelos = () => {
     Categoria.hasMany(Menu);
     Menu.belongsTo(Categoria);
 
-    //relacion entre combo y productos por combp
-
-    Combo.hasMany(PlatoCombo);
-    PlatoCombo.belongsTo(Combo);
-
     // relacion entre sucursal y inventario por sucursal
     Sucursal.hasMany(Inventario);
     Inventario.belongsTo(Sucursal);
@@ -63,21 +63,22 @@ exports.CrearModelos = () => {
     Tipo.hasMany(Insumo)
     Insumo.belongsTo(Tipo)
 
-    //RELACIÓN ENTRE USUARIOS Y CLIENTES
-    Usuario.hasMany(Clientes)
-    Clientes.belongsTo(Usuario)
 
-    //Relacion entre combos y PxCombo
-    Combo.hasMany(PlatoCombo)
-    PlatoCombo.belongsTo(Combo)
+    //relacion entre combo y productos por combp
+    Combo.hasMany(PlatoCombo);
+    PlatoCombo.belongsTo(Combo);
 
+    
     //Relacion entre menu y PxCombo
     Menu.hasMany(PlatoCombo)
     PlatoCombo.belongsTo(Menu)
+    
+    
 
     //RELACIÓN ENTRE DETALLE COMPRA CON COMPRAS, PRODUCTOS, SUCURSAL
     Compra.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Compra)
+
 
     Insumo.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Insumo)
@@ -97,54 +98,29 @@ exports.CrearModelos = () => {
     Empleado.hasMany(Factura)
     Factura.belongsTo(Empleado)
 
-
-    //===========================
-    DetalleFactura.hasMany(Factura)
-    Factura.belongsTo(DetalleFactura)
-
-    DetalleFactura.hasMany(Combo)
-    Combo.belongsTo(DetalleFactura)
-
-    DetalleFactura.hasMany(Menu)
-    Menu.belongsTo(DetalleFactura)
-
-//===========================
-    Empleado.hasMany(Sucursal)
-    Sucursal.belongsTo(Empleado)
-
-    Empleado.hasMany(Usuario)
-    Usuario.belongsTo(Empleado)
-
-    Empleado.hasMany(Cargo)
-    Cargo.belongsTo(Empleado)
+    Sucursal.hasMany(DetalleCompra)
+    DetalleCompra.belongsTo(Sucursal)
 
 
-//===========================
-    Insumo.hasMany(Proveedor)
-    Proveedor.belongsTo(Insumo)
 
 
-    //===========================
-    Inventario.hasMany(Insumo)
-    Insumo.belongsTo(Inventario)
+//======================================================
+    
+
+   
 
 
-    //===========================
-    ProductoPlato.hasMany(Insumo)
-    Insumo.belongsTo(ProductoPlato)
-
-
-    //===========================
-    Mesas.hasMany(Reservaciones)
-    Reservaciones.belongsTo(Mesas)
+  
 
 
 
 
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
     //===========================================
-    //--------MODELO SUCURSAL----------------
-    Sucursal.sync().then(() => {
+
+
+    //-----------MODELO USUARIO-------------
+    Usuario.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -152,8 +128,9 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
-    //--------MODELO EMPLEADO----------------
-    Empleado.sync().then(() => {
+
+    //-----------MODELO TIPO PRODUCTO-------------
+    Tipo.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -161,14 +138,6 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
-    //--------MODELO FORMAS DE PAGO----------------
-    FormaPago.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
 
     //--------MODELO PROVEEDOR----------------
     Proveedor.sync().then(() => {
@@ -178,6 +147,57 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+
+     //----------MODELO CATEGORIA--------------
+     Categoria.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+
+   //-----------MODELO COMBO-------------
+    Combo.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+ 
+
+    //----modelo de Menu-----
+    Menu.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+
+     //------------MODELO PXCOMBO------------
+     PlatoCombo.sync().then(() => {
+
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+
+    //-----------MODELO PXPLATO-------------   
+    ProductoPlato.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
 
 
     //----modelo de Cargos-----
@@ -190,39 +210,14 @@ exports.CrearModelos = () => {
         })
 
 
-    //-----------MODELO COMBO-------------
-    Combo.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
+    
 
 
-    //----------MODELO CATEGORIA--------------
-    Categoria.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
+        
 
 
-    //----modelo de Menu-----
-    Menu.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
-
-
-    //------------MODELO PXCOMBO------------
-    PlatoCombo.sync().then(() => {
-
+    //--------MODELO SUCURSAL----------------
+    Sucursal.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -242,16 +237,6 @@ exports.CrearModelos = () => {
         })
 
 
-    //-----------MODELO RESERVACIONES-------------
-    Reservaciones.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
-
-
     //------------MODELO MESAS------------
     Mesas.sync().then(() => {
         console.log('Modelo creado correctamente');
@@ -262,14 +247,37 @@ exports.CrearModelos = () => {
         })
 
 
-    //----modelo de Compra-----
-    Compra.sync().then(() => {
+     //-----------MODELO RESERVACIONES-------------
+     Reservaciones.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+
+
+
+    //--------MODELO EMPLEADO----------------
+    Empleado.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+
+
+    //--------MODELO FORMAS DE PAGO----------------
+    FormaPago.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
 
 
     //----------MODELO IXSUCURSAL-------------
@@ -282,15 +290,6 @@ exports.CrearModelos = () => {
         })
 
 
-    //-----------MODELO PXPLATO-------------   
-    ProductoPlato.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
-
 
     //-----------MODELO IXCOMPRA-------------
     Insumo.sync().then(() => {
@@ -302,34 +301,15 @@ exports.CrearModelos = () => {
         })
 
 
-    //-----------MODELO TIPO PRODUCTO-------------
-    Tipo.sync().then(() => {
+        //----modelo de Compra-----
+    Compra.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-
-
-    //-----------MODELO DETALLE FACTURA-------------
-    DetalleFactura.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
-
-
-    //-----------MODELO USUARIO-------------
-    Usuario.sync().then(() => {
-        console.log('Modelo creado correctamente');
-    })
-        .catch((error) => {
-            console.log('Error al crear el modelo');
-            console.log(error);
-        })
+    
 
     //-----------MODELO DETALLE COMPRA-------------
     DetalleCompra.sync().then(() => {
@@ -348,4 +328,15 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
+
+
+   //-----------MODELO DETALLE FACTURA-------------
+   DetalleFactura.sync().then(() => {
+    console.log('Modelo creado correctamente');
+})
+    .catch((error) => {
+        console.log('Error al crear el modelo');
+        console.log(error);
+    })
+ 
 }
