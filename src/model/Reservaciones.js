@@ -6,12 +6,12 @@ const Reservaciones = db.define(
     'Reservaciones',
     {
         fechaHora:{
-            type:DataTypes.DATEONLY, 
-            allowNull:false, 
+            type:DataTypes.DATE, 
+            allowNull: false, 
             validate:{
                 isDate: true,
                 notEmpty: true,
-                isBefore: today.format('YYYY-MM-DD')
+                isAfter: today.format('YYYY-MM-DD')
             }
         }
     },

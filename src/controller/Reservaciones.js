@@ -1,6 +1,8 @@
 const Reservaciones = require('../model/Reservaciones');
+const Clientes = require('../model/Clientes');
+const Mesas = require('../model/Mesas');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloReservaciones = {
@@ -35,6 +37,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloReservaciones);
 }
+
 exports.Listar = async (req, res) => {
     const listarReservaciones = await Reservaciones.findAll();
     res.json(listarReservaciones);
@@ -46,48 +49,63 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { fecha_hora } = req.body;
-        console.log(fecha_hora);
-        if (!fecha_hora) {
+        const { fechaHora, ClienteId, MesaId } = req.body;
+        if (!fechaHora || !ClienteId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            await Reservaciones.create({
-                fecha_hora
-            }).then(data => {
-                res.json({ msj: 'Registro guardado' });
-            })
-                .catch((er) => {
-                    var errores = '';
-                    er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '. ';
-                    })
-                    res.json({ errores });
+            var buscarCliente = await Clientes.findOne({ where: { id: ClienteId } });
+            var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
+            if (!buscarCliente || !buscarMesa) {
+                res.send('El id del cliente o mesa no existe');
+            } else {
+                await Reservaciones.create({
+                    fechaHora,
+                    ClienteId,
+                    MesaId
+                }).then(data => {
+                    res.json({ msj: 'Registro guardado' });
                 })
+                    .catch((er) => {
+                        var errores = '';
+                        er.errors.forEach(element => {
+                            console.log(element.message);
+                            errores += element.message + '. ';
+                        })
+                        res.json({ errores });
+                    })
+            }
         }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { fecha_hora } = req.body;
-    if (!fecha_hora || !id) {
+    const { fechaHora, ClienteId, MesaId } = req.body;
+    if ( !fechaHora || !ClienteId || !MesaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarReservacion= await Reservaciones.findOne({ where: { id: id } });
+        var buscarReservacion = await Reservaciones.findOne({ where: { id: id } });
         if (!buscarReservacion) {
-            res.send('El id del tipo no existe');
+            res.send('El id de la reservación no existe');
         } else {
-            buscarReservacion.fecha_hora = fecha_hora;
-            await buscarReservacion.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarCliente = await Clientes.findOne({ where: { id: ClienteId } });
+            var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
+            if (!buscarCliente || !buscarMesa) {
+                res.send('El id del cliente o mesa no existe');
+            } else {
+                buscarReservacion.fechaHora = fechaHora;
+                buscarReservacion.ClienteId = ClienteId;
+                buscarReservacion.MesaId = MesaId
+                await buscarReservacion.save()
+                    .then((data) => {
+                        console.log(data);
+                        res.send('Actualizado correctamente');
+                    })
+                    .catch((er) => {
+                        console.log(er);
+                        res.send('Error al actualizar');
+                    });
+            }
         }
     }
 }

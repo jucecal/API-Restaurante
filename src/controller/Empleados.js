@@ -64,6 +64,10 @@ exports.Guardar = async (req, res) => {
     if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
+        var buscarCargo = await Cargo.findOne({ where: { id: CategoriumId } });
+            if (!buscarCategoria) {
+                res.send('El id de la categoría no existe');
+            }else{
         await Empleado.create({
             nombre,
             apellido,
@@ -77,6 +81,7 @@ exports.Guardar = async (req, res) => {
             .catch((er) => {
                 res.json({ msj: 'Error al guardar el registro' });
             })
+        }
     }
 }
 
