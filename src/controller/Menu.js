@@ -142,7 +142,6 @@ exports.Guardar = async (req, res) =>{
     }
     else{
         const {nombre, precio, descripcion, CategoriumId} = req.body;
-        
         if(!nombre || !precio || !descripcion || !CategoriumId){
             res.json({msj:'Debe enviar los datos completos'})
         }
