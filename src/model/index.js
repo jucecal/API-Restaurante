@@ -10,7 +10,7 @@ const Menu = require('./Menu');
 
 const Cargo = require('./Cargo');
 const PxCombo = require('./PxCombo');
-const IxSucursal = require('./IxSucursal');
+const IxSucursal = require('./Inventario');
 const PxPlato = require("./PxPlato");
 
 const IxCompra = require("./IxCompra");

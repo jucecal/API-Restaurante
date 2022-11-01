@@ -1,4 +1,4 @@
-const IxSucursal= require('../model/IxSucursal');
+const IxSucursal= require('../model/Inventario');
 const { validationResult } = require('express-validator');
 const {request} = require('express');
 

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const controladorIxSucursal = require('../controller/IxSucursal');
+const controladorIxSucursal = require('../controller/Inventario');
 const {body, query} = require('express-validator');
 const ruta = Router();
 
