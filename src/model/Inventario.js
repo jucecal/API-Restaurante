@@ -4,7 +4,7 @@ const Inventario = db.define(
     'Inventario',
     {
         Stock:{ 
-        type: DataTypes.STRING, 
+        type: DataTypes.INTEGER, 
         allowNull: false 
         }
     },

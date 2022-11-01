@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
-const Formas_Pago = db.define(
-    'Formas_Pago',
+const FormaPago = db.define(
+    'FormaPago',
     {
 
         forma_Pago:
@@ -12,7 +12,7 @@ const Formas_Pago = db.define(
         
     },
     {
-        tableName: 'formas_pagos',
+        tableName: 'Forma_Pago',
     }
 );
-module.exports = Formas_Pago;
+module.exports = FormaPago;

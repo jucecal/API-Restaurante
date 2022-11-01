@@ -22,7 +22,7 @@ const Sucursal = db.define(
         }
     },
     {
-        tableName: 'sucursales',
+        tableName: 'Sucursales',
     }
 );
 module.exports = Sucursal;

@@ -1,4 +1,4 @@
-const PxPlato = require('../model/PxPlato');
+const PxPlato = require('../model/ProductoPlato');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');

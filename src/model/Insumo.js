@@ -1,20 +1,33 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
-const Insumo = db.define(
-    'Insumo',
+const moment = require('moment');
+var today = moment();
+const Insumos = db.define(
+    'Insumos',
     {
-        nombre:
-        { type: DataTypes.STRING(50), allowNull: false },
+        nombre:{ 
+            type: DataTypes.STRING(50), 
+            allowNull: false 
+        },
 
-        marca:
-        { type: DataTypes.STRING(50), allowNull: false },
+        marca:{ 
+            type: DataTypes.STRING(50), 
+            allowNull: false 
+        },
 
         //TIPO DE FECHA
         //DE Vencimiento  == DD/MM/AAAA
-        vencimiento:
-        { type: DataTypes.STRING(10), allowNull: false },
+        fechaVencimiento:{ 
+            type:DataTypes.DATEONLY, 
+            allowNull:false, 
+            validate:{
+                isDate: true,
+                notEmpty: true,
+                isBefore: today.format('YYYY-MM-DD')
+            }
+        },
 
-        preciounitario:
+        precioUnitario:
         {
             type: DataTypes.DOUBLE,
             allowNull: false,
@@ -27,7 +40,7 @@ const Insumo = db.define(
        
     },
     {
-        tableName: 'insumos',
+        tableName: 'Insumos',
     }
 );
-module.exports = Insumo;
+module.exports = Insumos;
