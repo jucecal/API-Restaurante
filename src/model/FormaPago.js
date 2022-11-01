@@ -4,7 +4,7 @@ const FormaPago = db.define(
     'FormaPago',
     {
 
-        forma_Pago:
+        formaPago:
         {
             type: DataTypes.STRING(50),
             allowNull: false
