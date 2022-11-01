@@ -24,7 +24,7 @@ const Clientes = db.define(
         //DE NACIMIENTO  == DD/MM/AAAA
         fechaNacimiento:{
             type:DataTypes.DATEONLY, 
-            allowNull:false, 
+            allowNull: false, 
             validate:{
                 isDate: true,
                 notEmpty: true,

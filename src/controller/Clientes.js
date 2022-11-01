@@ -46,15 +46,17 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombres, apellidos, telefono } = req.body;
-        console.log(nombres, apellidos, telefono);
-        if (!nombres || !apellidos || !telefono) {
+        const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion } = req.body;
+        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Clientes.create({
                 nombres,
                 apellidos,
-                telefono
+                telefono,
+                fechaNacimiento,
+                correo,
+                direccion
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
             })
@@ -72,18 +74,21 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombres, apellidos, telefono } = req.body;
-    if (!nombres || !apellidos || !telefono || !id) {
+    const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion } = req.body;
+    if ( !nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarCliente= await Contacto.findOne({ where: { id: id } });
+        var buscarCliente= await Clientes.findOne({ where: { id: id } });
         if (!buscarCliente) {
             res.send('El id del tipo no existe');
         } else {
             buscarCliente.nombres = nombres;
             buscarCliente.apellidos = apellidos;
-            buscarContacto.telefono = telefono;
-            await buscarContacto.save()
+            buscarCliente.telefono = telefono;
+            buscarCliente.fechaNacimiento = fechaNacimiento;
+            buscarCliente.correo = correo;
+            buscarCliente.direccion = direccion;
+            await buscarCliente.save()
                 .then((data) => {
                     console.log(data);
                     res.send('Actualizado correctamente');
@@ -101,7 +106,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await Contacto.destroy({ where: { id: id } })
+        await Clientes.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
                     res.send('El id no existe');
