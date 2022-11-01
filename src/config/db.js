@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize')
 const sequelize = require('sequelize')
 const db = new sequelize(
-    'prueba', //NOMBRE DE LA BASE DE DATOS.
+    'restaurante', //NOMBRE DE LA BASE DE DATOS.
     'root', //USUARIO DE BASE DE DATOS.
     '', //CONTRASEÑA DE USUARIO.
     {

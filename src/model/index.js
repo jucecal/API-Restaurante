@@ -59,6 +59,13 @@ exports.CrearModelos = () => {
     Usuario.hasMany(Clientes)
     Clientes.belongsTo(Usuario)
 
+    //Relacion entre combos y PxCombo
+    Combo.hasMany(PxCombo)
+    PxCombo.belongsTo(Combo)
+
+    //Relacion entre menu y PxCombo
+    Menu.hasMany(PxCombo)
+    PxCombo.belongsTo(Menu)
 
 
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
