@@ -13,7 +13,7 @@ const PxCombo = require('./PxCombo');
 const IxSucursal = require('./IxSucursal');
 const PxPlato = require("./PxPlato");
 
-const IxCompra = require("./IxCompra");
+const Insumo = require("./Insumo");
 const Tipo = require("./Tipo");
 const Detallefactura = require("./Detallefactura");
 const Usuario = require("./Usuario");
@@ -52,8 +52,8 @@ exports.CrearModelos = () => {
     IxSucursal.belongsTo(Sucursal);
 
     //RELACIÓN ENTRE TIPO PRODUCTO Y PRODUCTOS COMPRA
-    Tipo.hasMany(IxCompra)
-    IxCompra.belongsTo(Tipo)
+    Tipo.hasMany(Insumo)
+    Insumo.belongsTo(Tipo)
 
     //RELACIÓN ENTRE USUARIOS Y CLIENTES
     Usuario.hasMany(Clientes)
@@ -193,7 +193,7 @@ exports.CrearModelos = () => {
     
 
     //-----------MODELO IXCOMPRA-------------
-     IxCompra.sync().then(() => {
+     Insumo.sync().then(() => {
          console.log('Modelo creado correctamente');
     })
         .catch((error) => {
