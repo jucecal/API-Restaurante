@@ -23,7 +23,7 @@ const Proveedor = db.define(
       
     },
     {
-        tableName: 'Proveedores',
+        tableName: 'proveedores',
     }
 );
 module.exports = Proveedor;

@@ -9,20 +9,21 @@ const Compra = require('./Compra');
 const Menu = require('./Menu');
 
 const Cargo = require('./Cargo');
-const PxCombo = require('./PlatoCombo');
-const IxSucursal = require('./Inventario');
-const PxPlato = require("./ProductoPlato");
-
 const Insumo = require("./Insumo");
 const Tipo = require("./Tipo");
-const Detallefactura = require("./DetalleFactura");
+const DetalleFactura = require("./DetalleFactura");
+
 const Usuario = require("./Usuario");
 const Empleado = require("./Empleados");
-
-const Formas_Pago = require("./FormaPago");
+const FormaPago = require("./FormaPago");
 const Proveedor = require("./Proveedor");
+
 const Factura = require("./Factura");
-const detalleCompra = require("./DetalleCompra");
+const DetalleCompra = require("./DetalleCompra");
+const Inventario = require("./Inventario");
+const ProductoPlato = require("./ProductoPlato");
+
+const PlatoCombo = require("./PlatoCombo");
 
 
 exports.CrearModelos = () => {
@@ -42,8 +43,8 @@ exports.CrearModelos = () => {
     Reservaciones.belongsTo(Clientes);
 
     //PARA TABLA DE RELACIONES TBL_MESAS_x_RESERVA
-    Reservaciones.hasMany(Mesas);
-    Mesas.belongsTo(Reservaciones);
+    Mesas.hasMany(Reservaciones);
+    Reservaciones.belongsTo(Mesas);
 
     //relacion entre menu y categorias
     Categoria.hasMany(Menu);
@@ -51,12 +52,12 @@ exports.CrearModelos = () => {
 
     //relacion entre combo y productos por combp
 
-    Combo.hasMany(PxCombo);
-    PxCombo.belongsTo(Combo);
+    Combo.hasMany(PlatoCombo);
+    PlatoCombo.belongsTo(Combo);
 
     // relacion entre sucursal y inventario por sucursal
-    Sucursal.hasMany(IxSucursal);
-    IxSucursal.belongsTo(Sucursal);
+    Sucursal.hasMany(Inventario);
+    Inventario.belongsTo(Sucursal);
 
     //RELACIÓN ENTRE TIPO PRODUCTO Y PRODUCTOS COMPRA
     Tipo.hasMany(Insumo)
@@ -67,19 +68,19 @@ exports.CrearModelos = () => {
     Clientes.belongsTo(Usuario)
 
     //Relacion entre combos y PxCombo
-    Combo.hasMany(PxCombo)
-    PxCombo.belongsTo(Combo)
+    Combo.hasMany(PlatoCombo)
+    PlatoCombo.belongsTo(Combo)
 
     //Relacion entre menu y PxCombo
-    Menu.hasMany(PxCombo)
-    PxCombo.belongsTo(Menu)
+    Menu.hasMany(PlatoCombo)
+    PlatoCombo.belongsTo(Menu)
 
     //RELACIÓN ENTRE DETALLE COMPRA CON COMPRAS, PRODUCTOS, SUCURSAL
-    Compra.hasMany(detalleCompra)
-    detalleCompra.belongsTo(Compra)
+    Compra.hasMany(DetalleCompra)
+    DetalleCompra.belongsTo(Compra)
 
-    Insumo.hasMany(detalleCompra)
-    detalleCompra.belongsTo(Insumo)
+    Insumo.hasMany(DetalleCompra)
+    DetalleCompra.belongsTo(Insumo)
 
     Mesas.hasMany(Factura)
     Factura.belongsTo(Mesas)
@@ -90,11 +91,54 @@ exports.CrearModelos = () => {
     Clientes.hasMany(Factura)
     Factura.belongsTo(Clientes)
 
-    Formas_Pago.hasMany(Factura)
-    Factura.belongsTo(Formas_Pago)
+    FormaPago.hasMany(Factura)
+    Factura.belongsTo(FormaPago)
 
     Empleado.hasMany(Factura)
     Factura.belongsTo(Empleado)
+
+
+    //===========================
+    DetalleFactura.hasMany(Factura)
+    Factura.belongsTo(DetalleFactura)
+
+    DetalleFactura.hasMany(Combo)
+    Combo.belongsTo(DetalleFactura)
+
+    DetalleFactura.hasMany(Menu)
+    Menu.belongsTo(DetalleFactura)
+
+//===========================
+    Empleado.hasMany(Sucursal)
+    Sucursal.belongsTo(Empleado)
+
+    Empleado.hasMany(Usuario)
+    Usuario.belongsTo(Empleado)
+
+    Empleado.hasMany(Cargo)
+    Cargo.belongsTo(Empleado)
+
+
+//===========================
+    Insumo.hasMany(Proveedor)
+    Proveedor.belongsTo(Insumo)
+
+
+    //===========================
+    Inventario.hasMany(Insumo)
+    Insumo.belongsTo(Inventario)
+
+
+    //===========================
+    ProductoPlato.hasMany(Insumo)
+    Insumo.belongsTo(ProductoPlato)
+
+
+    //===========================
+    Mesas.hasMany(Reservaciones)
+    Reservaciones.belongsTo(Mesas)
+
+
 
 
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
@@ -118,7 +162,7 @@ exports.CrearModelos = () => {
         })
 
     //--------MODELO FORMAS DE PAGO----------------
-    Formas_Pago.sync().then(() => {
+    FormaPago.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -177,7 +221,7 @@ exports.CrearModelos = () => {
 
 
     //------------MODELO PXCOMBO------------
-    PxCombo.sync().then(() => {
+    PlatoCombo.sync().then(() => {
 
         console.log('Modelo creado correctamente');
     })
@@ -229,7 +273,7 @@ exports.CrearModelos = () => {
 
 
     //----------MODELO IXSUCURSAL-------------
-    IxSucursal.sync().then(() => {
+    Inventario.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -239,7 +283,7 @@ exports.CrearModelos = () => {
 
 
     //-----------MODELO PXPLATO-------------   
-    PxPlato.sync().then(() => {
+    ProductoPlato.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -269,7 +313,7 @@ exports.CrearModelos = () => {
 
 
     //-----------MODELO DETALLE FACTURA-------------
-    Detallefactura.sync().then(() => {
+    DetalleFactura.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -288,7 +332,7 @@ exports.CrearModelos = () => {
         })
 
     //-----------MODELO DETALLE COMPRA-------------
-    detalleCompra.sync().then(() => {
+    DetalleCompra.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
