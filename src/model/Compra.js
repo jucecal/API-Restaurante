@@ -7,16 +7,18 @@ const Compra = db.define(
     {        
         fecha: 
         {
-            type:DataTypes.DATEONLY, allowNull:false, 
+            type:DataTypes.DATEONLY, 
+            allowNull:false, 
             validate:{
                 isDate: true,
                 notEmpty: true,
                 isBefore: today.format('YYYY-MM-DD')
             }
         },
-        total_pagar:
+        totalPagar:
         {
-            type: DataTypes.DOUBLE,allowNull: false,
+            type: DataTypes.DOUBLE,
+            allowNull: false,
             validate:{
                 isDecimal: true, 
                 min: 1     
@@ -26,7 +28,7 @@ const Compra = db.define(
         
     },
     {
-        tableName: 'compras'
+        tableName: 'Compras'
     }
 );
 module.exports = Compra;

@@ -1,4 +1,4 @@
-const detalleCompra = require('../model/detalleCompra');
+const detalleCompra = require('../model/DetalleCompra');
 const { validationResult } = require('express-validator');
 const {request} = require('express');
 

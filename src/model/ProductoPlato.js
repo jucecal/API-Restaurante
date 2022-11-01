@@ -1,16 +1,15 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
-const Mesas = db.define(
-    'Mesas',
+const ProductoPlato = db.define(
+    'ProductoPlato',
     {
-        capacidad:
-        {
+        cantidad:{
             type: DataTypes.INTEGER, 
             allowNull: false
         }
     },
     {
-        tableName: 'Mesas',
+        tableName: 'Producto_X_Plato',
     }
 );
-module.exports = Mesas;
+module.exports = ProductoPlato;

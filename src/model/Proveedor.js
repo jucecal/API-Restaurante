@@ -8,7 +8,8 @@ const Proveedor = db.define(
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        nombre_contacto:
+
+        nombreContacto:
         {
             type: DataTypes.STRING(50),
             allowNull: false
@@ -22,7 +23,7 @@ const Proveedor = db.define(
       
     },
     {
-        tableName: 'proveedores',
+        tableName: 'Proveedores',
     }
 );
 module.exports = Proveedor;

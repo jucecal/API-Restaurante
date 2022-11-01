@@ -1,20 +1,29 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
-const Detallefactura = db.define(
-    'Detallefactura',
+const DetalleFactura = db.define(
+    'DetalleFactura',
     {
-        cantidad:{ type: DataTypes.INTEGER, allowNull: false},
+        cantidad:{ 
+            type: DataTypes.INTEGER, 
+            allowNull: false
+        },
 
-        subtotal:{ type: DataTypes.DOUBLE, allowNull: false,
+        subTotal:{ 
+            type: DataTypes.DOUBLE, 
+            allowNull: false,
             validate:{
                 isDecimal: true, min: 1
             }
         },
         
-        estado:{ type: DataTypes.ENUM('AC', 'IN', 'BL'), allowNull: false, defaultValue: 'AC'}
+        estado:{ 
+            type: DataTypes.ENUM('AC', 'IN', 'BL'), 
+            allowNull: false, 
+            defaultValue: 'AC'
+        }
     },
     {
-        tableName: 'detallefacturas',
+        tableName: 'Detalle_Factura',
     }
 );
-module.exports = Detallefactura;
+module.exports = DetalleFactura;

@@ -9,20 +9,20 @@ const Compra = require('./Compra');
 const Menu = require('./Menu');
 
 const Cargo = require('./Cargo');
-const PxCombo = require('./PxCombo');
+const PxCombo = require('./PlatoCombo');
 const IxSucursal = require('./Inventario');
-const PxPlato = require("./PxPlato");
+const PxPlato = require("./ProductoPlato");
 
 const Insumo = require("./Insumo");
 const Tipo = require("./Tipo");
-const Detallefactura = require("./Detallefactura");
+const Detallefactura = require("./DetalleFactura");
 const Usuario = require("./Usuario");
 const Empleado = require("./Empleados");
 
-const Formas_Pago = require("./Formas_Pago");
+const Formas_Pago = require("./FormaPago");
 const Proveedor = require("./Proveedor");
 const Factura = require("./Factura");
-const detalleCompra = require("./detalleCompra");
+const detalleCompra = require("./DetalleCompra");
 
 
 exports.CrearModelos = () => {

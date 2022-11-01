@@ -20,17 +20,18 @@ app.use('/api/clientes', require('./route/Clientes'));
 app.use('/api/mesas', require('./route/Mesas'));
 app.use('/api/reservaciones', require('./route/Reservaciones'));
 app.use('/api/compras', require('./route/Compra'));
-app.use('/api/pxcombo', require('./route/PxCombo'));
+app.use('/api/pxcombo', require('./route/PlatoCombo'));
 
 app.use('/api/tipos', require('./route/Tipo'));
-app.use('/api/detallefacturas', require('./route/Detallefactura'));
+app.use('/api/detallefacturas', require('./route/DetalleFactura'));
 app.use('/api/usuarios', require('./route/Usuario'));
 app.use('/api/cargos', require('./route/Cargo'));
 
 app.use('/api/menu', require('./route/Menu'));
 app.use('/api/inventario', require('./route/Inventario'));
 app.use('/api/insumos', require('./route/Insumo'));
-app.use('/api/detallecompra', require('./route/detalleCompra'));
+app.use('/api/detallecompra', require('./route/DetalleCompra'));
+
 app.use('/api/facturas', require('./route/Factura'));
 
 //INICIANDO SERVER

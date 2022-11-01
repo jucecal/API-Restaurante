@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
-const Combo = require('../model/PxCombo');
+const PlatoCombo = require('../model/PlatoCombo');
 
 exports.Inicio = (req, res) => {
     const moduloCombo = {

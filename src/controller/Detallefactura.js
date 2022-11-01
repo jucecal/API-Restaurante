@@ -1,4 +1,4 @@
-const Detallefactura = require('../model/Detallefactura');
+const Detallefactura = require('../model/DetalleFactura');
 const { validationResult } = require('express-validator');
 const {request} = require('express');
 

@@ -1,30 +1,49 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
+const moment = require('moment');
+var today = moment();
 const Clientes = db.define(
     'Clientes',
     {
-        nombres:
-        { type: DataTypes.STRING(50), allowNull: false },
+        nombres:{ 
+            type: DataTypes.STRING(50), 
+            allowNull: false 
+        },
 
-        apellidos:
-        { type: DataTypes.STRING(50), allowNull: false },
+        apellidos:{ 
+            type: DataTypes.STRING(50), 
+            allowNull: false 
+        },
 
-        telefono:
-        { type: DataTypes.TEXT, allowNull: false },
+        telefono:{ 
+            type: DataTypes.TEXT, 
+            allowNull: false 
+        },
 
         //TIPO DE FECHA
         //DE NACIMIENTO  == DD/MM/AAAA
-        nacimiento:
-        {type: DataTypes.STRING(10), allowNull: false },
+        fechaNacimiento:{
+            type:DataTypes.DATEONLY, 
+            allowNull:false, 
+            validate:{
+                isDate: true,
+                notEmpty: true,
+                isBefore: today.format('YYYY-MM-DD')
+            }
+        },
 
-        correo:
-        { type: DataTypes.STRING(100), allowNull: false },
+        correo:{ 
+            type: DataTypes.STRING(100), 
+            allowNull: false 
+        },
 
-        direccion:
-        { type: DataTypes.STRING(250), allowNull: false }
+        direccion:{ 
+            type: DataTypes.STRING(250), 
+            allowNull: false 
+        }
     },
     {
-        tableName: 'clientes',
+        tableName: 'Clientes',
     }
 );
 module.exports = Clientes;
