@@ -42,8 +42,8 @@ exports.CrearModelos = () => {
     Reservaciones.belongsTo(Clientes);
 
     //PARA TABLA DE RELACIONES TBL_MESAS_x_RESERVA
-    Reservaciones.hasMany(Mesas);
-    Mesas.belongsTo(Reservaciones);
+    Mesas.hasMany(Reservaciones);
+    Reservaciones.belongsTo(Mesas);
 
     //relacion entre menu y categorias
     Categoria.hasMany(Menu);
