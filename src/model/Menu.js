@@ -14,6 +14,7 @@ const Menu = db.define(
                     notEmpty: true
             }          
         },
+        
         precio:
         {
             type: DataTypes.DOUBLE, 
@@ -23,6 +24,7 @@ const Menu = db.define(
                 min: 1     
             }
         },
+
         descripcion:
         {
             type: DataTypes.STRING(250), 

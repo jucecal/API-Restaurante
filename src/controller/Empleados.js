@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
-const Empleado = require('../model/Empleado');
+const Empleado = require('../model/Empleados');
 
 exports.Inicio = (req, res) => {
     const moduloEmpleado = {
@@ -60,12 +60,17 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { Empleado } = req.body;
-    if (!Empleado) {
+    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion } = req.body;
+    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         await Empleado.create({
-            empleado
+            nombre,
+            apellido,
+            telefono,
+            fechaNacimiento,
+            correo,
+            direccion
         }).then(data => {
             res.json({ msj: 'Registro guardado' });
         })
@@ -77,15 +82,20 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { empleado} = req.body;
-    if (!empleado  || !id) {
+    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion } = req.body;
+    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
         if (!buscarEmpleado) {
             res.send('El id del cliente no existe');
         } else {
-            buscarEmpleado.empleado = empleado;
+            buscarEmpleado.nombre = nombre;
+            buscarEmpleado.apellido = apellido;
+            buscarEmpleado.telefono = telefono;
+            buscarEmpleado.fechaNacimiento = fechaNacimiento;
+            buscarEmpleado.correo = correo;
+            buscarEmpleado.direccion = direccion;
             await buscarEmpleado.save()
                 .then((data) => {
                     console.log(data);

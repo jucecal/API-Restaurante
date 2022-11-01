@@ -11,10 +11,6 @@ ruta.get('/buscarId',
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 controladorInsumo.buscarId);
 
-ruta.get('/buscarnombre', 
-query('nombre').isLength({min: 3, max: 50}).withMessage('Debe escribir el nombre de la sucursal con una longitud de 3 - 50 caracteres'),
-controladorInsumo.buscarNombre);
-
 ruta.post('/guardar', 
 body('nombre').isLength({min: 3, max: 50}).withMessage('Debe escribir el nombre de la sucursal con una longitud de 3 - 50 caracteres'),
 controladorInsumo.Guardar);

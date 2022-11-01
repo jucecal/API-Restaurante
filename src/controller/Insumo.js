@@ -10,25 +10,25 @@ exports.Inicio = (req, res) => {
         rutas: [
             {
                 ruta: '/api/insumos/listar',
-                descripcion: 'Listar las compras',
+                descripcion: 'Listar los insumos',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/insumos/guardar',
-                descripcion: 'Guardar los datos de una compra',
+                descripcion: 'Guardar los datos de un insumo',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/insumos/editar',
-                descripcion: 'Modifica los datos de una compra',
+                descripcion: 'Modifica los datos de un insumo',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
                 ruta: '/api/insumos/eliminar',
-                descripcion: 'Elimina los datos de una compra',
+                descripcion: 'Elimina los datos de un insumo',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
@@ -58,39 +58,17 @@ exports.buscarId = async (req, res) => {
     }
 }
 
-exports.buscarNombre = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { nombre } = req.query;
-        const listarInsumo = await Insumo.findAll({
-            attributes:['nombre', 'marca', 'vencimiento','preciounitario'],
-            where: {
-                [Op.and]: {
-                    nombre: {
-                        [Op.like]: nombre
-                    },
-                    activo: true
-                }
-            }
-        });
-        res.json(listarInsumo);
-    }
-}
-
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { nombre, marca, vencimiento, preciounitario } = req.body;
-    if (!nombre || !marca || !vencimiento || !preciounitario) {
+    const { nombre, marca, fechaVencimiento, precioUnitario } = req.body;
+    if (!nombre || !marca || !fechaVencimiento || !precioUnitario) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         await Insumo.create({
             nombre,
             marca,
-            vencimiento,
-            preciounitario
+            fechaVencimiento,
+            precioUnitario
         }).then(data => {
             res.json({ msj: 'Registro guardado' });
         })
@@ -102,18 +80,18 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, marca, vencimiento, preciounitario} = req.body;
-    if (!nombre || !marca || !vencimiento || !preciounitario) {
+    const { nombre, marca, fechaVencimiento, precioUnitario} = req.body;
+    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarInsumo = await Insumo.findOne({ where: { id: id } });
         if (!buscarInsumo) {
-            res.send('El id del cliente no existe');
+            res.send('El id del insumo no existe');
         } else {
-            buscarInsumo = nombre;
-            buscarInsumo = marca;
-            buscarInsumo = vencimiento;
-            buscarInsumo = preciounitario;
+            buscarInsumo.nombre = nombre;
+            buscarInsumo.marca = marca;
+            buscarInsumo.fechaVencimiento = fechaVencimiento;
+            buscarInsumo.precioUnitario = precioUnitario;
             await buscarInsumo.save()
                 .then((data) => {
                     console.log(data);

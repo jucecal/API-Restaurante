@@ -1,27 +1,24 @@
 const { Router } = require('express');
-const controladorCategoria = require('../controller/Empleado');
+const controladorEmpleado = require('../controller/Empleados');
 const {body, query} = require('express-validator');
 const ruta = Router();
 
+ruta.get('/', controladorEmpleado.Inicio);
 
-ruta.get('/', controladorCategoria.Inicio);
-
-ruta.get('/listar', controladorCategoria.Listar);
+ruta.get('/listar', controladorEmpleado.Listar);
 
 ruta.get('/buscarId', 
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-controladorCategoria.buscarId);
+controladorEmpleado.buscarId);
 
 ruta.post('/guardar', 
-body('categoria').isLength({min: 3, max: 50}).withMessage('Debe escribir la categoria con una longitud de 3 - 50 caracteres'),
-controladorCategoria.Guardar);
+controladorEmpleado.Guardar);
 
 ruta.put('/editar', 
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-body('categoria').isLength({min: 3, max: 50}).withMessage('Debe escribir la categoria con una longitud de 3 - 50 caracteres'),
-controladorCategoria.Editar);
+controladorEmpleado.Editar);
 
 ruta.delete('/eliminar', 
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-controladorCategoria.Eliminar);
+controladorEmpleado.Eliminar);
 module.exports=ruta;

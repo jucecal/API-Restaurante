@@ -97,7 +97,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await Contacto.destroy({ where: { id: id } })
+        await Mesas.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
                     res.send('El id no existe');

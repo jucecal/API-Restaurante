@@ -19,7 +19,7 @@ const Insumos = db.define(
         //DE Vencimiento  == DD/MM/AAAA
         fechaVencimiento:{ 
             type:DataTypes.DATEONLY, 
-            allowNull:false, 
+            allowNull: true, 
             validate:{
                 isDate: true,
                 notEmpty: true,

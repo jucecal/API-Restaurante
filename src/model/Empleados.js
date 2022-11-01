@@ -17,6 +17,13 @@ const Empleado = db.define(
             allowNull: false
         },
 
+        
+        telefono:
+        {
+            type: DataTypes.STRING(20),
+            allowNull: false
+        },
+
         fechaNacimiento:
         {
             type:DataTypes.DATEONLY, 
@@ -28,24 +35,17 @@ const Empleado = db.define(
             }
         },
 
-        direccion:
-        {
-            type: DataTypes.STRING(50),
-            allowNull: false
-        },
-
-        telefono:
-        {
-            type: DataTypes.STRING(20),
-            allowNull: false
-        },
-
         correo:
         {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        
+
+        direccion:
+        {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        }
     },
     {
         tableName: 'empleados',
