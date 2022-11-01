@@ -60,12 +60,14 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { Proveedor } = req.body;
-    if (!Proveedor) {
+    const { proveedor,  nombreContacto, telefono } = req.body;
+    if (!Proveedor || !nombreContacto || !telefono) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         await Proveedor.create({
-            proveedor
+            proveedor,
+            nombreContacto,
+            telefono
         }).then(data => {
             res.json({ msj: 'Registro guardado' });
         })
@@ -77,8 +79,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { proveedor} = req.body;
-    if (!proveedor  || !id) {
+    const { proveedor,  nombreContacto, telefono } = req.body;
+    if ( !proveedor || !nombreContacto || !telefono || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarProveedor = await Proveedor.findOne({ where: { id: id } });
@@ -86,6 +88,8 @@ exports.Editar = async (req, res) => {
             res.send('El id del cliente no existe');
         } else {
             buscarProveedor.proveedor = proveedor;
+            buscarProveedor.nombreContacto = nombreContacto;
+            buscarProveedor.telefono = telefono;
             await buscarProveedor.save()
                 .then((data) => {
                     console.log(data);

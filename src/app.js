@@ -33,6 +33,7 @@ app.use('/api/insumos', require('./route/Insumo'));
 app.use('/api/detallecompra', require('./route/DetalleCompra'));
 
 app.use('/api/facturas', require('./route/Factura'));
+app.use('/api/proveedor', require('./route/Proveedor'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
