@@ -24,6 +24,7 @@ const Inventario = require("./Inventario");
 const ProductoPlato = require("./ProductoPlato");
 
 const PlatoCombo = require("./PlatoCombo");
+const { INET } = require("sequelize");
 
 
 exports.CrearModelos = () => {
@@ -31,38 +32,9 @@ exports.CrearModelos = () => {
     //CREACION DE LAS RELACIONES PARA LAS TABLAS
     //=========================================
 
-    //RELACIÓN ENTRE USUARIOS Y CLIENTES
-    Usuario.hasMany(Clientes)
-    Clientes.belongsTo(Usuario)
-
-    //primeras relaciones hechas por Rebirth
-    Sucursal.hasMany(Mesas);
-    Mesas.belongsTo(Sucursal);
-
-    //relacion entre sucursales y compras
-    Sucursal.hasMany(Compra);
-    Compra.belongsTo(Sucursal);
-
-    //PARA TABLA DE RELACIONES ENTRE CLIENTES Y RESERVACIONES
-    Clientes.hasMany(Reservaciones);
-    Reservaciones.belongsTo(Clientes);
-
-    //PARA TABLA DE RELACIONES TBL_MESAS_x_RESERVA
-    Mesas.hasMany(Reservaciones);
-    Reservaciones.belongsTo(Mesas);
-
     //relacion entre menu y categorias
     Categoria.hasMany(Menu);
     Menu.belongsTo(Categoria);
-
-    // relacion entre sucursal y inventario por sucursal
-    Sucursal.hasMany(Inventario);
-    Inventario.belongsTo(Sucursal);
-
-    //RELACIÓN ENTRE TIPO PRODUCTO Y PRODUCTOS COMPRA
-    Tipo.hasMany(Insumo)
-    Insumo.belongsTo(Tipo)
-
 
     //relacion entre combo y productos por combp
     Combo.hasMany(PlatoCombo);
@@ -72,74 +44,117 @@ exports.CrearModelos = () => {
     //Relacion entre menu y PxCombo
     Menu.hasMany(PlatoCombo)
     PlatoCombo.belongsTo(Menu)
-    
-    
+
+
+    //RELACION ENTRE MENU Y PRODUCTO PLATO
+    Menu.hasMany(ProductoPlato)
+    ProductoPlato.belongsTo(Menu)
+
+    //RELACIÓN ENTRE USUARIOS Y CLIENTES
+    Usuario.hasMany(Clientes)
+    Clientes.belongsTo(Usuario)
+
+    //RELACION ENTRE SUCURSAL Y MESAS
+    Sucursal.hasMany(Mesas);
+    Mesas.belongsTo(Sucursal);
+
+
+    //PARA TABLA DE RELACIONES ENTRE CLIENTES Y RESERVACIONES
+    Clientes.hasMany(Reservaciones);
+    Reservaciones.belongsTo(Clientes);
+
+    //PARA TABLA DE RELACIONES TBL_MESAS_x_RESERVA
+    Mesas.hasMany(Reservaciones);
+    Reservaciones.belongsTo(Mesas);
+
+
+    //RELACION ENTRE SUCURSAL Y EMPLEADO
+    Sucursal.hasMany(Empleado)
+    Empleado.belongsTo(Sucursal)
+
+
+    //RELACION ENTRE CARGO Y EMPLEADO
+    Cargo.hasMany(Empleado)
+    Empleado.belongsTo(Cargo)
+
+
+    //RELACION ENTRE USUARIO Y EMPLEADO
+    Usuario.hasMany(Empleado)
+    Empleado.belongsTo(Usuario)
+
+
+    // relacion entre sucursal y inventario por sucursal
+    Sucursal.hasMany(Inventario);
+    Inventario.belongsTo(Sucursal);
+
+    //RELACION DE TIPO CON INVENTARIO
+    Tipo.hasMany(Inventario)
+    Inventario.belongsTo(Tipo)
+
+    //RELACIÓN ENTRE TIPO PRODUCTO Y PRODUCTOS COMPRA
+    Tipo.hasMany(Insumo)
+    Insumo.belongsTo(Tipo)
+
+    //RELACION DE PROVEEDOR CON INSUMOS
+    Proveedor.hasMany(Insumo)
+    Insumo.belongsTo(Proveedor)
+
+    //relacion entre sucursales y Detalle compras
+    Sucursal.hasMany(Compra);
+    Compra.belongsTo(Sucursal);
+
+    //RELACION DE SUCURSAL CON DETALLE COMPRA
+    Sucursal.hasMany(DetalleCompra)
+    DetalleCompra.belongsTo(Sucursal)
+
+    //RELACION DE INSUMOS CON DETALLE COMPRA
+    Insumo.hasMany(DetalleCompra)
+    DetalleCompra.belongsTo(Insumo)
 
     //RELACIÓN ENTRE DETALLE COMPRA CON COMPRAS, PRODUCTOS, SUCURSAL
     Compra.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Compra)
 
-    Insumo.hasMany(DetalleCompra)
-    DetalleCompra.belongsTo(Insumo)
 
+    //RELACION DE MESAS CON FACTURAS
     Mesas.hasMany(Factura)
     Factura.belongsTo(Mesas)
 
+    //RELACION DE RESERVACIONES CON FACTURAS
     Reservaciones.hasMany(Factura)
     Factura.belongsTo(Reservaciones)
 
+    //RELACION DE CLIENTES CON FACTURAS
     Clientes.hasMany(Factura)
     Factura.belongsTo(Clientes)
 
+    //RELACION DE FORMA DE PAGO CON FACTURAS
     FormaPago.hasMany(Factura)
     Factura.belongsTo(FormaPago)
 
+    //RELACION DE EMPLEADO CON FACTURAS
     Empleado.hasMany(Factura)
     Factura.belongsTo(Empleado)
 
-    Sucursal.hasMany(DetalleCompra)
-    DetalleCompra.belongsTo(Sucursal)
-
-    //=========================
-
-    Combo.hasMany(DetalleFactura)
-    DetalleFactura.belongsTo(Combo)
-   
-
-/*
-  Factura.hasMany(DetalleFactura)
-    DetalleFactura.hasMany(Factura)
-
-    
-
-     Menu.hasMany(DetalleFactura)
+    //RELACION DE CON DETALLE FACTURA
+    Menu.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Menu)
 
+    //RELACION DE COMBO CON DETALLE FACTURA
+    Combo.hasMany(DetalleFactura)
+    DetalleFactura.belongsTo(Combo)
 
-*/
+    //RELACION DE FACTURA CON DETALLE FACTURA
+    Factura.hasMany(DetalleFactura)
+    DetalleFactura.hasMany(Factura)
 
-  
+//################################333
     
-    
-
-   
 
 
 //======================================================
-    
-
-   
-
-
-  
-
-
-
-
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
     //===========================================
-
-
     //-----------MODELO USUARIO-------------
     Usuario.sync().then(() => {
         console.log('Modelo creado correctamente');
@@ -199,7 +214,7 @@ exports.CrearModelos = () => {
         })
 
 
-     //------------MODELO PXCOMBO------------
+     //------------MODELO PLATO COMBO------------
      PlatoCombo.sync().then(() => {
 
         console.log('Modelo creado correctamente');
@@ -210,7 +225,7 @@ exports.CrearModelos = () => {
         })
 
 
-    //-----------MODELO PXPLATO-------------   
+    //-----------MODELO PRODUCTO PLATO-------------   
     ProductoPlato.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -229,12 +244,6 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-
-
-    
-
-
-        
 
 
     //--------MODELO SUCURSAL----------------
@@ -322,7 +331,7 @@ exports.CrearModelos = () => {
         })
 
 
-        //----modelo de Compra-----
+        //----Modelo de Compra-----
     Compra.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -362,11 +371,5 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-        
 
-    
-
-
-   
- 
 }
