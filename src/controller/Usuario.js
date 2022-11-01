@@ -57,7 +57,7 @@ exports.Guardar = async (req, res) => {
                 nombre: nombre,
                 correo: correo,
                 password: password,
-                tipo:tipo
+                tipo: tipo
 
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
@@ -80,11 +80,14 @@ exports.Editar = async (req, res) => {
     if (!nombre || !correo || !password || !tipo || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarUsuario= await Tipo.findOne({ where: { id: id } });
+        var buscarUsuario= await Usuario.findOne({ where: { id: id } });
         if (!buscarUsuario) {
-            res.send('El id del tipo no existe');
+            res.send('El id del usuario no existe');
         } else {
-            buscarUsuario.nombre= nombre;
+            buscarUsuario.nombre = nombre;
+            buscarUsuario.correo = correo;
+            buscarUsuario.password = password;
+            buscarUsuario.tipo = tipo;
             await buscarUsuario.save()
                 .then((data) => {
                     console.log(data);

@@ -77,8 +77,7 @@ exports.BuscarId = async (req, res) =>{
         const {id} = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
-            where:{
-                
+            where:{  
                 id:id
             },
             include: [
