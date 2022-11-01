@@ -22,6 +22,8 @@ const Empleado = require("./Empleados");
 const Formas_Pago = require("./Formas_Pago");
 const Proveedor = require("./Proveedor");
 
+const detalleCompra = require("./detalleCompra");
+
 
 exports.CrearModelos = () => {
 
@@ -45,7 +47,7 @@ exports.CrearModelos = () => {
 
     //relacion entre menu y categorias
     Categoria.hasMany(Menu);
-    Menu.belongsTo(Categoria);   
+    Menu.belongsTo(Categoria);
 
     //relacion entre combo y productos por combp
 
@@ -71,6 +73,16 @@ exports.CrearModelos = () => {
     //Relacion entre menu y PxCombo
     Menu.hasMany(PxCombo)
     PxCombo.belongsTo(Menu)
+
+    //RELACIÓN ENTRE DETALLE COMPRA CON COMPRAS, PRODUCTOS, SUCURSAL
+    Compra.hasMany(detalleCompra)
+    detalleCompra.belongsTo(Compra)
+
+    Insumo.hasMany(detalleCompra)
+    detalleCompra.belongsTo(Insumo)
+
+    Sucursal.hasMany(detalleCompra)
+    detalleCompra.belongsTo(Sucursal)
 
 
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
@@ -102,8 +114,8 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
-     //--------MODELO PROVEEDOR----------------
-     Proveedor.sync().then(() => {
+    //--------MODELO PROVEEDOR----------------
+    Proveedor.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -132,7 +144,7 @@ exports.CrearModelos = () => {
         })
 
 
-        //----------MODELO CATEGORIA--------------
+    //----------MODELO CATEGORIA--------------
     Categoria.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -152,7 +164,7 @@ exports.CrearModelos = () => {
         })
 
 
-        //------------MODELO PXCOMBO------------
+    //------------MODELO PXCOMBO------------
     PxCombo.sync().then(() => {
 
         console.log('Modelo creado correctamente');
@@ -212,54 +224,63 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-    
-    
-     //-----------MODELO PXPLATO-------------   
-     PxPlato.sync().then(() => {
+
+
+    //-----------MODELO PXPLATO-------------   
+    PxPlato.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-    
+
 
     //-----------MODELO IXCOMPRA-------------
-     Insumo.sync().then(() => {
-         console.log('Modelo creado correctamente');
+    Insumo.sync().then(() => {
+        console.log('Modelo creado correctamente');
     })
         .catch((error) => {
-             console.log('Error al crear el modelo');
-             console.log(error);
+            console.log('Error al crear el modelo');
+            console.log(error);
         })
-        
+
 
     //-----------MODELO TIPO PRODUCTO-------------
     Tipo.sync().then(() => {
         console.log('Modelo creado correctamente');
-   })
-       .catch((error) => {
+    })
+        .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
-       })
+        })
 
 
-       //-----------MODELO DETALLE FACTURA-------------
+    //-----------MODELO DETALLE FACTURA-------------
     Detallefactura.sync().then(() => {
         console.log('Modelo creado correctamente');
-   })
-       .catch((error) => {
+    })
+        .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
-       })
+        })
 
 
-       //-----------MODELO USUARIO-------------
+    //-----------MODELO USUARIO-------------
     Usuario.sync().then(() => {
         console.log('Modelo creado correctamente');
-   })
-       .catch((error) => {
+    })
+        .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);
-       })
+        })
+
+    //-----------MODELO DETALLE COMPRA-------------
+    detalleCompra.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
 }
