@@ -21,7 +21,7 @@ const Empleado = require("./Empleados");
 
 const Formas_Pago = require("./Formas_Pago");
 const Proveedor = require("./Proveedor");
-
+const Factura = require("./Factura");
 const detalleCompra = require("./detalleCompra");
 
 
@@ -81,8 +81,20 @@ exports.CrearModelos = () => {
     Insumo.hasMany(detalleCompra)
     detalleCompra.belongsTo(Insumo)
 
-    Sucursal.hasMany(detalleCompra)
-    detalleCompra.belongsTo(Sucursal)
+    Mesas.hasMany(Factura)
+    Factura.belongsTo(Mesas)
+
+    Reservaciones.hasMany(Factura)
+    Factura.belongsTo(Reservaciones)
+
+    Clientes.hasMany(Factura)
+    Factura.belongsTo(Clientes)
+
+    Formas_Pago.hasMany(Factura)
+    Factura.belongsTo(Formas_Pago)
+
+    Empleado.hasMany(Factura)
+    Factura.belongsTo(Empleado)
 
 
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
@@ -277,6 +289,15 @@ exports.CrearModelos = () => {
 
     //-----------MODELO DETALLE COMPRA-------------
     detalleCompra.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+    //-----------MODELO FACTURA-------------
+    Factura.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {

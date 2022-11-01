@@ -31,6 +31,7 @@ app.use('/api/menu', require('./route/Menu'));
 app.use('/api/inventario', require('./route/Inventario'));
 app.use('/api/insumos', require('./route/Insumo'));
 app.use('/api/detallecompra', require('./route/detalleCompra'));
+app.use('/api/facturas', require('./route/Factura'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
