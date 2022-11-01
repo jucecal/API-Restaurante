@@ -34,6 +34,7 @@ app.use('/api/detallecompra', require('./route/DetalleCompra'));
 
 app.use('/api/facturas', require('./route/Factura'));
 app.use('/api/proveedor', require('./route/Proveedor'));
+app.use('/api/formaspago', require('./route/FormaPago'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {

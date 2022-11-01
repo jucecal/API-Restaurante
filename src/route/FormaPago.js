@@ -7,10 +7,6 @@ ruta.get('/', controladorFormaPago.Inicio);
 
 ruta.get('/listar', controladorFormaPago.Listar);
 
-ruta.get('/buscarId', 
-query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-controladorFormaPago.buscarId);
-
 ruta.post('/guardar', 
 controladorFormaPago.Guardar);
 

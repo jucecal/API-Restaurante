@@ -1,71 +1,55 @@
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
-const Formas_Pago = require('../model/Formas_Pago');
+const FormaPago = require('../model/FormaPago');
 
 exports.Inicio = (req, res) => {
-    const moduloFormas_Pago = {
-        modulo: 'Formas_Pago',
+    const moduloFormaPago = {
+        modulo: 'FormaPago',
         descripcion: 'Gestiona las operaciones con el modelo de Formas de Pago',
         rutas: [
             {
-                ruta: '/api/formas_Pago/listar',
+                ruta: '/api/formaspago/listar',
                 descripcion: 'Listar las formas de pago',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/formas_Pago/guardar',
+                ruta: '/api/formaspago/guardar',
                 descripcion: 'Guardar los datos de una formas de pago',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/formas_Pago/editar',
+                ruta: '/api/formaspago/editar',
                 descripcion: 'Modifica los datos de una formas de pago',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/formas_Pago/eliminar',
+                ruta: '/api/formaspago/eliminar',
                 descripcion: 'Elimina los datos de una formas de pago',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
         ]
     }
-    res.json(moduloFormas_Pago);
+    res.json(moduloFormaPago);
 }
 
 exports.Listar = async (req, res) => {
-    const listarformas_Pago = await formas_Pago.findAll();
-    res.json(listarformas_Pago);
-}
-
-exports.buscarId = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { id } = req.query;
-        const listarFormas_Pago = await formas_Pago.findAll({
-            where: {
-                id
-            }
-        });
-        res.json(listarformas_Pago);
-    }
+    const listarFormaPago = await FormaPago.findAll();
+    res.json(listarFormaPago);
 }
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { Formas_Pago } = req.body;
-    if (!Formas_Pago) {
+    const { formaPago } = req.body;
+    if (!formaPago) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        await Formas_Pago.create({
-            formas_Pago
+        await FormaPago.create({
+            formaPago
         }).then(data => {
             res.json({ msj: 'Registro guardado' });
         })
@@ -77,16 +61,16 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { formas_Pago} = req.body;
-    if (!formas_Pago  || !id) {
+    const { formaPago } = req.body;
+    if ( !formaPago  || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarFormas_Pago = await Formas_Pago.findOne({ where: { id: id } });
-        if (!buscarFormas_Pago) {
-            res.send('El id del cliente no existe');
+        var buscarFormaPago = await FormaPago.findOne({ where: { id: id } });
+        if (!buscarFormaPago) {
+            res.send('El id de la forma no existe');
         } else {
-            buscarFormas_Pago.formas_Pago = formas_Pago;
-            await buscarFormas_Pago.save()
+            buscarFormaPago.formaPago = formaPago;
+            await buscarFormaPago.save()
                 .then((data) => {
                     console.log(data);
                     res.send('Actualizado correctamente');
@@ -104,7 +88,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await Formas_Pago.destroy({ where: { id: id } })
+        await FormaPago.destroy({ where: { id: id } })
             .then((data) => {
                 if(data==0){
                     res.send('El id no existe');
