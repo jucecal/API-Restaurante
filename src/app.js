@@ -29,6 +29,7 @@ app.use('/api/cargos', require('./route/Cargo'));
 
 app.use('/api/menu', require('./route/Menu'));
 app.use('/api/inventario', require('./route/Inventario'));
+app.use('/api/insumos', require('./route/Insumo'));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {

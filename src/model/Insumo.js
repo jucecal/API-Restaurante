@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
-const IxCompra = db.define(
-    'IxCompra',
+const Insumo = db.define(
+    'Insumo',
     {
         nombre:
         { type: DataTypes.STRING(50), allowNull: false },
@@ -27,7 +27,7 @@ const IxCompra = db.define(
        
     },
     {
-        tableName: 'ixcompras',
+        tableName: 'insumos',
     }
 );
-module.exports = IxCompra;
+module.exports = Insumo;
