@@ -17,6 +17,11 @@ const Insumo = require("./Insumo");
 const Tipo = require("./Tipo");
 const Detallefactura = require("./Detallefactura");
 const Usuario = require("./Usuario");
+const Empleado = require("./Empleados");
+
+const Formas_Pago = require("./Formas_Pago");
+const Proveedor = require("./Proveedor");
+
 
 exports.CrearModelos = () => {
 
@@ -72,6 +77,33 @@ exports.CrearModelos = () => {
     //===========================================
     //--------MODELO SUCURSAL----------------
     Sucursal.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+    //--------MODELO EMPLEADO----------------
+    Empleado.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+    //--------MODELO FORMAS DE PAGO----------------
+    Formas_Pago.sync().then(() => {
+        console.log('Modelo creado correctamente');
+    })
+        .catch((error) => {
+            console.log('Error al crear el modelo');
+            console.log(error);
+        })
+
+     //--------MODELO PROVEEDOR----------------
+     Proveedor.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
