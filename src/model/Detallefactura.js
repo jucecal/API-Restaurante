@@ -7,11 +7,11 @@ const Detallefactura = db.define(
 
         subtotal:{ type: DataTypes.DOUBLE, allowNull: false,
             validate:{
-                isDecimal: true, min: 1 
+                isDecimal: true, min: 1
             }
         },
         
-        estado:{ type: DataTypes.TINYINT, allowNull: true, defaultValue: 'ac'}
+        estado:{ type: DataTypes.ENUM('AC', 'IN', 'BL'), allowNull: false, defaultValue: 'AC'}
     },
     {
         tableName: 'detallefacturas',
