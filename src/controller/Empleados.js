@@ -41,7 +41,12 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarEmpleado = await Empleado.findAll();
+    const listarEmpleado = await Empleado.findAll({
+        attributes: [['id', 'Código Empleado'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'SucursalId', 'CargoId', 'UsuarioId'],
+        include: [{ 
+            model: Usuario, attributes: [['nombre', 'Nombre de Usuario']]
+        }]
+    });
     res.json(listarEmpleado);
 }
 
