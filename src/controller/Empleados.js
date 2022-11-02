@@ -64,26 +64,39 @@ exports.buscarId = async (req, res) => {
 exports.Guardar = async (req, res) => {
     console.log(req);
     const { nombre, apellido, telefono, fechaNacimiento, correo, direccion, SucursalId, CargoId, UsuarioId } = req.body;
-    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !SucursalId || !CargoId || !UsuarioId) {
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !SucursalId || !CargoId || !UsuarioId) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarCargo = await Cargo.findOne({ where: { id: CategoriumId } });
-            if (!buscarCategoria) {
+        var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
+        if (!buscarCargo) {
+            res.send('El id de la categoría no existe');
+        } else {
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
                 res.send('El id de la categoría no existe');
-            }else{
-        await Empleado.create({
-            nombre,
-            apellido,
-            telefono,
-            fechaNacimiento,
-            correo,
-            direccion
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
-            })
+            } else {
+                var buscarUsuario = await Sucursal.findOne({ where: { id: UsuarioId } });
+                if (!buscarUsuario) {
+                    res.send('El id de la categoría no existe');
+                } else {
+                    await Empleado.create({
+                        nombre,
+                        apellido,
+                        telefono,
+                        fechaNacimiento,
+                        correo,
+                        direccion,
+                        CargoId,
+                        SucursalId,
+                        UsuarioId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
+                    })
+                        .catch((er) => {
+                            res.json({ msj: 'Error al guardar el registro' });
+                        })
+                }
+            }
         }
     }
 }
@@ -91,28 +104,46 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { nombre, apellido, telefono, fechaNacimiento, correo, direccion } = req.body;
-    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
         if (!buscarEmpleado) {
             res.send('El id del cliente no existe');
         } else {
-            buscarEmpleado.nombre = nombre;
-            buscarEmpleado.apellido = apellido;
-            buscarEmpleado.telefono = telefono;
-            buscarEmpleado.fechaNacimiento = fechaNacimiento;
-            buscarEmpleado.correo = correo;
-            buscarEmpleado.direccion = direccion;
-            await buscarEmpleado.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
+            if (!buscarCargo) {
+                res.send('El id de la categoría no existe');
+            } else {
+                var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+                if (!buscarSucursal) {
+                    res.send('El id de la categoría no existe');
+                } else {
+                    var buscarUsuario = await Sucursal.findOne({ where: { id: UsuarioId } });
+                    if (!buscarUsuario) {
+                        res.send('El id de la categoría no existe');
+                    } else {
+                        buscarEmpleado.nombre = nombre;
+                        buscarEmpleado.apellido = apellido;
+                        buscarEmpleado.telefono = telefono;
+                        buscarEmpleado.fechaNacimiento = fechaNacimiento;
+                        buscarEmpleado.correo = correo;
+                        buscarEmpleado.direccion = direccion;
+                        buscarEmpleado.SucursalId = SucursalId;
+                        buscarEmpleado.CargoId = CargoId;
+                        buscarEmpleado.UsuarioId = UsuarioId;
+                        await buscarEmpleado.save()
+                            .then((data) => {
+                                console.log(data);
+                                res.send('Actualizado correctamente');
+                            })
+                            .catch((er) => {
+                                console.log(er);
+                                res.send('Error al actualizar');
+                            });
+                    }
+                }
+            }
         }
     }
 }
@@ -124,10 +155,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await Empleado.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {
