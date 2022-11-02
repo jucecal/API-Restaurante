@@ -115,7 +115,6 @@ exports.CrearModelos = () => {
     Compra.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Compra)
 
-
     //RELACION DE MESAS CON FACTURAS
     Mesas.hasMany(Factura)
     Factura.belongsTo(Mesas)
@@ -136,17 +135,20 @@ exports.CrearModelos = () => {
     Empleado.hasMany(Factura)
     Factura.belongsTo(Empleado)
 
-    //RELACION DE CON DETALLE FACTURA
-    Menu.hasMany(DetalleFactura)
-    DetalleFactura.belongsTo(Menu)
-
-    //RELACION DE COMBO CON DETALLE FACTURA
+    //RELACION DE COMBO CON DETALLE DE FACTURA
     Combo.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Combo)
 
-    //RELACION DE FACTURA CON DETALLE FACTURA
+    //RELACION DE FACTURA CON DETALLE DE FACTURA
     Factura.hasMany(DetalleFactura)
-    DetalleFactura.hasMany(Factura)
+    DetalleFactura.belongsTo(Factura)
+
+    //RELACION DE MENU CON DETALLE DE FACTURA
+    Menu.hasMany(DetalleFactura)
+    DetalleFactura.belongsTo(Menu)
+   
+
+   
 
 //################################333
     
