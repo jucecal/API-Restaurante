@@ -1,6 +1,7 @@
 const Mesas = require('../model/Mesas');
+const Sucursal = require('../model/Sucursal');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloMesas = {
@@ -46,24 +47,29 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { capacidad } = req.body;
-        console.log(capacidad);
-        if (!capacidad) {
+        const { capacidad, SucursalId } = req.body;
+        if (!capacidad, !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            await Mesas.create({
-                capacidad
-            }).then(data => {
-                res.json({ msj: 'Registro guardado' });
-            })
-                .catch((er) => {
-                    var errores = '';
-                    er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '. ';
-                    })
-                    res.json({ errores });
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            } else {
+                await Mesas.create({
+                    capacidad,
+                    SucursalId
+                }).then(data => {
+                    res.json({ msj: 'Registro guardado' });
                 })
+                    .catch((er) => {
+                        var errores = '';
+                        er.errors.forEach(element => {
+                            console.log(element.message);
+                            errores += element.message + '. ';
+                        })
+                        res.json({ errores });
+                    })
+            }
         }
     }
 }
@@ -74,20 +80,26 @@ exports.Editar = async (req, res) => {
     if (!capacidad || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarMesa= await Mesas.findOne({ where: { id: id } });
+        var buscarMesa = await Mesas.findOne({ where: { id: id } });
         if (!buscarMesa) {
-            res.send('El id del tipo no existe');
+            res.send('El id de la mesa no existe');
         } else {
-            buscarMesa.capacidad = capacidad;
-            await buscarMesa.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            } else {
+                buscarMesa.capacidad = capacidad;
+                buscarMesa.SucursalId = SucursalId;
+                await buscarMesa.save()
+                    .then((data) => {
+                        console.log(data);
+                        res.send('Actualizado correctamente');
+                    })
+                    .catch((er) => {
+                        console.log(er);
+                        res.send('Error al actualizar');
+                    });
+            }
         }
     }
 }
