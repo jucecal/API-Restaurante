@@ -58,7 +58,7 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCompras = await Compra.findAll({
-        attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],
+        attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],
         include: [
             {model: Sucursal, attributes: [['nombre','Nombre Sucursal']]}
         ]
@@ -74,7 +74,7 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCompra = await Compra.findAll({  
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
             where: {
                 id:id
             },
@@ -94,7 +94,7 @@ exports.buscarFecha = async (req, res) => {
     } else {
         const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
             where: {
                 [Op.and]: {
                     fecha: {
@@ -122,7 +122,7 @@ exports.BuscarPorSucursal = async (req, res) =>{
     else{
         const {nombre} = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['total_pagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
             include: [
                 {model: Sucursal,  attributes: [['nombre','Nombre Sucursal']], where:{nombre:{[Op.like]:nombre} }}
             ]
@@ -140,9 +140,8 @@ exports.Guardar = async (req, res) => {
         res.json({msj: 'errores en los datos enviados'})
     }
     else{
-        const {fecha, total_pagar, SucursalId} = req.body;
-        
-        if(!fecha || !total_pagar || !SucursalId){
+        const { fecha, totalPagar, SucursalId } = req.body;
+        if( !fecha || !totalPagar || !SucursalId ){
             res.json({msj:'Debe enviar los datos completos'})
         }
         else{
@@ -152,7 +151,7 @@ exports.Guardar = async (req, res) => {
             }else{
                 await Compra.create({
                     fecha,
-                    total_pagar,
+                    totalPagar,
                     SucursalId
                 }).then((data)=>{
                     res.json({msj:'Registro guardado'})
@@ -175,8 +174,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { fecha, total_pagar, SucursalId} = req.body;
-    if (!fecha || !total_pagar || !SucursalId || !id) {
+    const { fecha, totalPagar, SucursalId } = req.body;
+    if (!fecha || !totalPagar || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCompra = await Compra.findOne({ where: { id: id } });
@@ -188,9 +187,8 @@ exports.Editar = async (req, res) => {
                 res.send('El id de la sucursal no existe');
             }else{
                 buscarCompra.fecha = fecha;
-                buscarCompra.total_pagar = total_pagar;
+                buscarCompra.totalPagar = totalPagar;
                 buscarCompra.SucursalId = SucursalId;                
-                
                 await buscarCompra.save()
                 .then((data) => {
                     console.log(data);

@@ -69,15 +69,15 @@ exports.Guardar = async (req, res) => {
     } else {
         var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
         if (!buscarCargo) {
-            res.send('El id de la categoría no existe');
+            res.send('El id del cargo no existe');
         } else {
             var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
             if (!buscarSucursal) {
-                res.send('El id de la categoría no existe');
+                res.send('El id de la sucursal no existe');
             } else {
-                var buscarUsuario = await Sucursal.findOne({ where: { id: UsuarioId } });
+                var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
                 if (!buscarUsuario) {
-                    res.send('El id de la categoría no existe');
+                    res.send('El id del usuario no existe');
                 } else {
                     await Empleado.create({
                         nombre,

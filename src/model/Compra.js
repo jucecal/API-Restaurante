@@ -5,18 +5,17 @@ var today = moment();
 const Compra = db.define(
     'Compra',
     {        
-        fecha: 
-        {
+        fecha: {
             type:DataTypes.DATEONLY, 
-            allowNull:false, 
+            allowNull: false, 
             validate:{
                 isDate: true,
                 notEmpty: true,
                 isBefore: today.format('YYYY-MM-DD')
             }
         },
-        totalPagar:
-        {
+
+        totalPagar: {
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate:{

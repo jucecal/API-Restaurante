@@ -1,6 +1,7 @@
 const Clientes = require('../model/Clientes');
+const Usuario = require('../model/Usuario');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloClientes = {
@@ -46,39 +47,45 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion } = req.body;
-        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion) {
+        const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion, UsuarioId } = req.body;
+        if ( !nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion ) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            await Clientes.create({
-                nombres,
-                apellidos,
-                telefono,
-                fechaNacimiento,
-                correo,
-                direccion
-            }).then(data => {
-                res.json({ msj: 'Registro guardado' });
-            })
-                .catch((er) => {
-                    var errores = '';
-                    er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '. ';
-                    })
-                    res.json({ errores });
+            var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
+            if (!buscarUsuario) {
+                res.send('El id del usuario no existe');
+            } else {
+                await Clientes.create({
+                    nombres,
+                    apellidos,
+                    telefono,
+                    fechaNacimiento,
+                    correo,
+                    direccion,
+                    UsuarioId
+                }).then(data => {
+                    res.json({ msj: 'Registro guardado' });
                 })
+                    .catch((er) => {
+                        var errores = '';
+                        er.errors.forEach(element => {
+                            console.log(element.message);
+                            errores += element.message + '. ';
+                        })
+                        res.json({ errores });
+                    })
+            }
         }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion } = req.body;
-    if ( !nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
+    const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion, UsuarioId } = req.body;
+    if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarCliente= await Clientes.findOne({ where: { id: id } });
+        var buscarCliente = await Clientes.findOne({ where: { id: id } });
         if (!buscarCliente) {
             res.send('El id del tipo no existe');
         } else {
@@ -88,6 +95,7 @@ exports.Editar = async (req, res) => {
             buscarCliente.fechaNacimiento = fechaNacimiento;
             buscarCliente.correo = correo;
             buscarCliente.direccion = direccion;
+            buscarCliente.UsuarioId = UsuarioId;
             await buscarCliente.save()
                 .then((data) => {
                     console.log(data);

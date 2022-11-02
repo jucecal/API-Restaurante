@@ -22,14 +22,14 @@ controladorCompra.BuscarPorSucursal);
 
 ruta.post('/guardar', 
 body('fecha').isDate().withMessage('Ingrese una fecha valida'),
-body('total_pagar').isNumeric().withMessage('Solo se aceptan valores numericos para el precio'),
+body('totalPagar').isNumeric().withMessage('Solo se aceptan valores numericos para el precio'),
 body('SucursalId').isInt().withMessage('Solo se aceptan valores enteros para el id de sucursal'),
 controladorCompra.Guardar);
 
 ruta.put('/editar', 
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 body('fecha').isDate().withMessage('Ingrese una fecha valida'),
-body('total_pagar').isNumeric().withMessage('Solo se aceptan valores numericos para el precio'),
+body('totalPagar').isNumeric().withMessage('Solo se aceptan valores numericos para el precio'),
 body('SucursalId').isInt().withMessage('Solo se aceptan valores enteros para el id de sucursal'),
 controladorCompra.Editar);
 
