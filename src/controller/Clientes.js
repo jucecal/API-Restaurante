@@ -48,7 +48,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion, UsuarioId } = req.body;
-        if ( !nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion ) {
+        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
@@ -89,22 +89,27 @@ exports.Editar = async (req, res) => {
         if (!buscarCliente) {
             res.send('El id del tipo no existe');
         } else {
-            buscarCliente.nombres = nombres;
-            buscarCliente.apellidos = apellidos;
-            buscarCliente.telefono = telefono;
-            buscarCliente.fechaNacimiento = fechaNacimiento;
-            buscarCliente.correo = correo;
-            buscarCliente.direccion = direccion;
-            buscarCliente.UsuarioId = UsuarioId;
-            await buscarCliente.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
+            if (!buscarUsuario) {
+                res.send('El id del usuario no existe');
+            } else {
+                buscarCliente.nombres = nombres;
+                buscarCliente.apellidos = apellidos;
+                buscarCliente.telefono = telefono;
+                buscarCliente.fechaNacimiento = fechaNacimiento;
+                buscarCliente.correo = correo;
+                buscarCliente.direccion = direccion;
+                buscarCliente.UsuarioId = UsuarioId;
+                await buscarCliente.save()
+                    .then((data) => {
+                        console.log(data);
+                        res.send('Actualizado correctamente');
+                    })
+                    .catch((er) => {
+                        console.log(er);
+                        res.send('Error al actualizar');
+                    });
+            }
         }
     }
 }
