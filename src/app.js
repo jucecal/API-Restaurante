@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+const path = require('path');
+require('dotenv').config();
 const db = require('./config/db');
 const Modelos = require('./model');
 const app = express();
@@ -36,6 +38,9 @@ app.use('/api/facturas', require('./route/Factura'));
 app.use('/api/proveedor', require('./route/Proveedor'));
 app.use('/api/formaspago', require('./route/FormaPago'));
 app.use('/api/empleados', require('./route/Empleados'));
+
+//RUTA IMAGENES
+app.use('/api/imagenes/', express.static(path.join(__dirname, 'public/img')));
 
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {

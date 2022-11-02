@@ -1,6 +1,20 @@
 const {Router} = require('express');
+const path = require('path');
+const multer = require('multer');
 const controladorMenu = require('../controller/Menu')
 const { body, query} = require('express-validator');
+
+const storageMenu = multer.diskStorage({
+    destination: function (req, file, cb){
+        cb(null, path.join(__dirname, '../public/img/menu'));
+    },
+    filename: function (req, file, cb){
+        const nombreUnico = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + nombreUnico + '-' + file.mimetype.replace('/','.'));
+    }
+});
+const uploadMenu = multer({storage: storageMenu});
+
 const ruta = Router();
 
 ruta.get('/', controladorMenu.Inicio);
@@ -37,5 +51,9 @@ controladorMenu.Editar);
 ruta.delete('/eliminar',
 query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 controladorMenu.Eliminar);
+
+ruta.post('/imagen', 
+uploadMenu.single('img'), 
+controladorMenu.RecibirImagen);
 
 module.exports = ruta;

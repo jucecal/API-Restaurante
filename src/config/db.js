@@ -1,13 +1,13 @@
-const { Sequelize } = require('sequelize')
+
 const sequelize = require('sequelize')
 const db = new sequelize(
-    'restaurante', //NOMBRE DE LA BASE DE DATOS.
-    'root', //USUARIO DE BASE DE DATOS.
-    '', //CONTRASEÑA DE USUARIO.
+    process.env.BASE_NOMBRE,
+    process.env.BASE_USUARIO,
+    process.env.BASE_CONTRASENA,
     {
-        host: 'localhost',
+        host: process.env.BASE_SERVIDOR,
         dialect: 'mysql',
-        port: '3306',
+        port: process.env.BASE_PUERTO,
     }
 )
 module.exports = db

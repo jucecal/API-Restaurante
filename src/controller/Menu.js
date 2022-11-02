@@ -2,7 +2,18 @@ const Menu = require('../model/Menu');
 const Categoria = require('../model/Categoria');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
+const MSJ = require('../components/mensaje');
 const { Op } = require('sequelize');
+
+
+const fs = require('fs');
+const path = require('path');
+var errores = [];
+var data = [];
+var error = {
+    msg: '',
+    parametro: ''
+};
 
 exports.Inicio = (req,res) =>{
     const moduloMenu = {
@@ -58,7 +69,7 @@ exports.Inicio = (req,res) =>{
 
 exports.Listar = async (req, res) =>{
     const listarMenu = await Menu.findAll({
-        attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+        attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['imagen','Imagen Producto'],['CategoriumId', 'Código Categoría']],
         include: [
             {model: Categoria, attributes: [['categoria','Categoría Producto']]}
         ]
@@ -76,7 +87,7 @@ exports.BuscarId = async (req, res) =>{
     else{
         const {id} = req.query;
         const listarMenu = await Menu.findAll({
-            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['imagen','Imagen Producto'],['CategoriumId', 'Código Categoría']],
             where:{  
                 id:id
             },
@@ -98,7 +109,7 @@ exports.BuscarNombre = async (req, res) =>{
     else{
         const {nombre} = req.query;
         const listarMenu = await Menu.findAll({
-            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['imagen','Imagen Producto'],['CategoriumId', 'Código Categoría']],
             where:{
 
                 nombre:{[Op.like]:nombre}                                   
@@ -123,7 +134,7 @@ exports.BuscarPorCategoria = async (req, res) =>{
     else{
         const {nombre} = req.query;
         const listarMenu = await Menu.findAll({
-            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['CategoriumId', 'Código Categoría']],
+            attributes: [['id', 'Código Producto'],['nombre', 'Nombre Producto'],['precio', 'Precio Producto'],['descripcion', 'Descripción Producto'],['imagen','Imagen Producto'],['CategoriumId', 'Código Categoría']],
             include: [
                 {model: Categoria, attributes: [['categoria','Categoría Producto']], where:{Categoria:{[Op.like]:nombre} }}
             ]
@@ -235,4 +246,51 @@ exports.Eliminar = async (req, res) =>{
         })
     }
 
+}
+
+exports.RecibirImagen = async (req, res) => {
+    const { filename } = req.file;
+    const { id } = req.body;
+    //console.log(req);
+    console.log(filename);
+    try {
+        errores=[];
+        data=[];
+        var buscarMenu = await Menu.findOne({ where:{ id }});
+        if(!buscarMenu){
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/menu/' + filename));
+            if(!buscarImagen)
+                console.log('La imagen no existe');
+            else{
+                fs.unlinkSync(path.join(__dirname, '../public/img/menu/' + filename));
+                console.log('Imagen eliminada');
+            }
+            error.msg='El id del producto no existe. Se elimino la imagen enviada';
+            error.parametro='id';
+            errores.push(error);
+            MSJ("Peticion ejecutada correctamente", 200, [], errores, res);
+        }
+        else{
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/menu/' + buscarMenu.imagen));
+            if(!buscarImagen)
+                console.log('No encontro la imagen');
+            else{
+                fs.unlinkSync(path.join(__dirname, '../public/img/menu/' + buscarMenu.imagen));
+                console.log('Imagen eliminada');
+            }
+            buscarMenu.imagen=filename;
+            await buscarMenu.save()
+            .then((data)=>{
+                MSJ('Peticion ejecutada correctamente', 200, data, errores, res);
+            })
+            .catch((error)=>{
+                errores.push(error);
+                MSJ('Peticion ejecutada correctamente', 200, [], errores, res);
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        errores.push(error);
+        MSJ('Error al ejecutar la peticion', 500, [], errores, res);
+    }
 }

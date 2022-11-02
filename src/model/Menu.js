@@ -33,7 +33,13 @@ const Menu = db.define(
                     len:[3,250],
                     notEmpty: true
             } 
-        }            
+        },
+        
+        imagen: 
+        {
+            type: DataTypes.STRING(250), 
+            allowNull: true
+        }
         
     },
     {

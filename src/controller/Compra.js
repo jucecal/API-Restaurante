@@ -2,7 +2,17 @@ const Compra = require('../model/Compra');
 const Sucursal = require('../model/Sucursal');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
+const MSJ = require('../components/mensaje');
 const { Op } = require('sequelize');
+
+const fs = require('fs');
+const path = require('path');
+var errores = [];
+var data = [];
+var error = {
+    msg: '',
+    parametro: ''
+};
 
 exports.Inicio = (req, res) => {
     const moduloCompra = {
@@ -58,7 +68,7 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCompras = await Compra.findAll({
-        attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],
+        attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['imagen','Imagen Comprobante'],['SucursalId', 'Código Sucursal']],
         include: [
             {model: Sucursal, attributes: [['nombre','Nombre Sucursal']]}
         ]
@@ -74,7 +84,7 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCompra = await Compra.findAll({  
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['imagen','Imagen Comprobante'],['SucursalId', 'Código Sucursal']],          
             where: {
                 id:id
             },
@@ -94,7 +104,7 @@ exports.buscarFecha = async (req, res) => {
     } else {
         const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['imagen','Imagen Comprobante'],['SucursalId', 'Código Sucursal']],          
             where: {
                 [Op.and]: {
                     fecha: {
@@ -122,7 +132,7 @@ exports.BuscarPorSucursal = async (req, res) =>{
     else{
         const {nombre} = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['SucursalId', 'Código Sucursal']],          
+            attributes: [['id', 'Código Compra'],['fecha', 'Fecha'],['totalPagar', 'Pago Total'],['imagen','Imagen Comprobante'],['SucursalId', 'Código Sucursal']],          
             include: [
                 {model: Sucursal,  attributes: [['nombre','Nombre Sucursal']], where:{nombre:{[Op.like]:nombre} }}
             ]
@@ -221,5 +231,52 @@ exports.Eliminar = async (req, res) => {
                 console.log(er);
                 res.send('Error al eliminar');
             })
+    }
+}
+
+exports.RecibirImagen = async (req, res) => {
+    const { filename } = req.file;
+    const { id } = req.body;
+    //console.log(req);
+    console.log(filename);
+    try {
+        errores=[];
+        data=[];
+        var buscarCompra = await Compra.findOne({ where:{ id }});
+        if(!buscarCompra){
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/compras/' + filename));
+            if(!buscarImagen)
+                console.log('La imagen no existe');
+            else{
+                fs.unlinkSync(path.join(__dirname, '../public/img/compras/' + filename));
+                console.log('Imagen eliminada');
+            }
+            error.msg='El id de la compra no existe. Se elimino la imagen enviada';
+            error.parametro='id';
+            errores.push(error);
+            MSJ("Peticion ejecutada correctamente", 200, [], errores, res);
+        }
+        else{
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/compras/' + buscarCompra.imagen));
+            if(!buscarImagen)
+                console.log('No encontro la imagen');
+            else{
+                fs.unlinkSync(path.join(__dirname, '../public/img/compras/' + buscarCompra.imagen));
+                console.log('Imagen eliminada');
+            }
+            buscarCompra.imagen=filename;
+            await buscarCompra.save()
+            .then((data)=>{
+                MSJ('Peticion ejecutada correctamente', 200, data, errores, res);
+            })
+            .catch((error)=>{
+                errores.push(error);
+                MSJ('Peticion ejecutada correctamente', 200, [], errores, res);
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        errores.push(error);
+        MSJ('Error al ejecutar la peticion', 500, [], errores, res);
     }
 }

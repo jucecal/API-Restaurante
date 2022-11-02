@@ -22,6 +22,11 @@ const Compra = db.define(
                 isDecimal: true, 
                 min: 1     
             }
+        },
+
+        imagen: {
+            type: DataTypes.STRING(250), 
+            allowNull: true
         }
                  
         
