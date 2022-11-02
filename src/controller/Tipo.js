@@ -1,6 +1,6 @@
 const Tipo = require('../model/Tipo');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloTipo = {
@@ -53,7 +53,7 @@ exports.Guardar = async (req, res) => {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Tipo.create({
-                tipo:tipo
+                tipo: tipo
 
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
@@ -76,7 +76,7 @@ exports.Editar = async (req, res) => {
     if (!tipo || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarTipo= await Tipo.findOne({ where: { id: id } });
+        var buscarTipo = await Tipo.findOne({ where: { id: id } });
         if (!buscarTipo) {
             res.send('El id del tipo no existe');
         } else {

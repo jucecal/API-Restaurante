@@ -90,7 +90,7 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const {ComboId, MenuId } = req.body;
+    const { ComboId, MenuId } = req.body;
     if (!ComboId || !MenuId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {

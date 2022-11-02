@@ -1,6 +1,6 @@
 const Usuario = require('../model/Usuario');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloUsuario = {
@@ -80,7 +80,7 @@ exports.Editar = async (req, res) => {
     if (!nombre || !correo || !password || !tipo || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarUsuario= await Usuario.findOne({ where: { id: id } });
+        var buscarUsuario = await Usuario.findOne({ where: { id: id } });
         if (!buscarUsuario) {
             res.send('El id del usuario no existe');
         } else {

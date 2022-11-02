@@ -3,9 +3,9 @@ const db = require('../config/db');
 const Inventario = db.define(
     'Inventario',
     {
-        stock:{ 
-        type: DataTypes.INTEGER, 
-        allowNull: false 
+        stock: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },
     {

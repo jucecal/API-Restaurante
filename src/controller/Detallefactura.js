@@ -94,7 +94,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { cantidad, subTotal, estado, FacturaId, ComboId, MenuId } = req.body;
-    if ( !cantidad || !subTotal || !estado || !FacturaId || !id ) {
+    if (!cantidad || !subTotal || !estado || !FacturaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarDetallefactura = await Tipo.findOne({ where: { id: id } });

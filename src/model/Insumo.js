@@ -5,39 +5,38 @@ var today = moment();
 const Insumos = db.define(
     'Insumos',
     {
-        nombre:{ 
-            type: DataTypes.STRING(50), 
-            allowNull: false 
+        nombre: {
+            type: DataTypes.STRING(50),
+            allowNull: false
         },
 
-        marca:{ 
-            type: DataTypes.STRING(50), 
-            allowNull: false 
+        marca: {
+            type: DataTypes.STRING(50),
+            allowNull: false
         },
 
         //TIPO DE FECHA
         //DE Vencimiento  == DD/MM/AAAA
-        fechaVencimiento:{ 
-            type:DataTypes.DATEONLY, 
-            allowNull: true, 
-            validate:{
+        fechaVencimiento: {
+            type: DataTypes.DATEONLY,
+            allowNull: true,
+            validate: {
                 isDate: true,
                 notEmpty: true,
                 isBefore: today.format('YYYY-MM-DD')
             }
         },
 
-        precioUnitario:
-        {
+        precioUnitario: {
             type: DataTypes.DOUBLE,
             allowNull: false,
-            validate:{
-                isDecimal: true, 
-                min: 1     
+            validate: {
+                isDecimal: true,
+                min: 1
             }
         },
 
-       
+
     },
     {
         tableName: 'Insumos',

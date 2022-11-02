@@ -1,7 +1,7 @@
 const Cargo = require('../model/Cargo');
-const {validationResult, body} = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const { Op } = require('sequelize');
-exports.Inicio = (req,res) =>{
+exports.Inicio = (req, res) => {
     const moduloCargo = {
         modulo: 'cargos',
         descripcion: 'Gestiona las operaciones con el modelo de cargo',
@@ -47,135 +47,135 @@ exports.Inicio = (req,res) =>{
     res.json(moduloCargo);
 }
 
-exports.Listar = async (req, res) =>{
+exports.Listar = async (req, res) => {
     const listarCargo = await Cargo.findAll({
-        attributes:[['id','Código Cargo'],['nombre','Nombre Cargo']]
+        attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']]
     });
     res.json(listarCargo);
 }
 
-exports.BuscarId = async (req, res) =>{
+exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validacion.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
+        res.json({ msj: 'errores en los datos enviados' })
     }
-    else{
-        const {id} = req.query;
+    else {
+        const { id } = req.query;
         const listarCargos = await Cargo.findAll({
-            attributes:[['id','Código Cargo'],['nombre','Nombre Cargo']],
-            where:{
-                id:id
+            attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']],
+            where: {
+                id: id
             }
         });
         res.json(listarCargos);
     }
-    
+
 }
 
-exports.BuscarNombre = async (req, res) =>{
+exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validacion.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
+        res.json({ msj: 'errores en los datos enviados' })
     }
-    else{
-        const {nombre} = req.query;
+    else {
+        const { nombre } = req.query;
         const listarCargos = await Cargo.findAll({
-            attributes:[['id','Código Cargo'],['nombre','Nombre Cargo']],
-            where:{
+            attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']],
+            where: {
 
-                nombre:{[Op.like]:nombre}                                   
-                
+                nombre: { [Op.like]: nombre }
+
             }
 
         });
         res.json(listarCargos);
     }
-    
+
 }
 
-exports.Guardar = async (req, res) =>{
+exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validacion.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
+        res.json({ msj: 'errores en los datos enviados' })
     }
-    else{
-        const {nombre} = req.body;
-        
-        if(!nombre){
-            res.json({msj:'Debe enviar el nombre del cargo'})
+    else {
+        const { nombre } = req.body;
+
+        if (!nombre) {
+            res.json({ msj: 'Debe enviar el nombre del cargo' })
         }
-        else{
+        else {
             await Cargo.create({
                 nombre: nombre
-            }).then((data)=>{
-                res.json({msj:'Registro guardado'})
+            }).then((data) => {
+                res.json({ msj: 'Registro guardado' })
             })
-            .catch((er)=>{
-                var errores = '';
-                er.errors.forEach(element => {
-                    console.log(element.message)
-                    errores += element.message + '. ';
+                .catch((er) => {
+                    var errores = '';
+                    er.errors.forEach(element => {
+                        console.log(element.message)
+                        errores += element.message + '. ';
+                    });
+                    res.json({ errores });
+
                 });
-                res.json({errores});
-                
-            });
-            
+
         }
     }
-    
+
 }
 
-exports.Editar = async (req, res) =>{
+exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const {nombre} = req.body;
-    
-    if(!nombre || !id){
-        res.json({msj:'Debe enviar los datos completos'});
+    const { nombre } = req.body;
+
+    if (!nombre || !id) {
+        res.json({ msj: 'Debe enviar los datos completos' });
     }
-    else{
-        var buscarCargo = await Cargo.findOne({ where: {id: id}});
-        if(!buscarCargo){
+    else {
+        var buscarCargo = await Cargo.findOne({ where: { id: id } });
+        if (!buscarCargo) {
             res.send('El id del cargo no existe');
         }
-        else{
+        else {
             buscarCargo.nombre = nombre;
             await buscarCargo.save()
-            .then((data)=>{
-                console.log(data);
-                res.send('Se modificó correctamente')
-            })
-            .catch((er)=>{
-                console.log(er);
-                res.send('Error al guardar los cambios');
-            });
+                .then((data) => {
+                    console.log(data);
+                    res.send('Se modificó correctamente')
+                })
+                .catch((er) => {
+                    console.log(er);
+                    res.send('Error al guardar los cambios');
+                });
         }
-        
+
     }
 }
 
-exports.Eliminar = async (req, res) =>{
+exports.Eliminar = async (req, res) => {
     const { id } = req.query;
-       
-    if(!id){
-        res.json({msj:'Debe enviar el id'});
+
+    if (!id) {
+        res.json({ msj: 'Debe enviar el id' });
     }
-    else{
-        await Cargo.destroy({where:{id:id}})
-        .then((data)=>{
-            if(data == 0){
-                res.send('El id no existe')
-            }
-            else{
-                res.send('Registros eliminados ' + data)
-            }
-            
-        })
-        .catch((er)=>{
-            res.send('Error al eliminar el registro');
-        })
+    else {
+        await Cargo.destroy({ where: { id: id } })
+            .then((data) => {
+                if (data == 0) {
+                    res.send('El id no existe')
+                }
+                else {
+                    res.send('Registros eliminados ' + data)
+                }
+
+            })
+            .catch((er) => {
+                res.send('Error al eliminar el registro');
+            })
     }
 
 }

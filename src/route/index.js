@@ -3,4 +3,4 @@ const controladorInicio = require('../controller/Inicio');
 const ruta = Router();
 ruta.get('/', controladorInicio.Inicio);
 
-module.exports=ruta;
+module.exports = ruta;

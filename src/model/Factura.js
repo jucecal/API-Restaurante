@@ -5,38 +5,33 @@ var today = moment();
 const Factura = db.define(
     'Factura',
     {
-        fecha:
-        {
-            type:DataTypes.DATEONLY, 
-            allowNull:false, 
-            validate:{
+        fecha: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            validate: {
                 isDate: true,
                 notEmpty: true,
                 isBefore: today.format('YYYY-MM-DD')
             }
         },
 
-        ISV:
-        {
-            type: DataTypes.DOUBLE, 
+        ISV: {
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
 
-        totalPagar:
-        {
-            type: DataTypes.DOUBLE, 
+        totalPagar: {
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
 
-        efectivo:
-        {
-            type: DataTypes.DOUBLE, 
+        efectivo: {
+            type: DataTypes.DOUBLE,
             allowNull: false
         },
 
-        cambio:
-        {
-            type: DataTypes.DOUBLE, 
+        cambio: {
+            type: DataTypes.DOUBLE,
             allowNull: true
         }
     },

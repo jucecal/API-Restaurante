@@ -61,7 +61,7 @@ exports.buscarId = async (req, res) => {
 exports.Guardar = async (req, res) => {
     console.log(req);
     const { combo, precio } = req.body;
-    if (!combo || !precio ) {
+    if (!combo || !precio) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         await Combo.create({
@@ -78,8 +78,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { combo, precio} = req.body;
-    if (!combo || !precio  || !id) {
+    const { combo, precio } = req.body;
+    if (!combo || !precio || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCombo = await Combo.findOne({ where: { id: id } });
@@ -108,10 +108,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await Combo.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {

@@ -5,44 +5,38 @@ var today = moment();
 const Empleado = db.define(
     'Empleado',
     {
-        nombre:
-        {
+        nombre: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
 
-        apellido:
-        {
+        apellido: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
 
-        
-        telefono:
-        {
+
+        telefono: {
             type: DataTypes.STRING(20),
             allowNull: false
         },
 
-        fechaNacimiento:
-        {
-            type:DataTypes.DATEONLY, 
-            allowNull: false, 
-            validate:{
+        fechaNacimiento: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            validate: {
                 isDate: true,
                 notEmpty: true,
                 isBefore: today.format('YYYY-MM-DD')
             }
         },
 
-        correo:
-        {
+        correo: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
 
-        direccion:
-        {
+        direccion: {
             type: DataTypes.STRING(50),
             allowNull: false
         }

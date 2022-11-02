@@ -3,24 +3,21 @@ const db = require('../config/db');
 const Proveedor = db.define(
     'Proveedor',
     {
-        proveedor:
-        {
+        proveedor: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
 
-        nombreContacto:
-        {
+        nombreContacto: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        
-        telefono:
-        {
+
+        telefono: {
             type: DataTypes.STRING(20),
             allowNull: false
         },
-      
+
     },
     {
         tableName: 'proveedores',

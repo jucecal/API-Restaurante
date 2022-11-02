@@ -103,10 +103,6 @@ exports.CrearModelos = () => {
     Sucursal.hasMany(Compra);
     Compra.belongsTo(Sucursal);
 
-    //RELACION DE SUCURSAL CON DETALLE COMPRA
-    Sucursal.hasMany(DetalleCompra)
-    DetalleCompra.belongsTo(Sucursal)
-
     //RELACION DE INSUMOS CON DETALLE COMPRA
     Insumo.hasMany(DetalleCompra)
     DetalleCompra.belongsTo(Insumo)
@@ -146,10 +142,10 @@ exports.CrearModelos = () => {
     //RELACION DE MENU CON DETALLE DE FACTURA
     Menu.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Menu)
-   
 
-//######################################################
-//======================================================
+
+    //######################################################
+    //======================================================
     //CREACIÓN DE LOS MODELOS EN LA BASE DE DATOS
     //===========================================
     //-----------MODELO USUARIO-------------
@@ -181,8 +177,8 @@ exports.CrearModelos = () => {
             console.log(error);
         })
 
-     //----------MODELO CATEGORIA--------------
-     Categoria.sync().then(() => {
+    //----------MODELO CATEGORIA--------------
+    Categoria.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -191,7 +187,7 @@ exports.CrearModelos = () => {
         })
 
 
-   //-----------MODELO COMBO-------------
+    //-----------MODELO COMBO-------------
     Combo.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -199,7 +195,7 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
- 
+
 
     //----modelo de Menu-----
     Menu.sync().then(() => {
@@ -211,8 +207,8 @@ exports.CrearModelos = () => {
         })
 
 
-     //------------MODELO PLATO COMBO------------
-     PlatoCombo.sync().then(() => {
+    //------------MODELO PLATO COMBO------------
+    PlatoCombo.sync().then(() => {
 
         console.log('Modelo creado correctamente');
     })
@@ -274,8 +270,8 @@ exports.CrearModelos = () => {
         })
 
 
-     //-----------MODELO RESERVACIONES-------------
-     Reservaciones.sync().then(() => {
+    //-----------MODELO RESERVACIONES-------------
+    Reservaciones.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
         .catch((error) => {
@@ -328,7 +324,7 @@ exports.CrearModelos = () => {
         })
 
 
-        //----Modelo de Compra-----
+    //----Modelo de Compra-----
     Compra.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
@@ -336,7 +332,7 @@ exports.CrearModelos = () => {
             console.log('Error al crear el modelo');
             console.log(error);
         })
-    
+
 
     //-----------MODELO DETALLE COMPRA-------------
     DetalleCompra.sync().then(() => {
@@ -353,7 +349,7 @@ exports.CrearModelos = () => {
     Factura.sync().then(() => {
         console.log('Modelo creado correctamente');
     })
-    
+
         .catch((error) => {
             console.log('Error al crear el modelo');
             console.log(error);

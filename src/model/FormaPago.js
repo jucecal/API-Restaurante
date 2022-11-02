@@ -4,12 +4,11 @@ const FormaPago = db.define(
     'FormaPago',
     {
 
-        formaPago:
-        {
+        formaPago: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        
+
     },
     {
         tableName: 'Forma_Pago',

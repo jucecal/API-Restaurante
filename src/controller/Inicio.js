@@ -1,3 +1,3 @@
-exports.Inicio = (req, res) =>{
+exports.Inicio = (req, res) => {
     res.send('Estoy en el controlador');
 }

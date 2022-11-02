@@ -62,7 +62,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { formaPago } = req.body;
-    if ( !formaPago  || !id) {
+    if (!formaPago || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarFormaPago = await FormaPago.findOne({ where: { id: id } });
@@ -90,10 +90,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await FormaPago.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {

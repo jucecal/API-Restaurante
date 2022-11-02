@@ -66,7 +66,7 @@ exports.buscarNombre = async (req, res) => {
     } else {
         const { nombre } = req.query;
         const listarSucursal = await Sucursal.findAll({
-            attributes:['nombre', 'ubicacion', 'telefono'],
+            attributes: ['nombre', 'ubicacion', 'telefono'],
             where: {
                 [Op.and]: {
                     nombre: {
@@ -101,7 +101,7 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, ubicacion, telefono} = req.body;
+    const { nombre, ubicacion, telefono } = req.body;
     if (!nombre || !ubicacion || !telefono || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -132,10 +132,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await Sucursal.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {

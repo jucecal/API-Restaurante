@@ -3,8 +3,8 @@ const db = require('../config/db');
 const ProductoPlato = db.define(
     'ProductoPlato',
     {
-        cantidad:{
-            type: DataTypes.INTEGER, 
+        cantidad: {
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     },

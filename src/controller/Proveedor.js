@@ -60,7 +60,7 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { proveedor,  nombreContacto, telefono } = req.body;
+    const { proveedor, nombreContacto, telefono } = req.body;
     if (!Proveedor || !nombreContacto || !telefono) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -79,8 +79,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { proveedor,  nombreContacto, telefono } = req.body;
-    if ( !proveedor || !nombreContacto || !telefono || !id) {
+    const { proveedor, nombreContacto, telefono } = req.body;
+    if (!proveedor || !nombreContacto || !telefono || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarProveedor = await Proveedor.findOne({ where: { id: id } });
@@ -110,10 +110,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await Proveedor.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {
