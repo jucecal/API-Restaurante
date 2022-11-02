@@ -24,7 +24,7 @@ const Inventario = require("./Inventario");
 const ProductoPlato = require("./ProductoPlato");
 
 const PlatoCombo = require("./PlatoCombo");
-const { INET } = require("sequelize");
+//const { INET } = require("sequelize");
 
 
 exports.CrearModelos = () => {

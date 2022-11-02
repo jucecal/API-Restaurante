@@ -2,6 +2,9 @@ const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
 const Empleado = require('../model/Empleados');
+const Sucursal = require('../model/Sucursal');
+const Cargo = require('../model/Cargo');
+const Usuario = require('../model/Usuario');
 
 exports.Inicio = (req, res) => {
     const moduloEmpleado = {
@@ -60,8 +63,8 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion } = req.body;
-    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion) {
+    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+    if ( !nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !SucursalId || !CargoId || !UsuarioId) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCargo = await Cargo.findOne({ where: { id: CategoriumId } });

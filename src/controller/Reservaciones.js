@@ -54,25 +54,29 @@ exports.Guardar = async (req, res) => {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarCliente = await Clientes.findOne({ where: { id: ClienteId } });
-            var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
-            if (!buscarCliente || !buscarMesa) {
-                res.send('El id del cliente o mesa no existe');
+            if (!buscarCliente) {
+                res.send('El id del cliente no existe');
             } else {
-                await Reservaciones.create({
-                    fechaHora,
-                    ClienteId,
-                    MesaId
-                }).then(data => {
-                    res.json({ msj: 'Registro guardado' });
-                })
-                    .catch((er) => {
-                        var errores = '';
-                        er.errors.forEach(element => {
-                            console.log(element.message);
-                            errores += element.message + '. ';
-                        })
-                        res.json({ errores });
+                var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
+                if (!buscarMesa) {
+                    res.send('El id de la mesa no existe');
+                } else {
+                    await Reservaciones.create({
+                        fechaHora,
+                        ClienteId,
+                        MesaId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
                     })
+                        .catch((er) => {
+                            var errores = '';
+                            er.errors.forEach(element => {
+                                console.log(element.message);
+                                errores += element.message + '. ';
+                            })
+                            res.json({ errores });
+                        })
+                }
             }
         }
     }
@@ -81,7 +85,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { fechaHora, ClienteId, MesaId } = req.body;
-    if ( !fechaHora || !ClienteId || !MesaId || !id) {
+    if (!fechaHora || !ClienteId || !MesaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarReservacion = await Reservaciones.findOne({ where: { id: id } });
@@ -89,22 +93,26 @@ exports.Editar = async (req, res) => {
             res.send('El id de la reservación no existe');
         } else {
             var buscarCliente = await Clientes.findOne({ where: { id: ClienteId } });
-            var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
-            if (!buscarCliente || !buscarMesa) {
-                res.send('El id del cliente o mesa no existe');
+            if (!buscarCliente) {
+                res.send('El id del cliente no existe');
             } else {
-                buscarReservacion.fechaHora = fechaHora;
-                buscarReservacion.ClienteId = ClienteId;
-                buscarReservacion.MesaId = MesaId
-                await buscarReservacion.save()
-                    .then((data) => {
-                        console.log(data);
-                        res.send('Actualizado correctamente');
-                    })
-                    .catch((er) => {
-                        console.log(er);
-                        res.send('Error al actualizar');
-                    });
+                var buscarMesa = await Mesas.findOne({ where: { id: MesaId } });
+                if (!buscarMesa) {
+                    res.send('El id de la mesa no existe');
+                } else {
+                    buscarReservacion.fechaHora = fechaHora;
+                    buscarReservacion.ClienteId = ClienteId;
+                    buscarReservacion.MesaId = MesaId
+                    await buscarReservacion.save()
+                        .then((data) => {
+                            console.log(data);
+                            res.send('Actualizado correctamente');
+                        })
+                        .catch((er) => {
+                            console.log(er);
+                            res.send('Error al actualizar');
+                        });
+                }
             }
         }
     }
