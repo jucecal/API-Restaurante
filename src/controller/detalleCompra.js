@@ -1,6 +1,5 @@
 const DetalleCompra = require('../model/DetalleCompra');
-const Sucursal = require('../model/Sucursal');
-const Insumo = require('../model/Insumo');
+const Insumos = require('../model/Insumo');
 const Compra = require('../model/Compra');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
@@ -40,7 +39,12 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarDetalleCompra = await DetalleCompra.findAll();
+    const listarDetalleCompra = await DetalleCompra.findAll({
+        attributes: [['cantidad', 'Cantidad'], ['subTotal', 'SubTotal'], ['observaciones', 'Observaciones'], ['InsumoId', 'ID Producto'], ['CompraId', 'Orden de Compra']],
+        include: [{ 
+            model: Insumos, attributes: [['nombre', 'Producto'], ['precioUnitario', 'Precio']]
+        }]
+    });
     res.json(listarDetalleCompra);
 }
 

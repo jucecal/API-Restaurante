@@ -38,7 +38,9 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarCombo = await Combo.findAll();
+    const listarCombo = await Combo.findAll({
+        attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']]
+    });
     res.json(listarCombo);
 }
 
@@ -49,10 +51,31 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarCombo = await Combo.findAll({
+        const listarCombo = await Combo.findOne({
+            attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']],
             where: {
                 id
             }
+        });
+        res.json(listarCombo);
+    }
+}
+
+exports.BuscarCombo = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { combo } = req.query;
+        const listarCombo = await Combo.findOne({
+            attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']],
+            where: {
+                combo: { 
+                    [Op.like]: combo 
+                }
+            },
         });
         res.json(listarCombo);
     }

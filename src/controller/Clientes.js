@@ -1,6 +1,7 @@
 const Clientes = require('../model/Clientes');
 const Usuario = require('../model/Usuario');
 const { validationResult } = require('express-validator');
+const { Op } = require('sequelize');
 const { request } = require('express');
 
 exports.Inicio = (req, res) => {
@@ -37,8 +38,57 @@ exports.Inicio = (req, res) => {
     res.json(moduloClientes);
 }
 exports.Listar = async (req, res) => {
-    const listarClientes = await Clientes.findAll();
+    const listarClientes = await Clientes.findAll({
+        attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+        include: [
+            { model: Usuario, attributes: [['nombre', 'Nombre de Usuario']] }
+        ]
+    });
     res.json(listarClientes);
+}
+
+exports.BuscarId = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { id } = req.query;
+        const listarClientes = await Clientes.findAll({
+            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+            where: {
+                id: id
+            },
+            include: [
+                { model: Usuario, attributes: [['nombre', 'Nombre de Usuario']] }
+            ]
+        });
+        res.json(listarClientes);
+    }
+}
+
+exports.BuscarNombre = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombres } = req.query;
+        const listarClientes = await Clientes.findAll({
+            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+            where: {
+                nombres: {
+                    [Op.like]: nombres
+                }
+            },
+            include: [
+                { model: Usuario, attributes: [['nombre', 'Nombre de Usuario']] }
+            ]
+        });
+        res.json(listarClientes);
+    }
 }
 
 exports.Guardar = async (req, res) => {

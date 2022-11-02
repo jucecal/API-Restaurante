@@ -12,6 +12,9 @@ ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorCategoria.buscarId);
 
+ruta.get('/buscarCategoria',
+    controladorCategoria.BuscarCategoria);
+
 ruta.post('/guardar',
     body('categoria').isLength({ min: 3, max: 50 }).withMessage('Debe escribir la categoria con una longitud de 3 - 50 caracteres'),
     controladorCategoria.Guardar);
@@ -24,4 +27,5 @@ ruta.put('/editar',
 ruta.delete('/eliminar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorCategoria.Eliminar);
+    
 module.exports = ruta;

@@ -39,10 +39,11 @@ exports.Inicio = (req, res) => {
 
 
 exports.Listar = async (req, res) => {
-    const listarCategoria = await Categoria.findAll();
+    const listarCategoria = await Categoria.findAll({
+        attributes: [['id', 'Código Categoria'], ['categoria', 'Nombre Categoria']]
+    });
     res.json(listarCategoria);
 }
-
 
 exports.buscarId = async (req, res) => {
     const validacion = validationResult(req);
@@ -52,14 +53,32 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCategoria = await Categoria.findAll({
+            attributes: [['id', 'Código Categoria'], ['categoria', 'Nombre Categoria']],
             where: {
-                id
+                id: id
             }
         });
         res.json(listarCategoria);
     }
 }
 
+exports.BuscarCategoria = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { categoria } = req.query;
+        const listarCategoria = await Categoria.findAll({
+            attributes: [['id', 'Código Categoria'], ['categoria', 'Nombre Categoria']],
+            where: {
+                categoria: { [Op.like]: categoria }
+            },
+        });
+        res.json(listarCategoria);
+    }
+}
 
 exports.Guardar = async (req, res) => {
     console.log(req);

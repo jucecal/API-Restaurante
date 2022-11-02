@@ -70,7 +70,7 @@ exports.Guardar = async (req, res) => {
         if (!buscarProveedor) {
             res.send('El id del proveedor no existe');
         } else {
-            var buscarTipo = await Tipo.findOne({ where: { id: Tipo } });
+            var buscarTipo = await Tipo.findOne({ where: { id: TipoId } });
             if (!buscarTipo) {
                 res.send('El id del tipo de producto no existe');
             } else {

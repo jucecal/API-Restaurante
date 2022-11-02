@@ -24,7 +24,7 @@ app.use('/api/compras', require('./route/Compra'));
 app.use('/api/pxcombo', require('./route/PlatoCombo'));
 
 app.use('/api/tipos', require('./route/Tipo'));
-app.use('/api/detallefacturas', require('./route/DetalleFactura'));
+app.use('/api/detallefactura', require('./route/DetalleFactura'));
 app.use('/api/usuarios', require('./route/Usuario'));
 app.use('/api/cargos', require('./route/Cargo'));
 
