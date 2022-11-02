@@ -8,17 +8,22 @@ ruta.get('/', controladorPxCombo.Inicio);
 ruta.get('/listar', controladorPxCombo.Listar);
 
 ruta.get('/buscarId', 
-query('idcombo').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-query('idplato').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('MenuId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 controladorPxCombo.buscarId);
 
 ruta.post('/guardar', 
-query('idcombo').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-query('idplato').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('MenuId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 controladorPxCombo.Guardar);
 
+ruta.post('/editar', 
+query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('MenuId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+controladorPxCombo.Editar);
+
 ruta.delete('/eliminar', 
-query('idcombo').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-query('idplato').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
 controladorPxCombo.Eliminar);
+
 module.exports=ruta;

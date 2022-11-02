@@ -1,4 +1,6 @@
 const Insumo = require('../model/Insumo');
+const Tipo = require('../model/Tipo');
+const Proveedor = require('../model/Proveedor');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
@@ -60,47 +62,71 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { nombre, marca, fechaVencimiento, precioUnitario } = req.body;
-    if (!nombre || !marca || !fechaVencimiento || !precioUnitario) {
+    const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
+    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !TipoId || !ProveedorId) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        await Insumo.create({
-            nombre,
-            marca,
-            fechaVencimiento,
-            precioUnitario
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
-            })
+        var buscarProveedor = await Proveedor.findOne({ where: { id: ProveedorId } });
+        if (!buscarProveedor) {
+            res.send('El id del proveedor no existe');
+        } else {
+            var buscarTipo = await Tipo.findOne({ where: { id: Tipo } });
+            if (!buscarTipo) {
+                res.send('El id del tipo de producto no existe');
+            } else {
+                await Insumo.create({
+                    nombre,
+                    marca,
+                    fechaVencimiento,
+                    precioUnitario,
+                    TipoId,
+                    ProveedorId
+                }).then(data => {
+                    res.json({ msj: 'Registro guardado' });
+                })
+                    .catch((er) => {
+                        res.json({ msj: 'Error al guardar el registro' });
+                    })
+            }
+        }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, marca, fechaVencimiento, precioUnitario} = req.body;
-    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !id) {
+    const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
+    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !ProveedorId || TipoId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarInsumo = await Insumo.findOne({ where: { id: id } });
         if (!buscarInsumo) {
             res.send('El id del insumo no existe');
         } else {
-            buscarInsumo.nombre = nombre;
-            buscarInsumo.marca = marca;
-            buscarInsumo.fechaVencimiento = fechaVencimiento;
-            buscarInsumo.precioUnitario = precioUnitario;
-            await buscarInsumo.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarProveedor = await Proveedor.findOne({ where: { id: ProveedorId } });
+            if (!buscarProveedor) {
+                res.send('El id del proveedor no existe');
+            } else {
+                var buscarTipo = await Tipo.findOne({ where: { id: Tipo } });
+                if (!buscarTipo) {
+                    res.send('El id del tipo de producto no existe');
+                } else {
+                    buscarInsumo.nombre = nombre;
+                    buscarInsumo.marca = marca;
+                    buscarInsumo.fechaVencimiento = fechaVencimiento;
+                    buscarInsumo.precioUnitario = precioUnitario;
+                    buscarInsumo.TipoId = TipoId;
+                    buscarInsumo.ProveedorId = ProveedorId;
+                    await buscarInsumo.save()
+                        .then((data) => {
+                            console.log(data);
+                            res.send('Actualizado correctamente');
+                        })
+                        .catch((er) => {
+                            console.log(er);
+                            res.send('Error al actualizar');
+                        });
+                }
+            }
         }
     }
 }
@@ -112,10 +138,10 @@ exports.Eliminar = async (req, res) => {
     } else {
         await Insumo.destroy({ where: { id: id } })
             .then((data) => {
-                if(data==0){
+                if (data == 0) {
                     res.send('El id no existe');
                 } else {
-                res.send('Registros eliminados: ' + data);
+                    res.send('Registros eliminados: ' + data);
                 }
             })
             .catch((er) => {

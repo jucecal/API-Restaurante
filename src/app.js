@@ -7,7 +7,6 @@ const Modelos = require('./model');
 const app = express();
 
 app.set('port', 3001);
-//app.use(morgan("dev"));
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -38,6 +37,8 @@ app.use('/api/facturas', require('./route/Factura'));
 app.use('/api/proveedor', require('./route/Proveedor'));
 app.use('/api/formaspago', require('./route/FormaPago'));
 app.use('/api/empleados', require('./route/Empleados'));
+
+app.use('/api/prodplato', require('./route/ProductoPlato'));
 
 //RUTA IMAGENES
 app.use('/api/imagenes/', express.static(path.join(__dirname, 'public/img')));

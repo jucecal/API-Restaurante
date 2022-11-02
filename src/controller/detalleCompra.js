@@ -1,6 +1,9 @@
-const detalleCompra = require('../model/DetalleCompra');
+const DetalleCompra = require('../model/DetalleCompra');
+const Sucursal = require('../model/Sucursal');
+const Insumo = require('../model/Insumo');
+const Compra = require('../model/Compra');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloDetalleCompra = {
@@ -37,7 +40,7 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarDetalleCompra = await detalleCompra.findAll();
+    const listarDetalleCompra = await DetalleCompra.findAll();
     res.json(listarDetalleCompra);
 }
 
@@ -47,51 +50,87 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { cantidad, observaciones, subtotal } = req.body;
-        console.log(cantidad);
-        if (!cantidad || !observaciones || !subtotal) {
+        const { cantidad, observaciones, subTotal, CompraId, InsumoId, SucursalId } = req.body;
+        if (!cantidad || !observaciones || !subTotal || !CompraId || !InsumoId || !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            await detalleCompra.create({
-                cantidad: cantidad,
-                subtotal: subtotal,
-                observaciones: observaciones
-
-            }).then(data => {
-                res.json({ msj: 'Registro guardado' });
-            })
-                .catch((er) => {
-                    var errores = '';
-                    er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '. ';
-                    })
-                    res.json({ errores });
-                })
+            var buscarCompra = await Compra.findOne({ where: { id: CompraId } });
+            if (!buscarCompra) {
+                res.send('El id de la compra no existe');
+            } else {
+                var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
+                if (!buscarInsumo) {
+                    res.send('El id del insumo no existe');
+                } else {
+                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+                    if (!buscarSucursal) {
+                        res.send('El id de la sucursal no existe');
+                    } else {
+                        await DetalleCompra.create({
+                            cantidad,
+                            subTotal,
+                            observaciones,
+                            CompraId,
+                            InsumoId,
+                            SucursalId
+                        }).then(data => {
+                            res.json({ msj: 'Registro guardado' });
+                        })
+                            .catch((er) => {
+                                var errores = '';
+                                er.errors.forEach(element => {
+                                    console.log(element.message);
+                                    errores += element.message + '. ';
+                                })
+                                res.json({ errores });
+                            })
+                    }
+                }
+            }
         }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { cantidad, observaciones, subtotal } = req.body;
-    if (!cantidad || !observaciones || !subtotal || !id) {
+    const { cantidad, observaciones, subTotal, CompraId, InsumoId, SucursalId } = req.body;
+    if (!cantidad || !observaciones || !subTotal || !CompraId || !InsumoId || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarDetalleCompra= await Tipo.findOne({ where: { id: id } });
+        var buscarDetalleCompra = await DetalleCompra.findOne({ where: { id: id } });
         if (!buscarDetalleCompra) {
             res.send('El id del tipo no existe');
         } else {
-            buscarDetalleCompra.cantidad = cantidad;
-            await buscarDetalleCompra.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarCompra = await Compra.findOne({ where: { id: CompraId } });
+            if (!buscarCompra) {
+                res.send('El id de la compra no existe');
+            } else {
+                var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
+                if (!buscarInsumo) {
+                    res.send('El id del insumo no existe');
+                } else {
+                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+                    if (!buscarSucursal) {
+                        res.send('El id de la sucursal no existe');
+                    } else {
+                        buscarDetalleCompra.cantidad = cantidad;
+                        buscarDetalleCompra.observaciones = observaciones;
+                        buscarDetalleCompra.subTotal = subTotal;
+                        buscarDetalleCompra.CompraId = CompraId;
+                        buscarDetalleCompra.InsumoId = InsumoId;
+                        buscarDetalleCompra.SucursalId = SucursalId;
+                        await buscarDetalleCompra.save()
+                            .then((data) => {
+                                console.log(data);
+                                res.send('Actualizado correctamente');
+                            })
+                            .catch((er) => {
+                                console.log(er);
+                                res.send('Error al actualizar');
+                            });
+                    }
+                }
+            }
         }
     }
 }
@@ -101,7 +140,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await detalleCompra.destroy({ where: { id: id } })
+        await DetalleCompra.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
                     res.send('El id no existe');

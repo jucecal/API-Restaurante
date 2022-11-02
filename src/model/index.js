@@ -26,7 +26,6 @@ const ProductoPlato = require("./ProductoPlato");
 const PlatoCombo = require("./PlatoCombo");
 //const { INET } = require("sequelize");
 
-
 exports.CrearModelos = () => {
 
     //CREACION DE LAS RELACIONES PARA LAS TABLAS
@@ -40,15 +39,17 @@ exports.CrearModelos = () => {
     Combo.hasMany(PlatoCombo);
     PlatoCombo.belongsTo(Combo);
 
-
     //Relacion entre menu y PxCombo
     Menu.hasMany(PlatoCombo)
     PlatoCombo.belongsTo(Menu)
 
-
     //RELACION ENTRE MENU Y PRODUCTO PLATO
     Menu.hasMany(ProductoPlato)
     ProductoPlato.belongsTo(Menu)
+
+    //RELACION ENTRE INSUMO Y PRODUCTO PLATO
+    Insumo.hasMany(ProductoPlato)
+    ProductoPlato.belongsTo(Insumo)
 
     //RELACIÓN ENTRE USUARIOS Y CLIENTES
     Usuario.hasMany(Clientes)
@@ -57,7 +58,6 @@ exports.CrearModelos = () => {
     //RELACION ENTRE SUCURSAL Y MESAS
     Sucursal.hasMany(Mesas);
     Mesas.belongsTo(Sucursal);
-
 
     //PARA TABLA DE RELACIONES ENTRE CLIENTES Y RESERVACIONES
     Clientes.hasMany(Reservaciones);
@@ -88,8 +88,8 @@ exports.CrearModelos = () => {
     Inventario.belongsTo(Sucursal);
 
     //RELACION DE TIPO CON INVENTARIO
-    Tipo.hasMany(Inventario)
-    Inventario.belongsTo(Tipo)
+    Insumo.hasMany(Inventario)
+    Inventario.belongsTo(Insumo)
 
     //RELACIÓN ENTRE TIPO PRODUCTO Y PRODUCTOS COMPRA
     Tipo.hasMany(Insumo)
@@ -146,8 +146,6 @@ exports.CrearModelos = () => {
     //RELACION DE MENU CON DETALLE DE FACTURA
     Menu.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Menu)
-   
-
    
 
 //######################################################

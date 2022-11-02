@@ -1,43 +1,45 @@
-const IxSucursal= require('../model/Inventario');
+const Inventario = require('../model/Inventario');
+const Sucursal = require('../model/Sucursal');
+const Insumo = require('../model/Insumo');
 const { validationResult } = require('express-validator');
-const {request} = require('express');
+const { request } = require('express');
 
 exports.Inicio = (req, res) => {
-    const moduloIxSucursal = {
-        modulo: 'ixsucursales',
+    const moduloInventario = {
+        modulo: 'inventario',
         descripcion: 'Gestiona las operaciones con el modelo de Sucursales',
         rutas: [
             {
-                ruta: '/api/ixsucursales/listar',
-                descripcion: 'Listar las Sucursales',
+                ruta: '/api/inventario/listar',
+                descripcion: 'Listar el inventario',
                 metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixsucursales/guardar',
-                descripcion: 'Guardar las Sucursales',
+                ruta: '/api/inventario/guardar',
+                descripcion: 'Guardar producto en inventario',
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixsucursales/editar',
-                descripcion: 'Modifica las Sucursales',
+                ruta: '/api/inventario/editar',
+                descripcion: 'Modifica producto en inventario',
                 metodo: 'PUT',
                 parametros: 'Ninguno'
             },
             {
-                ruta: '/api/ixsucursales/eliminar',
-                descripcion: 'Elimina las Sucursales',
+                ruta: '/api/inventario/eliminar',
+                descripcion: 'Elimina producto en inventario',
                 metodo: 'DELETE',
                 parametros: 'Ninguno'
             }
         ]
     }
-    res.json(moduloIxSucursal);
+    res.json(moduloInventario);
 }
 exports.Listar = async (req, res) => {
-    const listarIxSucursal = await IxSucursal.findAll();
-    res.json(listarIxSucursal);
+    const listarInventario = await Inventario.findAll();
+    res.json(listarInventario);
 }
 
 exports.Guardar = async (req, res) => {
@@ -46,48 +48,71 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { stock } = req.body;
-        console.log(stock);
-        if (!stock) {
+        const { stock, SucursalId, InsumoId } = req.body;
+        if (!stock || !SucursalId || !InsumoId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            await IxSucursal.create({
-               stock
-            }).then(data => {
-                res.json({ msj: 'Registro guardado' });
-            })
-                .catch((er) => {
-                    var errores = '';
-                    er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '. ';
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            } else {
+                var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
+                if (!buscarInsumo) {
+                    res.send('El id del insumo no existe');
+                } else {
+                    await Inventario.create({
+                        stock,
+                        SucursalId,
+                        InsumoId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
                     })
-                    res.json({ errores });
-                })
+                        .catch((er) => {
+                            var errores = '';
+                            er.errors.forEach(element => {
+                                console.log(element.message);
+                                errores += element.message + '. ';
+                            })
+                            res.json({ errores });
+                        })
+                }
+            }
         }
     }
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { stock } = req.body;
-    if (!stock || !id) {
+    const { stock, SucursalId, InsumoId } = req.body;
+    if (!stock || !SucursalId || !InsumoId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarIxSucursal= await IxSucursal.findOne({ where: { id: id } });
-        if (!buscarIxSucursal) {
+        var buscarInventario = await Inventario.findOne({ where: { id: id } });
+        if (!buscarInventario) {
             res.send('El id del tipo no existe');
         } else {
-            buscarIxSucursal.stock = stock;
-            await buscarIxSucursal.save()
-                .then((data) => {
-                    console.log(data);
-                    res.send('Actualizado correctamente');
-                })
-                .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
-                });
+            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+            if (!buscarSucursal) {
+                res.send('El id de la sucursal no existe');
+            } else {
+                var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
+                if (!buscarInsumo) {
+                    res.send('El id del insumo no existe');
+                } else {
+                    buscarInventario.stock = stock;
+                    buscarInventario.SucursalId = SucursalId;
+                    buscarInventario.InsumoId = InsumoId;
+                    await buscarInventario.save()
+                        .then((data) => {
+                            console.log(data);
+                            res.send('Actualizado correctamente');
+                        })
+                        .catch((er) => {
+                            console.log(er);
+                            res.send('Error al actualizar');
+                        });
+                }
+            }
         }
     }
 }
@@ -97,7 +122,7 @@ exports.Eliminar = async (req, res) => {
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     } else {
-        await IxSucursal.destroy({ where: { id: id } })
+        await Inventario.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
                     res.send('El id no existe');
