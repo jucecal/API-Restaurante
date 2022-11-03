@@ -5,17 +5,33 @@ const Proveedor = db.define(
     {
         proveedor: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate:{
+                len: [3, 50],
+                notEmpty: true,
+                isAlpha: truev
+            }
+            
         },
 
         nombreContacto: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate:{
+                len: [3, 50],
+                notEmpty: true,
+                isAlpha: truev
+            }
         },
 
         telefono: {
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: false,
+            validate:{
+                len:[8],
+                isNumeric: true
+
+            }
         },
 
     },
