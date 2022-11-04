@@ -5,12 +5,12 @@ var today = moment();
 const Clientes = db.define(
     'Clientes',
     {
-        nombres: {
+        nombre: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
 
-        apellidos: {
+        apellido: {
             type: DataTypes.STRING(50),
             allowNull: false
         },

@@ -39,7 +39,7 @@ exports.Inicio = (req, res) => {
 }
 exports.Listar = async (req, res) => {
     const listarClientes = await Clientes.findAll({
-        attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
+        attributes: [['id', 'ID Cliente'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
         include: [
             { model: Usuario, attributes: [['nombre', 'Nombre de Usuario']] }
         ]
@@ -56,7 +56,7 @@ exports.BuscarId = async (req, res) => {
     else {
         const { id } = req.query;
         const listarClientes = await Clientes.findAll({
-            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
+            attributes: [['id', 'ID Cliente'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
             where: {
                 id: id
             },
@@ -77,7 +77,7 @@ exports.BuscarNombre = async (req, res) => {
     else {
         const { nombres } = req.query;
         const listarClientes = await Clientes.findAll({
-            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
+            attributes: [['id', 'ID Cliente'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
             where: {
                 nombres: {
                     [Op.like]: nombres
@@ -97,8 +97,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombres, apellidos, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
-        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !direccion) {
+        const { nombre, apellido, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
+        if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
@@ -106,8 +106,8 @@ exports.Guardar = async (req, res) => {
                 res.send('El id del usuario no existe');
             } else {
                 await Clientes.create({
-                    nombres,
-                    apellidos,
+                    nombre,
+                    apellido,
                     telefono,
                     fechaNacimiento,
                     direccion,
@@ -130,8 +130,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombres, apellidos, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
-    if (!nombres || !apellidos || !telefono || !fechaNacimiento || !direccion || !id) {
+    const { nombre, apellido, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCliente = await Clientes.findOne({ where: { id: id } });
@@ -142,8 +142,8 @@ exports.Editar = async (req, res) => {
             if (!buscarUsuario) {
                 res.send('El id del usuario no existe');
             } else {
-                buscarCliente.nombres = nombres;
-                buscarCliente.apellidos = apellidos;
+                buscarCliente.nombre = nombre;
+                buscarCliente.apellido = apellido;
                 buscarCliente.telefono = telefono;
                 buscarCliente.fechaNacimiento = fechaNacimiento;
                 buscarCliente.direccion = direccion;
