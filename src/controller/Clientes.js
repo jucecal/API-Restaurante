@@ -39,7 +39,7 @@ exports.Inicio = (req, res) => {
 }
 exports.Listar = async (req, res) => {
     const listarClientes = await Clientes.findAll({
-        attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+        attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
         include: [
             { model: Usuario, attributes: [['nombre', 'Nombre de Usuario']] }
         ]
@@ -56,7 +56,7 @@ exports.BuscarId = async (req, res) => {
     else {
         const { id } = req.query;
         const listarClientes = await Clientes.findAll({
-            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
             where: {
                 id: id
             },
@@ -77,7 +77,7 @@ exports.BuscarNombre = async (req, res) => {
     else {
         const { nombres } = req.query;
         const listarClientes = await Clientes.findAll({
-            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'UsuarioId'],
+            attributes: [['id', 'ID Cliente'], ['nombres', 'Nombre'], ['apellidos', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'UsuarioId'],
             where: {
                 nombres: {
                     [Op.like]: nombres
@@ -97,8 +97,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion, UsuarioId } = req.body;
-        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion) {
+        const { nombres, apellidos, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
+        if (!nombres || !apellidos || !telefono || !fechaNacimiento || !direccion) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
@@ -110,7 +110,6 @@ exports.Guardar = async (req, res) => {
                     apellidos,
                     telefono,
                     fechaNacimiento,
-                    correo,
                     direccion,
                     UsuarioId
                 }).then(data => {
@@ -131,8 +130,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombres, apellidos, telefono, fechaNacimiento, correo, direccion, UsuarioId } = req.body;
-    if (!nombres || !apellidos || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
+    const { nombres, apellidos, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
+    if (!nombres || !apellidos || !telefono || !fechaNacimiento || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCliente = await Clientes.findOne({ where: { id: id } });
@@ -147,7 +146,6 @@ exports.Editar = async (req, res) => {
                 buscarCliente.apellidos = apellidos;
                 buscarCliente.telefono = telefono;
                 buscarCliente.fechaNacimiento = fechaNacimiento;
-                buscarCliente.correo = correo;
                 buscarCliente.direccion = direccion;
                 buscarCliente.UsuarioId = UsuarioId;
                 await buscarCliente.save()

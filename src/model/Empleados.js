@@ -48,16 +48,6 @@ const Empleado = db.define(
             }
         },
 
-        correo: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            validate:{
-                len:[4,20],
-                isEmail:true
-
-            }
-        },
-
         direccion: {
             type: DataTypes.STRING(50),
             allowNull: false,

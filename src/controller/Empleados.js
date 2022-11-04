@@ -42,7 +42,7 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarEmpleado = await Empleado.findAll({
-        attributes: [['id', 'Código Empleado'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['correo', 'Email'], ['direccion', 'Dirección'], 'SucursalId', 'CargoId', 'UsuarioId'],
+        attributes: [['id', 'Código Empleado'], ['nombre', 'Nombre'], ['apellido', 'Apellido'], ['telefono', 'Telefono'], ['fechaNacimiento', 'Fecha de Nacimiento'], ['direccion', 'Dirección'], 'SucursalId', 'CargoId', 'UsuarioId'],
         include: [{ 
             model: Usuario, attributes: [['nombre', 'Nombre de Usuario']]
         }]
@@ -68,8 +68,8 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     console.log(req);
-    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion, SucursalId, CargoId, UsuarioId } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !SucursalId || !CargoId || !UsuarioId) {
+    const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
@@ -108,8 +108,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, apellido, telefono, fechaNacimiento, correo, direccion } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !correo || !direccion || !id) {
+    const { nombre, apellido, telefono, fechaNacimiento, direccion } = req.body;
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });

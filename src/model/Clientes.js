@@ -32,11 +32,6 @@ const Clientes = db.define(
             }
         },
 
-        correo: {
-            type: DataTypes.STRING(100),
-            allowNull: false
-        },
-
         direccion: {
             type: DataTypes.STRING(250),
             allowNull: false
