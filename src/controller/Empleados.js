@@ -89,7 +89,6 @@ exports.Guardar = async (req, res) => {
                         apellido,
                         telefono,
                         fechaNacimiento,
-                        correo,
                         direccion,
                         CargoId,
                         SucursalId,
@@ -99,6 +98,7 @@ exports.Guardar = async (req, res) => {
                     })
                         .catch((er) => {
                             res.json({ msj: 'Error al guardar el registro' });
+                            console.log(er);
                         })
                 }
             }
@@ -108,8 +108,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, apellido, telefono, fechaNacimiento, direccion } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !id) {
+    const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
