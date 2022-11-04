@@ -132,7 +132,6 @@ exports.Editar = async (req, res) => {
                         buscarEmpleado.apellido = apellido;
                         buscarEmpleado.telefono = telefono;
                         buscarEmpleado.fechaNacimiento = fechaNacimiento;
-                        buscarEmpleado.correo = correo;
                         buscarEmpleado.direccion = direccion;
                         buscarEmpleado.SucursalId = SucursalId;
                         buscarEmpleado.CargoId = CargoId;
