@@ -9,7 +9,7 @@ const Proveedor = db.define(
             validate:{
                 len: [3, 50],
                 notEmpty: true,
-                isAlpha: truev
+                isAlpha: true
             }
             
         },
@@ -20,7 +20,7 @@ const Proveedor = db.define(
             validate:{
                 len: [3, 50],
                 notEmpty: true,
-                isAlpha: truev
+                isAlpha: true
             }
         },
 
