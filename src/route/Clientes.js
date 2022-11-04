@@ -15,7 +15,7 @@ ruta.get('/buscarNombre',
     controladorClientes.BuscarNombre);
 
 ruta.post('/guardar',
-    body('nombres').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del tipo con una longitud de 3 - 50 caracteres'),
+    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del tipo con una longitud de 3 - 50 caracteres'),
     controladorClientes.Guardar);
 
 ruta.put('/editar',
