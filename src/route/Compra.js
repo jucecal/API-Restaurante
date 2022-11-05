@@ -15,6 +15,8 @@ const storageCompras = multer.diskStorage({
 });
 const uploadCompras = multer({ storage: storageCompras });
 
+
+
 const ruta = Router();
 
 ruta.get('/', controladorCompra.Inicio);
