@@ -55,7 +55,12 @@ const Empleado = db.define(
                 len:[3,50]
 
             }
-        }
+        },
+
+        imagen: {
+            type: DataTypes.STRING(250),
+            allowNull: true
+        }        
     },
     {
         tableName: 'empleados',

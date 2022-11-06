@@ -1,10 +1,20 @@
 const { validationResult } = require('express-validator');
 const { request } = require('express');
-const { Op } = require('sequelize');
 const Empleado = require('../model/Empleados');
 const Sucursal = require('../model/Sucursal');
 const Cargo = require('../model/Cargo');
 const Usuario = require('../model/Usuario');
+const MSJ = require('../components/mensaje');
+const { Op } = require('sequelize');
+const fs = require('fs');
+const path = require('path');
+var errores = [];
+var data = [];
+var error = {
+    msg: '',
+    parametro: ''
+};
+
 
 exports.Inicio = (req, res) => {
     const moduloEmpleado = {
@@ -114,7 +124,7 @@ exports.Editar = async (req, res) => {
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
         if (!buscarEmpleado) {
-            res.send('El id del cliente no existe');
+            res.send('El id del empleado no existe');
         } else {
             var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
             if (!buscarCargo) {
@@ -169,5 +179,53 @@ exports.Eliminar = async (req, res) => {
                 console.log(er);
                 res.send('Error al eliminar');
             })
+    }
+}
+
+
+exports.RecibirImagen = async (req, res) => {
+    const { filename } = req.file;
+    const { id } = req.body;
+    //console.log(req);
+    console.log(filename);
+    try {
+        errores = [];
+        data = [];
+        var buscarEmpleado = await Empleado.findOne({ where: { id } });
+        if (!buscarEmpleado) {
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/empleados/' + filename));
+            if (!buscarImagen)
+                console.log('La imagen no existe');
+            else {
+                fs.unlinkSync(path.join(__dirname, '../public/img/empleados/' + filename));
+                console.log('Imagen eliminada');
+            }
+            error.msg = 'El id del producto no existe. Se elimino la imagen enviada';
+            error.parametro = 'id';
+            errores.push(error);
+            MSJ("Peticion ejecutada correctamente", 200, [], errores, res);
+        }
+        else {
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/empleados/' + buscarEmpleado.imagen));
+            if (!buscarImagen)
+                console.log('No encontro la imagen');
+            else {
+                fs.unlinkSync(path.join(__dirname, '../public/img/empleados/' + buscarEmpleado.imagen));
+                console.log('Imagen eliminada');
+            }
+            buscarEmpleado.imagen = filename;
+            await buscarEmpleado.save()
+                .then((data) => {
+                    MSJ('Peticion ejecutada correctamente', 200, data, errores, res);
+                })
+                .catch((error) => {
+                    errores.push(error);
+                    MSJ('Peticion ejecutada correctamente', 200, [], errores, res);
+                });
+        }
+    } catch (error) {
+        console.log(error);
+        errores.push(error);
+        MSJ('Error al ejecutar la peticion', 500, [], errores, res);
     }
 }

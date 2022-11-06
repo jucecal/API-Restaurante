@@ -1,6 +1,20 @@
 const { Router } = require('express');
+const path = require('path');
+const multer = require('multer');
 const controladorCombo = require('../controller/Combo');
 const { body, query } = require('express-validator');
+
+const storageCombo = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../public/img/combos'));
+    },
+    filename: function (req, file, cb) {
+        const nombreUnico = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + nombreUnico + '-' + file.mimetype.replace('/', '.'));
+    }
+});
+const uploadCombo = multer({ storage: storageCombo });
+
 const ruta = Router();
 
 ruta.get('/', controladorCombo.Inicio);
@@ -26,5 +40,9 @@ ruta.put('/editar',
 ruta.delete('/eliminar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorCombo.Eliminar);
+
+ruta.post('/imagen',
+    uploadCombo.single('img'),
+    controladorCombo.RecibirImagen);
     
 module.exports = ruta;

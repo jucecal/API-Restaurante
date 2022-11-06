@@ -1,7 +1,17 @@
 const { validationResult } = require('express-validator');
 const { request } = require('express');
-const { Op } = require('sequelize');
 const Combo = require('../model/Combo');
+const MSJ = require('../components/mensaje');
+const { Op } = require('sequelize');
+const fs = require('fs');
+const path = require('path');
+var errores = [];
+var data = [];
+var error = {
+    msg: '',
+    parametro: ''
+};
+
 
 exports.Inicio = (req, res) => {
     const moduloCombo = {
@@ -107,7 +117,7 @@ exports.Editar = async (req, res) => {
     } else {
         var buscarCombo = await Combo.findOne({ where: { id: id } });
         if (!buscarCombo) {
-            res.send('El id del cliente no existe');
+            res.send('El id del combo no existe');
         } else {
             buscarCombo.combo = combo;
             buscarCombo.precio = precio;
@@ -141,5 +151,52 @@ exports.Eliminar = async (req, res) => {
                 console.log(er);
                 res.send('Error al eliminar');
             })
+    }
+}
+
+exports.RecibirImagen = async (req, res) => {
+    const { filename } = req.file;
+    const { id } = req.body;
+    //console.log(req);
+    console.log(filename);
+    try {
+        errores = [];
+        data = [];
+        var buscarCombo = await Combo.findOne({ where: { id } });
+        if (!buscarCombo) {
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/combos/' + filename));
+            if (!buscarImagen)
+                console.log('La imagen no existe');
+            else {
+                fs.unlinkSync(path.join(__dirname, '../public/img/combos/' + filename));
+                console.log('Imagen eliminada');
+            }
+            error.msg = 'El id del producto no existe. Se elimino la imagen enviada';
+            error.parametro = 'id';
+            errores.push(error);
+            MSJ("Peticion ejecutada correctamente", 200, [], errores, res);
+        }
+        else {
+            const buscarImagen = fs.existsSync(path.join(__dirname, '../public/img/combos/' + buscarCombo.imagen));
+            if (!buscarImagen)
+                console.log('No encontro la imagen');
+            else {
+                fs.unlinkSync(path.join(__dirname, '../public/img/combos/' + buscarCombo.imagen));
+                console.log('Imagen eliminada');
+            }
+            buscarCombo.imagen = filename;
+            await buscarCombo.save()
+                .then((data) => {
+                    MSJ('Peticion ejecutada correctamente', 200, data, errores, res);
+                })
+                .catch((error) => {
+                    errores.push(error);
+                    MSJ('Peticion ejecutada correctamente', 200, [], errores, res);
+                });
+        }
+    } catch (error) {
+        console.log(error);
+        errores.push(error);
+        MSJ('Error al ejecutar la peticion', 500, [], errores, res);
     }
 }

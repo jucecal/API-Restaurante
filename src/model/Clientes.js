@@ -35,6 +35,11 @@ const Clientes = db.define(
         direccion: {
             type: DataTypes.STRING(250),
             allowNull: false
+        },
+
+        imagen: {
+            type: DataTypes.STRING(250),
+            allowNull: true
         }
     },
     {
