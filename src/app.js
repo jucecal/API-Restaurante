@@ -43,6 +43,9 @@ app.use('/api/prodplato', require('./route/ProductoPlato'));
 //RUTA IMAGENES
 app.use('/api/imagenes/', express.static(path.join(__dirname, 'public/img')));
 
+//RUTA AUTENTICACION
+app.use('/api/autenticacion/', require('./route/Autenticacion'));
+
 //INICIANDO SERVER
 app.listen(app.get('port'), () => {
     console.log('Servidor iniciado en el puerto ' + app.get('port'));
