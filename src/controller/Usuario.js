@@ -48,8 +48,8 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
 
     } else {
-        const { nombre, correo, password, tipo } = req.body;
-        console.log(nombre, correo, password, tipo);
+        const { nombre, correo, password, tipo} = req.body;
+        //console.log(nombre, correo, password, tipo);
         if (!nombre || !correo || !password || !tipo) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
@@ -58,7 +58,6 @@ exports.Guardar = async (req, res) => {
                 correo: correo,
                 password: password,
                 tipo: tipo
-
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
             })
@@ -66,7 +65,7 @@ exports.Guardar = async (req, res) => {
                     var errores = '';
                     er.errors.forEach(element => {
                         console.log(element.message);
-                        errores += element.message + '. ';
+                        errores += element.message + '.';
                     })
                     res.json({ errores });
                 })

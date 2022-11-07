@@ -10,7 +10,7 @@ const Usuario = db.define(
             unique: {arg: true, msg: 'El usuario ya se encuentra asignado'},
             validate: {
                 len: [3, 50],
-            }
+            },
         },
 
         correo: {
@@ -48,7 +48,7 @@ const Usuario = db.define(
             type: DataTypes.ENUM('AC', 'IN', 'BL'), 
             allowNull: true, 
             defaultValue: 'AC' 
-        }
+        },
     },
     {
         tableName: 'Usuarios',

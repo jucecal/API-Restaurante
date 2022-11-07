@@ -23,6 +23,7 @@ function validacion(req) {
     }
     return errores;
 };
+
 exports.Inicio = async (req, res) => {
     var errores = validacion(req);
     const listaModulos =
@@ -77,6 +78,7 @@ exports.Inicio = async (req, res) => {
     };
     msjRes("Peticion ejecutada correctamente", 200, datos, errores);
 };
+
 exports.Pin = async (req, res) => {
     var errores = validacion(req);
     console.log(errores);
@@ -124,6 +126,7 @@ exports.Pin = async (req, res) => {
         }
     }
 };
+
 exports.Recuperar = async (req, res) => {
     var msj = validacion(req);
     console.log(msj);
