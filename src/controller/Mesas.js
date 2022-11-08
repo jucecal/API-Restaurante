@@ -40,7 +40,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarMesas = await Mesas.findAll({
         attributes: [
-            ['id', 'Mesa'], 
+            ['id', 'Mesa'],
             ['capacidad', 'Capacidad'],
             'SucursalId'
         ],
@@ -64,7 +64,7 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarMesas = await Mesas.findAll({
             attributes: [
-                ['id', 'Mesa'], 
+                ['id', 'Mesa'],
                 ['capacidad', 'Capacidad'],
                 'SucursalId'
             ],
@@ -125,22 +125,16 @@ exports.Editar = async (req, res) => {
         if (!buscarMesa) {
             res.send('El id de la mesa no existe');
         } else {
-            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
-            if (!buscarSucursal) {
-                res.send('El id de la sucursal no existe');
-            } else {
-                buscarMesa.capacidad = capacidad;
-                buscarMesa.SucursalId = SucursalId;
-                await buscarMesa.save()
-                    .then((data) => {
-                        console.log(data);
-                        res.send('Actualizado correctamente');
-                    })
-                    .catch((er) => {
-                        console.log(er);
-                        res.send('Error al actualizar');
-                    });
-            }
+            buscarMesa.capacidad = capacidad;
+            await buscarMesa.save()
+                .then((data) => {
+                    console.log(data);
+                    res.send('Actualizado correctamente');
+                })
+                .catch((er) => {
+                    console.log(er);
+                    res.send('Error al actualizar');
+                });
         }
     }
 }
