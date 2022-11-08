@@ -81,7 +81,6 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarEmpleado = await Empleado.findAll({
-<<<<<<< HEAD
 
             attributes: [
                 ['id', 'ID Empleado'], 
@@ -94,7 +93,7 @@ exports.buscarId = async (req, res) => {
                 ['CargoId', 'ID Cargo'], 
                 ['UsuarioId', 'ID Usuario']
                 ],
-=======
+
             attributes: [
                 ['id', 'Código Empleado'],
                 ['nombre', 'Nombre'],
@@ -106,7 +105,7 @@ exports.buscarId = async (req, res) => {
                 'CargoId',
                 'UsuarioId'
             ],
->>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
+
             where: {
                 id
             },

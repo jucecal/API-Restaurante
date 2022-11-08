@@ -40,15 +40,11 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll({
-<<<<<<< HEAD
+
         attributes: [['id', 'Código Categoria'],
-                    ['categoria', 'Nombre Categoria']]
-=======
-        attributes: [
-            ['id', 'Código Categoria'], 
-            ['categoria', 'Nombre Categoria']
-        ]
->>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
+                    ['categoria', 'Nombre Categoria']
+                ]
+
     });
     res.json(listarCategoria);
 }
