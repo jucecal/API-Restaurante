@@ -83,7 +83,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { cantidad, subTotal, estado, ComboId, FacturaId, MenuId } = req.body;
-        if (!cantidad || !estado  || !FacturaId ) {
+        if (!cantidad || !estado || !FacturaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             let buscarFactura = await Factura.findOne({ where: { id: FacturaId } });

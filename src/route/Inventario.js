@@ -8,12 +8,12 @@ ruta.get('/', controladorIxSucursal.Inicio);
 ruta.get('/listar', controladorIxSucursal.Listar);
 
 ruta.post('/guardar',
-    body('stock'),
+    body('stock').isInt().withMessage('Solo se aceptan valores enteros para el stock'),
     controladorIxSucursal.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('stock'),
+    body('stock').isInt().withMessage('Solo se aceptan valores enteros para el stock'),
     controladorIxSucursal.Editar);
 
 ruta.delete('/eliminar',

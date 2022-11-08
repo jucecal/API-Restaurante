@@ -8,10 +8,11 @@ ruta.get('/', controladorDetalleCompra.Inicio);
 ruta.get('/listar', controladorDetalleCompra.Listar);
 
 ruta.post('/guardar',
-    body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para el id  de categoría'),
+    body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetalleCompra.Guardar);
 
 ruta.put('/editar',
+    body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorDetalleCompra.Editar);
 

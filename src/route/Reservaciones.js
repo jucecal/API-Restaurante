@@ -12,12 +12,10 @@ ruta.get('/buscarId',
     controladorReservaciones.BuscarId);
 
 ruta.post('/guardar',
-    body('fechaHora'),
     controladorReservaciones.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('fechaHora'),
     controladorReservaciones.Editar);
 
 ruta.delete('/eliminar',

@@ -9,9 +9,12 @@ ruta.get('/', controladorDetallefactura.Inicio);
 
 ruta.get('/listar', controladorDetallefactura.Listar);
 
-ruta.post('/guardar', controladorDetallefactura.Guardar);
+ruta.post('/guardar', 
+    body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
+    controladorDetallefactura.Guardar);
 
 ruta.put('/editar',
+    body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     body('cantidad'), controladorDetallefactura.Editar);
 

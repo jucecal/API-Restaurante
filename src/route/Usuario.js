@@ -17,12 +17,15 @@ ruta.get('/buscarNombre',
     controladorUsuario.BuscarNombre)
 
 ruta.post('/guardar', 
-    body('nombre'), 
+    body('nombre').isAlphanumeric().withMessage('Debe agregar el nombre de usuario con caracteres validos'), 
+    body('correo').isEmail().withMessage('Debe agregar uan direccion correo valida'), 
     controladorUsuario.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('nombre'), controladorUsuario.Editar);
+    body('nombre').isAlphanumeric().withMessage('Debe agregar el nombre de usuario con caracteres validos'),
+    body('correo').isEmail().withMessage('Debe agregar uan direccion correo valida'), 
+    controladorUsuario.Editar);
 
 ruta.delete('/eliminar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
