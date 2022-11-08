@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const { request } = require('express');
 const Combo = require('../model/Combo');
 const MSJ = require('../components/mensaje');
@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 var errores = [];
 var data = [];
+
 var error = {
     msg: '',
     parametro: ''
@@ -105,9 +106,9 @@ exports.BuscarCombo = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
+        res.json({ msj: 'Errores en los datos enviados' });
     }
     else{
         console.log(req);
