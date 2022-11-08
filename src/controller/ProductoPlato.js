@@ -3,7 +3,6 @@ const Menu = require('../model/Menu');
 const Insumo = require('../model/Insumo');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
-const { Op } = require('sequelize');
 
 exports.Inicio = (req, res) => {
     const moduloPxPlato = {
@@ -42,57 +41,26 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarPxPlato = await ProductoPlato.findAll({
         attributes: [
-            ['id', 'ID Producto en Plato'], 
             ['cantidad', 'Cantidad'], 
-            ['MenuId', 'ID Mesa'], 
+            ['MenuId', 'ID Plato'], 
             ['InsumoId', 'ID Insumo']
+        ],
+        include: [
+        {
+            model: Menu,
+            attributes:[
+                ['nombre', 'Plato']
+            ]
+        },
+        {
+            model: Insumo,
+            attributes:[
+                ['nombre', 'Producto']
+            ]
+        },
         ]
     });
     res.json(listarPxPlato);
-}
-
-exports.buscarId = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { id } = req.query;
-        const listarPxPlato = await ProductoPlato.findAll({
-            attributes: [
-                ['id', 'ID Producto en Plato'], 
-                ['cantidad', 'Cantidad'], 
-                ['MenuId', 'ID Mesa'], 
-                ['InsumoId', 'ID Insumo']
-            ],
-            where: {
-                id
-            }
-        });
-        res.json(listarPxPlato);
-    }
-}
-
-exports.buscarNombre = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { cantidad } = req.query;
-        const listarPxPlato = await ProductoPlato.findAll({
-            attributes: ['cantidad'],
-            where: {
-                [Op.and]: {
-                    nombre: {
-                        [Op.like]: cantidad
-                    },
-                    activo: true
-                }
-            }
-        });
-        res.json(listarPxPlato);
-    }
 }
 
 exports.Guardar = async (req, res) => {
@@ -103,7 +71,7 @@ exports.Guardar = async (req, res) => {
     } else {
         var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
         if (!buscarMenu) {
-            res.send('El id del menu no existe');
+            res.send('El id del producto del menu no existe');
         } else {
             var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
             if (!buscarInsumo) {

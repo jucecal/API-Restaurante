@@ -40,9 +40,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarSucursal = await Sucursal.findAll({
         attributes: [
-            ['id', 'ID Sucursal'], 
-            ['nombre', 'Nombre'], 
-            ['ubicacion', 'Ubicación'], 
+            ['id', 'ID Sucursal'],
+            ['nombre', 'Nombre'],
+            ['ubicacion', 'Ubicación'],
             ['telefono', 'Teléfono']
         ]
     });
@@ -58,9 +58,9 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarSucursal = await Sucursal.findAll({
             attributes: [
-                ['id', 'ID Sucursal'], 
-                ['nombre', 'Nombre'], 
-                ['ubicacion', 'Ubicación'], 
+                ['id', 'ID Sucursal'],
+                ['nombre', 'Nombre'],
+                ['ubicacion', 'Ubicación'],
                 ['telefono', 'Teléfono']
             ],
             where: {
@@ -79,14 +79,17 @@ exports.buscarNombre = async (req, res) => {
     } else {
         const { nombre } = req.query;
         const listarSucursal = await Sucursal.findAll({
-            attributes: ['nombre', 'ubicacion', 'telefono'],
+            attributes: [
+                ['id', 'ID Sucursal'],
+                ['nombre', 'Nombre'],
+                ['ubicacion', 'Ubicación'],
+                ['telefono', 'Teléfono']
+            ],
             where: {
-                [Op.and]: {
-                    nombre: {
-                        [Op.like]: nombre
-                    },
-                    activo: true
+                nombre: {
+                    [Op.like]: nombre
                 }
+
             }
         });
         res.json(listarSucursal);
