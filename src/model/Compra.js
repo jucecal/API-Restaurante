@@ -9,7 +9,6 @@ const Compra = db.define(
             type: DataTypes.DATE,
             allowNull: false,
             validate: {
-                isDate: true,
                 notEmpty: true
             }
         },

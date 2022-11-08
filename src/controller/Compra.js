@@ -79,14 +79,13 @@ exports.Listar = async (req, res) => {
             ['id', 'Código Compra'],
             ['fecha', 'Fecha'],
             ['totalPagar', 'Pago Total'],
-            ['imagen', 'Imagen Comprobante'],
-            ['SucursalId', 'Código Sucursal']
+            ['imagen', 'Imagen Comprobante']
         ],
         include: [
         {
             model: Sucursal,
             attributes: [
-                ['nombre', 'Nombre Sucursal']
+                ['nombre', 'Sucursal']
             ]
         },
         ]
@@ -106,8 +105,7 @@ exports.buscarId = async (req, res) => {
                 ['id', 'Código Compra'],
                 ['fecha', 'Fecha'],
                 ['totalPagar', 'Pago Total'],
-                ['imagen', 'Imagen Comprobante'],
-                ['SucursalId', 'Código Sucursal']
+                ['imagen', 'Imagen Comprobante']
             ],
             where: {
                 id: id
@@ -115,7 +113,7 @@ exports.buscarId = async (req, res) => {
             include: [{
                 model: Sucursal,
                 attributes: [
-                    ['nombre', 'Nombre Sucursal']
+                    ['nombre', 'Sucursal']
                 ]
             }]
         });
@@ -135,8 +133,7 @@ exports.buscarFecha = async (req, res) => {
                 ['id', 'Código Compra'],
                 ['fecha', 'Fecha'],
                 ['totalPagar', 'Pago Total'],
-                ['imagen', 'Imagen Comprobante'],
-                ['SucursalId', 'Código Sucursal']
+                ['imagen', 'Imagen Comprobante']
             ],
             where: {
                 [Op.and]: {
@@ -151,7 +148,7 @@ exports.buscarFecha = async (req, res) => {
             include: [{
                 model: Sucursal,
                 attributes: [
-                    ['nombre', 'Nombre Sucursal']
+                    ['nombre', 'Sucursal']
                 ]
             }]
         });
@@ -175,12 +172,12 @@ exports.BuscarPorSucursal = async (req, res) => {
                 ['id', 'Código Compra'],
                 ['fecha', 'Fecha'],
                 ['totalPagar', 'Pago Total'],
-                ['imagen', 'Imagen Comprobante'],
-                ['SucursalId', 'Código Sucursal']],
+                ['imagen', 'Imagen Comprobante']
+            ],
             include: [{
                 model: Sucursal,
                 attributes: [
-                    ['nombre', 'Nombre Sucursal']
+                    ['nombre', 'Sucursal']
                 ],
                 where: {
                     nombre: {
@@ -200,7 +197,7 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { fecha, totalPagar, SucursalId } = req.body;
+        const { totalPagar, SucursalId } = req.body;
         if ( !totalPagar || !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })
         }
@@ -210,7 +207,7 @@ exports.Guardar = async (req, res) => {
                 res.send('El id de la sucursal no existe');
             } else {
                 await Compra.create({
-                    fecha,
+                    fecha: now(),
                     totalPagar,
                     SucursalId
                 }).then((data) => {
