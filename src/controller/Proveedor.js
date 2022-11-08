@@ -1,4 +1,4 @@
-const { validationResult, body } = require('express-validator');
+const { validationResult} = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
 const Proveedor = require('../model/Proveedor');
