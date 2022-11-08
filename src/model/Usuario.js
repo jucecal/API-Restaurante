@@ -7,7 +7,10 @@ const Usuario = db.define(
         nombre: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            unique: {arg: true, msg: 'El usuario ya se encuentra asignado'},
+            unique: {
+                arg: true, 
+                msg: 'El usuario ya se encuentra asignado'
+            },
             validate: {
                 len: [3, 50],
             },
@@ -16,9 +19,13 @@ const Usuario = db.define(
         correo: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            unique: {arg: true, msg: 'El correo ya se encuentra asignado'},
+            unique: {
+                arg: true, 
+                msg: 'El correo ya se encuentra asignado'
+            },
             validate: {
                 len: [3, 50],
+                isEmail: true
             }
         },
 
@@ -30,7 +37,10 @@ const Usuario = db.define(
         tipo: {
             type: DataTypes.ENUM('CLI', 'EMP'),
             allowNull: false,
-            defaultValue: 'CLI'
+            defaultValue: 'CLI',
+            validate: {
+                isIn: [['CLI', 'EMP']]
+            }
         },
 
         codigo: { 

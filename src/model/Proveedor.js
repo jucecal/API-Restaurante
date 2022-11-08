@@ -28,7 +28,6 @@ const Proveedor = db.define(
             validate:{
                 len:[8],
                 isNumeric: true
-
             }
         },
 

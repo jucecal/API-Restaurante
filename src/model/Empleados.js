@@ -12,7 +12,6 @@ const Empleado = db.define(
                 len: [3, 50],
                 notEmpty: true,
                 isAlpha: true
-
             }
         },
 
@@ -23,18 +22,16 @@ const Empleado = db.define(
                 len: [3, 50],
                 notEmpty: true,
                 isAlpha: true
-
             }
         },
 
 
         telefono: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.INTEGER(20),
             allowNull: false,
             validate:{
                 len:[8],
                 isNumeric: true
-
             }
         },
 
@@ -52,8 +49,8 @@ const Empleado = db.define(
             type: DataTypes.STRING(50),
             allowNull: false,
             validate:{ 
-                len:[3,50]
-
+                len:[3,50],
+                isAlphanumeric: true
             }
         },
 

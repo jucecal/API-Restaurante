@@ -193,7 +193,7 @@ exports.Guardar = async (req, res) => {
                                 res.send('El id de la reservacion no existe');
                             } else {
                                 await Factura.create({
-                                    fecha: now(),
+                                    fecha: Date(),
                                     ISV,
                                     totalPagar,
                                     efectivo,

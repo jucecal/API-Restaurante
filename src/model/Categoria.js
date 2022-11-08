@@ -6,7 +6,12 @@ const Categoria = db.define(
     {
         categoria: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            unique: { arg: true, msg: 'No se permiten nombres de categorias duplicados' },
+            validate: {
+                len: [3, 50],
+                notEmpty: true
+            }
         }
     },
     {

@@ -5,21 +5,29 @@ const DetalleFactura = db.define(
     {
         cantidad: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: true,
+                notEmpty: true
+            }
         },
 
         subTotal: {
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isDecimal: true, min: 1
+                isFloat: true, 
+                min: 1
             }
         },
 
         estado: {
             type: DataTypes.ENUM('AC', 'IN', 'BL'),
             allowNull: false,
-            defaultValue: 'AC'
+            defaultValue: 'AC',
+            validate: {
+                isIn: [['AC', 'IN', 'BL']]
+            }
         }
     },
     {

@@ -7,12 +7,20 @@ const Clientes = db.define(
     {
         nombre: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [4, 50],
+                notEmpty: true
+            }
         },
 
         apellido: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [4, 50],
+                notEmpty: true
+            }
         },
 
         telefono: {
@@ -21,7 +29,7 @@ const Clientes = db.define(
         },
 
         //TIPO DE FECHA
-        //DE NACIMIENTO  == DD/MM/AAAA
+        //DE NACIMIENTO  == AAAA-MM-DD
         fechaNacimiento: {
             type: DataTypes.DATEONLY,
             allowNull: false,

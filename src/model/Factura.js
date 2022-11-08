@@ -21,12 +21,20 @@ const Factura = db.define(
 
         totalPagar: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isFloat: true,
+                notEmpty: true
+            }
         },
 
         efectivo: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isFloat: true,
+                notEmpty: true
+            }
         },
 
         cambio: {

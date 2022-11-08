@@ -6,12 +6,11 @@ const Compra = db.define(
     'Compra',
     {
         fecha: {
-            type: DataTypes.DATEONLY,
+            type: DataTypes.DATE,
             allowNull: false,
             validate: {
                 isDate: true,
-                notEmpty: true,
-                isBefore: today.format('YYYY-MM-DD')
+                notEmpty: true
             }
         },
 

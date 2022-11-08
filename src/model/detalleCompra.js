@@ -5,7 +5,11 @@ const detalleCompra = db.define(
     {
         cantidad: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: true,
+                notEmpty: true
+            }
         },
 
         observaciones: {
@@ -18,7 +22,7 @@ const detalleCompra = db.define(
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isDecimal: true,
+                isFloat: true,
                 min: 1
             }
         },

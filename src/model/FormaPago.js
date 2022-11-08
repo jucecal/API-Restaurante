@@ -6,7 +6,10 @@ const FormaPago = db.define(
 
         formaPago: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isAlphanumeric: true
+            }
         },
 
     },

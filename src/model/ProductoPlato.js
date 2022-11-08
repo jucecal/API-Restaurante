@@ -5,7 +5,10 @@ const ProductoPlato = db.define(
     {
         cantidad: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: true
+            }
         }
     },
     {

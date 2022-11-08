@@ -7,12 +7,20 @@ const Insumos = db.define(
     {
         nombre: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [4, 50],
+                notEmpty: true
+            }
         },
 
         marca: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [4, 50],
+                notEmpty: true
+            }
         },
 
         //TIPO DE FECHA
@@ -31,7 +39,7 @@ const Insumos = db.define(
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isDecimal: true,
+                isFloat: true,
                 min: 1
             }
         },

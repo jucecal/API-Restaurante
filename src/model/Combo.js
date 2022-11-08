@@ -5,14 +5,18 @@ const Combo = db.define(
     {
         combo: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [4, 50],
+                notEmpty: true
+            }
         },
 
         precio: {
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isDecimal: true,
+                isFloat: true,
                 min: 1
             }
         },

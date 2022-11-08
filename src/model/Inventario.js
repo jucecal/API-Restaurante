@@ -5,7 +5,10 @@ const Inventario = db.define(
     {
         stock: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt: true
+            }
         }
     },
     {
