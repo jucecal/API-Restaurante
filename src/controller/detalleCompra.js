@@ -1,6 +1,7 @@
 const DetalleCompra = require('../model/DetalleCompra');
 const Insumo = require('../model/Insumo');
 const Compra = require('../model/Compra');
+const Inventario = require('../model/Inventario')
 const { validationResult } = require('express-validator');
 const { request } = require('express');
 
@@ -92,6 +93,29 @@ exports.Guardar = async (req, res) => {
                             })
                             res.json({ errores });
                         })
+
+                        const buscarCompra = await Compra.findOne({                            
+                            attributes: ['SucursalId'],
+                            where:{
+                                id:CompraId
+                            }
+                        });
+                        var buscarInventario = await Inventario.findOne({ where: { InsumoId: InsumoId, SucursalId: buscarCompra.SucursalId } });
+                        if (!buscarInventario) {
+                            console.log('No existe en inventario');
+                        } else {
+                            buscarInventario.stock += cantidad
+                            await buscarInventario.save()
+                                .then((data) => {
+                                    console.log(data);
+                                    console.log('Error en inventario');
+                                })
+                                .catch((er) => {
+                                    console.log(er);
+                                    console.log('Error en inventario');
+                                });
+                        }
+                        
                 }
             }
         }
