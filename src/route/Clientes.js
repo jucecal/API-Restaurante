@@ -2,6 +2,7 @@ const { Router } = require('express');
 const path = require('path');
 const multer = require('multer');
 const controladorClientes = require('../controller/Clientes');
+const { ValidarAutenticado } = require('../config/passport');
 const { body, query } = require('express-validator');
 
 const storageCliente = multer.diskStorage({
@@ -19,13 +20,15 @@ const ruta = Router();
 
 ruta.get('/', controladorClientes.Inicio);
 
-ruta.get('/listar', controladorClientes.Listar);
+ruta.get('/listar', ValidarAutenticado, controladorClientes.Listar);
 
 ruta.get('/buscarId',
-    query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+    query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'), 
+    ValidarAutenticado,
     controladorClientes.BuscarId);
 
 ruta.get('/buscarNombre',
+    ValidarAutenticado,
     controladorClientes.BuscarNombre);
 
 ruta.post('/guardar',

@@ -1,16 +1,19 @@
 const { Router } = require('express');
 const controladorUsuario = require('../controller/Usuario');
 const { body, query } = require('express-validator');
+const { ValidarAutenticado } = require('../config/passport');
 const ruta = Router();
 
 ruta.get('/', controladorUsuario.Inicio);
 
-ruta.get('/listar', controladorUsuario.Listar);
+ruta.get('/listar', ValidarAutenticado, controladorUsuario.Listar);
 
 ruta.get('/buscarId',
+    ValidarAutenticado,
     controladorUsuario.BuscarId)
 
 ruta.get('/buscarNombre',
+    ValidarAutenticado,
     controladorUsuario.BuscarNombre)
 
 ruta.post('/guardar', 

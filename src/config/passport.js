@@ -28,7 +28,7 @@ passport.use(new estrategiaJWT(opciones, async (payload, done)=> {
         return done(null, false);
     });
 }));
-exports.ValidarAutendicado = 
+exports.ValidarAutenticado = 
 passport.authenticate('jwt', {
     session: false, failureRedirect: '/api/autenticacion/error'
 });

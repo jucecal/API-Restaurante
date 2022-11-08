@@ -202,18 +202,19 @@ exports.InicioSesion = async (req, res) => {
         try {
             const { usuario, contrasena } = req.body;
             var buscarUsuario = await Usuario.findOne({
-                attributes: ['nombre', 'correo'],
-                include: {
+                attributes: ['id','nombre', 'correo', 'password'],    
+                include: [{
                     model: Cliente,
-                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],
-                },
+                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion']
+                }],            
                 where: {
                     [Op.or]: {
                         nombre: usuario,
-                        correo: usuario,
+                        correo: usuario
                     },
                     estado: 'AC',
                 }
+                
             });
             if (!buscarUsuario) {
                 var errores = [
@@ -225,18 +226,27 @@ exports.InicioSesion = async (req, res) => {
                 msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
             }
             else {
-                if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.contrasena)) {
+                console.log(buscarUsuario);
+                if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
                     const token = passport.getToken({ id: buscarUsuario.id });
                     const data = {
                         token: token,
-                        ...buscarUsuario
+                        usuario:{
+                            usuario: buscarUsuario.nombre,
+                            correo: buscarUsuario.correo,
+                            //nombre: buscarUsuario.Cliente.nombre,
+                            //apellido: buscarUsuario.Cliente.apellido,
+                            //imagen: buscarUsuario.Cliente.imagen,
+                            //telefono: buscarUsuario.Cliente.telefono,
+                            //direccion: buscarUsuario.Cliente.direcion,
+                        }
                     };
                     msjRes("Peticion ejecutada correctamente", 200, data, [], res);
                 }
                 else {
                     var errores = [
                         {
-                            mensaje: "El usuario no exite o la contraseña es incorrecta",
+                            mensaje: "El usuario no existe o la contraseña es incorrecta",
                             parametro: "contrasena"
                         },
                     ];
