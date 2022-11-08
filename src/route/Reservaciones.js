@@ -11,9 +11,6 @@ ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),    
     controladorReservaciones.BuscarId);
 
-ruta.get('/buscarNombre',    
-    controladorReservaciones.BuscarNombre);
-
 ruta.post('/guardar',
     body('fechaHora'),
     controladorReservaciones.Guardar);
