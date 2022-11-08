@@ -57,9 +57,8 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { id } = req.query;
         const listarUsuario = await Usuario.findAll({
             attributes: [
@@ -85,9 +84,8 @@ exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         var buscarUsuario = await Usuario.findOne({ where: { nombre: nombre } });
         if (!buscarUsuario) {
             res.send('El nombre del usuario no existe');

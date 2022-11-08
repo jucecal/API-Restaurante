@@ -185,11 +185,10 @@ exports.BuscarNombre = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else{
         console.log(req);
         const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
         if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {

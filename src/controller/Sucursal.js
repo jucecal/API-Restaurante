@@ -100,9 +100,8 @@ exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         console.log(req);
         const { nombre, ubicacion, telefono } = req.body;
         if (!nombre || !ubicacion || !telefono) {

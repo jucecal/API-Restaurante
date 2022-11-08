@@ -83,9 +83,8 @@ exports.BuscarCombo = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { combo } = req.query;
         const listarCombo = await Combo.findOne({
             attributes: [
