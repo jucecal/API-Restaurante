@@ -39,7 +39,14 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarReservaciones = await Reservaciones.findAll();
+    const listarReservaciones = await Reservaciones.findAll({
+        attributes: [
+            ['id', 'ID Sucursal'], 
+            ['fechaHora', 'Fecha y Hora'], 
+            ['ClienteId', 'ID Cliente'], 
+            ['MesaId', 'ID Mesa']
+        ]
+    });
     res.json(listarReservaciones);
 }
 

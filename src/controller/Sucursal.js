@@ -57,6 +57,12 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarSucursal = await Sucursal.findAll({
+            attributes: [
+                ['id', 'ID Sucursal'], 
+                ['nombre', 'Nombre'], 
+                ['ubicacion', 'Ubicación'], 
+                ['telefono', 'Teléfono']
+            ],
             where: {
                 id
             }
