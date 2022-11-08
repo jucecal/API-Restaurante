@@ -49,7 +49,11 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCombo = await Combo.findAll({
-        attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']]
+        attributes: [
+            ['id', 'ID Combo'], 
+            ['combo', 'Nombre'], 
+            ['precio', 'Precio']
+        ]
     });
     res.json(listarCombo);
 }
@@ -62,7 +66,11 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCombo = await Combo.findOne({
-            attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']],
+            attributes: [
+                ['id', 'ID Combo'], 
+                ['combo', 'Nombre'], 
+                ['precio', 'Precio']
+            ],
             where: {
                 id
             }
@@ -80,7 +88,11 @@ exports.BuscarCombo = async (req, res) => {
     else {
         const { combo } = req.query;
         const listarCombo = await Combo.findOne({
-            attributes: [['id', 'ID Combo'], ['combo', 'Nombre'], ['precio', 'Precio']],
+            attributes: [
+                ['id', 'ID Combo'], 
+                ['combo', 'Nombre'], 
+                ['precio', 'Precio']
+            ],
             where: {
                 combo: { 
                     [Op.like]: combo 

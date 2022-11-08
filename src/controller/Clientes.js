@@ -50,20 +50,21 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarClientes = await Clientes.findAll({
         attributes: [
-        ['id', 'ID Cliente'], 
-        ['nombre', 'Nombre'], 
-        ['apellido', 'Apellido'], 
-        ['telefono', 'Telefono'], 
-        ['fechaNacimiento', 'Fecha de Nacimiento'], 
-        ['direccion', 'Dirección'], 
-        'UsuarioId'
+            ['id', 'ID Cliente'],
+            ['nombre', 'Nombre'],
+            ['apellido', 'Apellido'],
+            ['telefono', 'Telefono'],
+            ['fechaNacimiento', 'Fecha de Nacimiento'],
+            ['direccion', 'Dirección'],
+            'UsuarioId'
         ],
-        include: [{ 
-            model: Usuario, 
+        include: [{
+            model: Usuario,
             attributes: [
-                ['nombre', 'Nombre de Usuario'], 
+                ['nombre', 'Nombre de Usuario'],
                 ['estado', 'Estado']
-            ]}
+            ]
+        }
         ]
     });
     res.json(listarClientes);
@@ -79,23 +80,24 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarClientes = await Clientes.findAll({
             attributes: [
-            ['id', 'ID Cliente'], 
-            ['nombre', 'Nombre'], 
-            ['apellido', 'Apellido'], 
-            ['telefono', 'Telefono'], 
-            ['fechaNacimiento', 'Fecha de Nacimiento'], 
-            ['direccion', 'Dirección'], 
-            'UsuarioId'
+                ['id', 'ID Cliente'],
+                ['nombre', 'Nombre'],
+                ['apellido', 'Apellido'],
+                ['telefono', 'Telefono'],
+                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['direccion', 'Dirección'],
+                'UsuarioId'
             ],
             where: {
                 id: id
             },
-            include: [{ 
-                model: Usuario, 
+            include: [{
+                model: Usuario,
                 attributes: [
-                    ['nombre', 'Nombre de Usuario'], 
+                    ['nombre', 'Nombre de Usuario'],
                     ['estado', 'Estado']
-                ]}
+                ]
+            }
             ]
         });
         res.json(listarClientes);
@@ -112,25 +114,26 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarClientes = await Clientes.findAll({
             attributes: [
-            ['id', 'ID Cliente'], 
-            ['nombre', 'Nombre'], 
-            ['apellido', 'Apellido'], 
-            ['telefono', 'Telefono'], 
-            ['fechaNacimiento', 'Fecha de Nacimiento'], 
-            ['direccion', 'Dirección'], 
-            'UsuarioId'
+                ['id', 'ID Cliente'],
+                ['nombre', 'Nombre'],
+                ['apellido', 'Apellido'],
+                ['telefono', 'Telefono'],
+                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['direccion', 'Dirección'],
+                'UsuarioId'
             ],
             where: {
                 nombre: {
                     [Op.like]: nombre
                 }
             },
-            include: [{ 
-                model: Usuario, 
+            include: [{
+                model: Usuario,
                 attributes: [
-                    ['nombre', 'Nombre de Usuario'], 
+                    ['nombre', 'Nombre de Usuario'],
                     ['estado', 'Estado']
-                ]}
+                ]
+            }
             ]
         });
         res.json(listarClientes);
