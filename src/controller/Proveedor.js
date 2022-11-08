@@ -1,4 +1,4 @@
-const { validationResult} = require('express-validator');
+const { validationResult, body} = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
 const Proveedor = require('../model/Proveedor');
@@ -110,7 +110,7 @@ exports.Guardar = async (req, res) => {
     } else {
         console.log(req);
          const { proveedor, nombreContacto, telefono } = req.body;
-    if (!Proveedor || !nombreContacto || !telefono) {
+    if (!proveedor || !nombreContacto || !telefono) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         await Proveedor.create({

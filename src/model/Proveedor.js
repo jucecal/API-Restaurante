@@ -8,8 +8,7 @@ const Proveedor = db.define(
             allowNull: false,
             validate:{
                 len: [3, 50],
-                notEmpty: true,
-                isAlpha: true
+                notEmpty: true
             }
             
         },
@@ -19,8 +18,7 @@ const Proveedor = db.define(
             allowNull: false,
             validate:{
                 len: [3, 50],
-                notEmpty: true,
-                isAlpha: true
+                notEmpty: true
             }
         },
 
