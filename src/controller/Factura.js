@@ -168,8 +168,8 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else{
         console.log(req);
-        const { fecha, ISV, totalPagar, efectivo, cambio, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-        if (!fecha || !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
+        const { ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
+        if ( !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });
@@ -193,11 +193,11 @@ exports.Guardar = async (req, res) => {
                                 res.send('El id de la reservacion no existe');
                             } else {
                                 await Factura.create({
-                                    fecha,
+                                    fecha: now(),
                                     ISV,
                                     totalPagar,
                                     efectivo,
-                                    cambio,
+                                    cambio: (efectivo - totalPagar),
                                     EmpleadoId,
                                     ClienteId,
                                     FormaPagoId,

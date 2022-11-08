@@ -73,6 +73,7 @@ exports.Listar = async (req, res) => {
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
             ['fechaNacimiento', 'Fecha de Nacimiento'],
+            ['imagen', 'Foto'],
             ['direccion', 'Dirección'],
             'UsuarioId'
         ],

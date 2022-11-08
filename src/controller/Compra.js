@@ -7,6 +7,7 @@ const { Op } = require('sequelize');
 
 const fs = require('fs');
 const path = require('path');
+const { now } = require('moment');
 var errores = [];
 var data = [];
 var error = {
@@ -199,8 +200,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { fecha, totalPagar, SucursalId } = req.body;
-        if (!fecha || !totalPagar || !SucursalId) {
+        const { totalPagar, SucursalId } = req.body;
+        if ( !totalPagar || !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })
         }
         else {
@@ -209,7 +210,7 @@ exports.Guardar = async (req, res) => {
                 res.send('El id de la sucursal no existe');
             } else {
                 await Compra.create({
-                    fecha,
+                    fecha: now(),
                     totalPagar,
                     SucursalId
                 }).then((data) => {
@@ -233,8 +234,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { fecha, totalPagar, SucursalId } = req.body;
-    if (!fecha || !totalPagar || !SucursalId || !id) {
+    const { totalPagar, SucursalId } = req.body;
+    if ( !totalPagar || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCompra = await Compra.findOne({ where: { id: id } });
@@ -245,7 +246,6 @@ exports.Editar = async (req, res) => {
             if (!buscarSucursal) {
                 res.send('El id de la sucursal no existe');
             } else {
-                buscarCompra.fecha = fecha;
                 buscarCompra.totalPagar = totalPagar;
                 buscarCompra.SucursalId = SucursalId;
                 await buscarCompra.save()

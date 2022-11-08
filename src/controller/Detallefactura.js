@@ -42,11 +42,12 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarDetallefactura = await DetalleFactura.findAll({
         attributes: [
+            ['id', 'ID Detalle'],
             ['cantidad', 'Cantidad'],
-            ['observaciones', 'Observaciones'],
             ['subtotal', 'Sub-Total'],
-            ['InsumoId', 'ID Producto'],
-            ['FacturaId', 'Id Factura']
+            ['FacturaId', 'ID Factura'],
+            ['ComboId', 'ID Combo'],
+            ['MenuId', 'ID Producto Menu'],
         ],
         include: [
             {
@@ -59,7 +60,7 @@ exports.Listar = async (req, res) => {
             {
                 model: Factura,
                 attributes: [
-                    ['id', 'ID Facturas']
+                    ['id', 'ID Factura']
                 ]
             },
             {
@@ -82,18 +83,18 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { cantidad, subTotal, estado, ComboId, FacturaId, MenuId } = req.body;
-        if (!cantidad || !subTotal || !estado  || !FacturaId ) {
+        if (!cantidad || !estado  || !FacturaId ) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
+            let buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
             if (!buscarFactura) {
                 res.send('El id de la factura no existe');
             } else {
-                var buscarCombo = await Combo.findOne({ where: { id: ComboId } });
+                let buscarCombo = await Combo.findOne({ where: { id: ComboId } });
                 if (!buscarCombo) {
                     res.send('El id del combo no existe');
                 } else {
-                    var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
+                    let buscarMenu = await Menu.findOne({ where: { id: MenuId } });
                     if (!buscarMenu) {
                         res.send('El id del menu no existe');
                     } else {
@@ -128,8 +129,8 @@ exports.Editar = async (req, res) => {
     if (!cantidad || !subTotal || !estado || !FacturaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarDetallefactura = await Tipo.findOne({ where: { id: id } });
-        if (!buscarDetallefacturas) {
+        var buscarDetallefactura = await DetalleFactura.findOne({ where: { id: id } });
+        if (!buscarDetallefactura) {
             res.send('El id del detalle no existe');
         } else {
             var buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
