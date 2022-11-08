@@ -213,8 +213,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { fecha, ISV, totalPagar, efectivo, cambio, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-    if (!fecha || !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId || !id) {
+    const { ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
+    if (!ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarFactura = await Factura.findOne({ where: { id: id } });
@@ -244,7 +244,7 @@ exports.Editar = async (req, res) => {
                                 buscarFactura.ISV = ISV;
                                 buscarFactura.totalPagar = totalPagar;
                                 buscarFactura.efectivo = efectivo;
-                                buscarFactura.cambio = cambio;
+                                buscarFactura.cambio = (efectivo - totalPagar);
                                 buscarFactura.EmpleadoId = EmpleadoId;
                                 buscarFactura.ClienteId = ClienteId;
                                 buscarFactura.FormaPagoId = FormaPagoId;

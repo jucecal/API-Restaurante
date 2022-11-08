@@ -57,10 +57,7 @@ exports.Listar = async (req, res) => {
     const listarReservaciones = await Reservaciones.findAll({
         attributes: [
             ['id', 'ID Reservacion'],
-            ['fechaHora', 'Fecha'],
-            ['SucursalId', 'ID Sucursal'],
-            ['ClienteId', 'ID Cliente'],
-            ['MesaId', 'ID Mesa']
+            ['fechaHora', 'Fecha']
         ],
         include: [
             {
@@ -96,10 +93,7 @@ exports.BuscarId = async (req, res) => {
         const listarReservaciones = await Reservaciones.findAll({
             attributes: [
                 ['id', 'ID Sucursal'],
-                ['fechaHora', 'Fecha y Hora'],
-                ['SucursalId', 'ID Sucursal'],
-                ['ClienteId', 'ID Cliente'],
-                ['MesaId', 'ID Mesa']
+                ['fechaHora', 'Fecha']
             ],
             where: {
                 id: id
