@@ -164,53 +164,61 @@ exports.buscarId = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { fecha, ISV, totalPagar, efectivo, cambio, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-    if (!fecha || !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });
-        if (!buscarEmpleado) {
-            res.send('El id del empleado no existe');
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+        const { fecha, ISV, totalPagar, efectivo, cambio, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
+        if (!fecha || !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarCliente = await Cliente.findOne({ where: { id: ClienteId } });
-            if (!buscarCliente) {
-                res.send('El id del cliente no existe');
+            var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });
+            if (!buscarEmpleado) {
+                res.send('El id del empleado no existe');
             } else {
-                var buscarFormaPago = await FormaPago.findOne({ where: { id: FormaPagoId } });
-                if (!buscarFormaPago) {
-                    res.send('El id de la forma de pago no existe');
+                var buscarCliente = await Cliente.findOne({ where: { id: ClienteId } });
+                if (!buscarCliente) {
+                    res.send('El id del cliente no existe');
                 } else {
-                    var buscarMesa = await Mesa.findOne({ where: { id: MesaId } });
-                    if (!buscarMesa) {
-                        res.send('El id de la mesa no existe');
+                    var buscarFormaPago = await FormaPago.findOne({ where: { id: FormaPagoId } });
+                    if (!buscarFormaPago) {
+                        res.send('El id de la forma de pago no existe');
                     } else {
-                        var buscarReservacion = await Reservacion.findOne({ where: { id: ReservacioneId } });
-                        if (!buscarReservacion) {
-                            res.send('El id de la reservacion no existe');
+                        var buscarMesa = await Mesa.findOne({ where: { id: MesaId } });
+                        if (!buscarMesa) {
+                            res.send('El id de la mesa no existe');
                         } else {
-                            await Factura.create({
-                                fecha,
-                                ISV,
-                                totalPagar,
-                                efectivo,
-                                cambio,
-                                EmpleadoId,
-                                ClienteId,
-                                FormaPagoId,
-                                MesaId,
-                                ReservacioneId
-                            }).then(data => {
-                                res.json({ msj: 'Registro guardado' });
-                            })
-                                .catch((er) => {
-                                    res.json({ msj: 'Error al guardar el registro' });
+                            var buscarReservacion = await Reservacion.findOne({ where: { id: ReservacioneId } });
+                            if (!buscarReservacion) {
+                                res.send('El id de la reservacion no existe');
+                            } else {
+                                await Factura.create({
+                                    fecha,
+                                    ISV,
+                                    totalPagar,
+                                    efectivo,
+                                    cambio,
+                                    EmpleadoId,
+                                    ClienteId,
+                                    FormaPagoId,
+                                    MesaId,
+                                    ReservacioneId
+                                }).then(data => {
+                                    res.json({ msj: 'Registro guardado' });
                                 })
+                                    .catch((er) => {
+                                        res.json({ msj: 'Error al guardar el registro' });
+                                    })
+                            }
                         }
                     }
                 }
             }
         }
+
     }
 }
 

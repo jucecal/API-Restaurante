@@ -29,12 +29,12 @@ ruta.get('/buscarNombre',
     controladorCombo.BuscarCombo);
 
 ruta.post('/guardar',
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del combo con una longitud de 3 - 50 caracteres'),
+    body('combo').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del combo con una longitud de 3 - 50 caracteres'),
     controladorCombo.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del combo con una longitud de 3 - 50 caracteres'),
+    body('combo').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del combo con una longitud de 3 - 50 caracteres'),
     controladorCombo.Editar);
 
 ruta.delete('/eliminar',

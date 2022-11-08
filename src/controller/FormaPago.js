@@ -48,10 +48,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFormaPago = await FormaPago.findAll({
         attributes: [
-
             ['id', 'ID Formas de Pago'], 
             ['formaPago', 'Forma de Pago']
-        ]
+        ],
     });
     res.json(listarFormaPago);
 }
@@ -79,8 +78,14 @@ exports.BuscarId = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { formaPago } = req.body;
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+        const { formaPago } = req.body;
     if (!formaPago) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -93,6 +98,9 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Error al guardar el registro' });
             })
     }
+
+    }
+  
 }
 
 exports.Editar = async (req, res) => {

@@ -12,6 +12,9 @@ ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorProveedor.buscarId);
 
+ruta.get('/buscarNombre',
+    controladorProveedor.BuscarNombre);
+
 ruta.post('/guardar',
     controladorProveedor.Guardar);
 

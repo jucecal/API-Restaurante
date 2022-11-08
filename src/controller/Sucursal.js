@@ -110,22 +110,30 @@ exports.buscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { nombre, ubicacion, telefono } = req.body;
-    if (!nombre || !ubicacion || !telefono) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await Sucursal.create({
-            nombre,
-            ubicacion,
-            telefono
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
-            })
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
     }
+    else {
+        console.log(req);
+        const { nombre, ubicacion, telefono } = req.body;
+        if (!nombre || !ubicacion || !telefono) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            await Sucursal.create({
+                nombre,
+                ubicacion,
+                telefono
+            }).then(data => {
+                res.json({ msj: 'Registro guardado' });
+            })
+                .catch((er) => {
+                    res.json({ msj: 'Error al guardar el registro' });
+                })
+        }
+    }
+
 }
 
 exports.Editar = async (req, res) => {

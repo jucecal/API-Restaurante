@@ -15,12 +15,12 @@ ruta.get('/buscarNombre',
     controladorInsumo.BuscarNombre);
 
 ruta.post('/guardar',
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre de la sucursal con una longitud de 3 - 50 caracteres'),
+    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del producto con una longitud de 3 - 50 caracteres'),
     controladorInsumo.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre de la sucursal con una longitud de 3 - 50 caracteres'),
+    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del producto con una longitud de 3 - 50 caracteres'),
     controladorInsumo.Editar);
 
 ruta.delete('/eliminar',

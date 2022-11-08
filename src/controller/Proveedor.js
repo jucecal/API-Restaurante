@@ -46,9 +46,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarProveedor = await Proveedor.findAll({
         attributes: [
-            ['id', 'ID Proveedor'], 
-            ['proveedor', 'Proveedor'], 
-            ['nombreContacto', 'Contacto'], 
+            ['id', 'ID Proveedor'],
+            ['proveedor', 'Proveedor'],
+            ['nombreContacto', 'Contacto'],
             ['telefono', 'Teléfono']
         ]
     });
@@ -64,12 +64,12 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarProveedor = await Proveedor.findAll({
             attributes: [
-                ['id', 'ID Proveedor'], 
-                ['proveedor', 'Proveedor'], 
-                ['nombreContacto', 'Contacto'], 
+                ['id', 'ID Proveedor'],
+                ['proveedor', 'Proveedor'],
+                ['nombreContacto', 'Contacto'],
                 ['telefono', 'Teléfono']
             ],
-            
+
             where: {
                 id
             }
@@ -78,9 +78,39 @@ exports.buscarId = async (req, res) => {
     }
 }
 
+exports.BuscarNombre = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { proveedor } = req.query;
+        const listarProveedor = await Proveedor.findAll({
+            attributes: [
+                ['id', 'ID Proveedor'],
+                ['proveedor', 'Proveedor'],
+                ['nombreContacto', 'Contacto'],
+                ['telefono', 'Teléfono']
+            ],
+            where: {
+                proveedor: {
+                    [Op.like]: proveedor
+                }
+            },
+        });
+        res.json(listarProveedor);
+    }
+}
+
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { proveedor, nombreContacto, telefono } = req.body;
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
+        console.log(req);
+         const { proveedor, nombreContacto, telefono } = req.body;
     if (!Proveedor || !nombreContacto || !telefono) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -95,6 +125,9 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Error al guardar el registro' });
             })
     }
+
+    }
+    
 }
 
 exports.Editar = async (req, res) => {

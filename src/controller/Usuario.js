@@ -94,31 +94,36 @@ exports.BuscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        const { nombre } = req.query;
-        const listarUsuario = await Usuario.findAll({
-            attributes: [
-                ['id', 'ID Usuario'],
-                ['nombre', 'Nombre'],
-                ['correo', 'Correo'],
-                ['password', 'Contraseña'],
-                ['tipo', 'Tipo'],
-                ['estado', 'Estado'],
-                ['codigo', 'Codigo'],
-                ['fallido', 'Fallido']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
-            },
-        });
-        res.json(listarUsuario);
+        var buscarUsuario = await Usuario.findOne({ where: { nombre: nombre } });
+        if (!buscarUsuario) {
+            res.send('El nombre del usuario no existe');
+        } else {
+            const listarUsuario = await Usuario.findAll({
+                attributes: [
+                    ['id', 'ID Usuario'],
+                    ['nombre', 'Nombre'],
+                    ['correo', 'Correo'],
+                    ['password', 'Contraseña'],
+                    ['tipo', 'Tipo'],
+                    ['estado', 'Estado'],
+                    ['codigo', 'Codigo'],
+                    ['fallido', 'Fallido']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
+                },
+            });
+            res.json(listarUsuario);
+        }
     }
 }
 
@@ -127,10 +132,9 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-
     } else {
         const { nombre, correo, password, tipo, estado } = req.body;
-        if (!nombre || !correo || !password || !tipo || !estado) {
+        if (!nombre || !correo || !password ) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Usuario.create({
@@ -157,7 +161,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { nombre, correo, password, tipo, estado } = req.body;
-    if (!nombre || !correo || !password || !tipo || !estado || !id) {
+    if (!nombre || !correo || !password || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarUsuario = await Usuario.findOne({ where: { id: id } });

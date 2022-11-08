@@ -202,43 +202,51 @@ exports.BuscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
-        if (!buscarCargo) {
-            res.send('El id del cargo no existe');
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+        const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+        if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
-            if (!buscarSucursal) {
-                res.send('El id de la sucursal no existe');
+            var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
+            if (!buscarCargo) {
+                res.send('El id del cargo no existe');
             } else {
-                var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
-                if (!buscarUsuario) {
-                    res.send('El id del usuario no existe');
+                var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
+                if (!buscarSucursal) {
+                    res.send('El id de la sucursal no existe');
                 } else {
-                    await Empleado.create({
-                        nombre,
-                        apellido,
-                        telefono,
-                        fechaNacimiento,
-                        direccion,
-                        CargoId,
-                        SucursalId,
-                        UsuarioId
-                    }).then(data => {
-                        res.json({ msj: 'Registro guardado' });
-                    })
-                        .catch((er) => {
-                            res.json({ msj: 'Error al guardar el registro' });
-                            console.log(er);
+                    var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
+                    if (!buscarUsuario) {
+                        res.send('El id del usuario no existe');
+                    } else {
+                        await Empleado.create({
+                            nombre,
+                            apellido,
+                            telefono,
+                            fechaNacimiento,
+                            direccion,
+                            CargoId,
+                            SucursalId,
+                            UsuarioId
+                        }).then(data => {
+                            res.json({ msj: 'Registro guardado' });
                         })
+                            .catch((er) => {
+                                res.json({ msj: 'Error al guardar el registro' });
+                                console.log(er);
+                            })
+                    }
                 }
             }
         }
     }
+   
 }
 
 exports.Editar = async (req, res) => {
