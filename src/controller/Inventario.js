@@ -38,7 +38,19 @@ exports.Inicio = (req, res) => {
     res.json(moduloInventario);
 }
 exports.Listar = async (req, res) => {
-    const listarInventario = await Inventario.findAll();
+    const listarInventario = await Inventario.findAll({
+        attributes: [
+            ['stock', 'Stock'],
+            'InsumoId', 
+            'SucursalId'
+        ],
+        include: [{
+            model: Sucursal, Insumo,
+            attributes: [
+                ['nombre', 'Sucursal']
+            ]
+        }]
+    });
     res.json(listarInventario);
 }
 

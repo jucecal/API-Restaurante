@@ -76,7 +76,6 @@ exports.BuscarId = async (req, res) => {
         });
         res.json(listarCargos);
     }
-
 }
 
 exports.BuscarNombre = async (req, res) => {

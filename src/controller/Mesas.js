@@ -36,9 +36,50 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloMesas);
 }
+
 exports.Listar = async (req, res) => {
-    const listarMesas = await Mesas.findAll();
+    const listarMesas = await Mesas.findAll({
+        attributes: [
+            ['id', 'Mesa'], 
+            ['capacidad', 'Capacidad'],
+            'SucursalId'
+        ],
+        include: [{
+            model: Sucursal,
+            attributes: [
+                ['nombre', 'Sucursal']
+            ]
+        }]
+    });
     res.json(listarMesas);
+}
+
+exports.BuscarId = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { id } = req.query;
+        const listarMesas = await Mesas.findAll({
+            attributes: [
+                ['id', 'Mesa'], 
+                ['capacidad', 'Capacidad'],
+                'SucursalId'
+            ],
+            where: {
+                id: id
+            },
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Sucursal']
+                ]
+            }]
+        });
+        res.json(listarMesas);
+    }
 }
 
 exports.Guardar = async (req, res) => {
