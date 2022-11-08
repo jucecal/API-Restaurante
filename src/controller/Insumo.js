@@ -149,14 +149,13 @@ exports.BuscarNombre = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         console.log(req);
         const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
-        if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !TipoId || !ProveedorId) {
+        if (!nombre || !marca || !precioUnitario || !TipoId || !ProveedorId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarProveedor = await Proveedor.findOne({ where: { id: ProveedorId } });
@@ -185,13 +184,13 @@ exports.Guardar = async (req, res) => {
         }
 
     }
-   
+
 }
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
-    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !ProveedorId || TipoId || !id) {
+    if (!nombre || !marca || !precioUnitario || !ProveedorId || !TipoId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarInsumo = await Insumo.findOne({ where: { id: id } });
@@ -202,7 +201,7 @@ exports.Editar = async (req, res) => {
             if (!buscarProveedor) {
                 res.send('El id del proveedor no existe');
             } else {
-                var buscarTipo = await Tipo.findOne({ where: { id: Tipo } });
+                var buscarTipo = await Tipo.findOne({ where: { id: TipoId } });
                 if (!buscarTipo) {
                     res.send('El id del tipo de producto no existe');
                 } else {
