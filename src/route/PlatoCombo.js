@@ -7,11 +7,6 @@ ruta.get('/', controladorPxCombo.Inicio);
 
 ruta.get('/listar', controladorPxCombo.Listar);
 
-ruta.get('/buscarId',
-    query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    query('MenuId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    controladorPxCombo.buscarId);
-
 ruta.post('/guardar',
     query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     query('MenuId').isInt().withMessage('Solo se aceptan valores enteros para el id'),
