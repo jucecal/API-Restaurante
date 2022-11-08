@@ -9,6 +9,8 @@ const { request } = require('express');
 const { Op, Model } = require('sequelize');
 const { now } = require('moment');
 
+
+
 exports.Inicio = (req, res) => {
     const moduloFactura = {
         modulo: 'facturas',
