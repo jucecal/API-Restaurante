@@ -38,7 +38,14 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarSucursal = await Sucursal.findAll();
+    const listarSucursal = await Sucursal.findAll({
+        attributes: [
+            ['id', 'ID Sucursal'], 
+            ['nombre', 'Nombre'], 
+            ['ubicacion', 'Ubicación'], 
+            ['telefono', 'Teléfono']
+        ]
+    });
     res.json(listarSucursal);
 }
 
