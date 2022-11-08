@@ -72,8 +72,14 @@ exports.buscarId = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { ComboId, MenuId } = req.body;
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+        const { ComboId, MenuId } = req.body;
     if (!ComboId || !MenuId) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -97,6 +103,9 @@ exports.Guardar = async (req, res) => {
             }
         }
     }
+
+    }
+    
 }
 
 exports.Editar = async (req, res) => {

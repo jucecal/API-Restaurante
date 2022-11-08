@@ -85,8 +85,14 @@ exports.buscarId = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { proveedor, nombreContacto, telefono } = req.body;
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+         const { proveedor, nombreContacto, telefono } = req.body;
     if (!Proveedor || !nombreContacto || !telefono) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -101,6 +107,9 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Error al guardar el registro' });
             })
     }
+
+    }
+    
 }
 
 exports.Editar = async (req, res) => {

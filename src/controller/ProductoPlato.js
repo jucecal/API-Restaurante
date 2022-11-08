@@ -96,7 +96,13 @@ exports.buscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
     const { cantidad, MenuId, InsumoId } = req.body;
     if (!cantidad || !MenuId || !InsumoId) {
         res.json({ msj: 'Debe enviar los datos completos' });
@@ -122,6 +128,10 @@ exports.Guardar = async (req, res) => {
             }
         }
     }
+
+
+    }
+   
 }
 
 exports.Editar = async (req, res) => {
