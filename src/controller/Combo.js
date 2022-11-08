@@ -51,8 +51,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarCombo = await Combo.findAll({
         attributes: [
-            ['id', 'ID Combo'], 
-            ['combo', 'Nombre'], 
+            ['id', 'ID Combo'],
+            ['combo', 'Nombre'],
             ['precio', 'Precio']
         ]
     });
@@ -68,8 +68,8 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarCombo = await Combo.findOne({
             attributes: [
-                ['id', 'ID Combo'], 
-                ['combo', 'Nombre'], 
+                ['id', 'ID Combo'],
+                ['combo', 'Nombre'],
                 ['precio', 'Precio']
             ],
             where: {
@@ -90,13 +90,13 @@ exports.BuscarCombo = async (req, res) => {
         const { combo } = req.query;
         const listarCombo = await Combo.findOne({
             attributes: [
-                ['id', 'ID Combo'], 
-                ['combo', 'Nombre'], 
+                ['id', 'ID Combo'],
+                ['combo', 'Nombre'],
                 ['precio', 'Precio']
             ],
             where: {
-                combo: { 
-                    [Op.like]: combo 
+                combo: {
+                    [Op.like]: combo
                 }
             },
         });
@@ -109,23 +109,25 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
+
     }
-    else{
+    else {
+
         console.log(req);
         const { combo, precio } = req.body;
-    if (!combo || !precio) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await Combo.create({
-            combo,
-            precio
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
+        if (!combo || !precio) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            await Combo.create({
+                combo,
+                precio
+            }).then(data => {
+                res.json({ msj: 'Registro guardado' });
             })
-    }
+                .catch((er) => {
+                    res.json({ msj: 'Error al guardar el registro' });
+                })
+        }
     }
 
 }
