@@ -40,7 +40,14 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarPxPlato = await ProductoPlato.findAll();
+    const listarPxPlato = await ProductoPlato.findAll({
+        attributes: [
+            ['id', 'ID Producto en Plato'], 
+            ['cantidad', 'Cantidad'], 
+            ['MenuId', 'ID Mesa'], 
+            ['InsumoId', 'ID Insumo']
+        ]
+    });
     res.json(listarPxPlato);
 }
 
@@ -52,6 +59,12 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarPxPlato = await ProductoPlato.findAll({
+            attributes: [
+                ['id', 'ID Producto en Plato'], 
+                ['cantidad', 'Cantidad'], 
+                ['MenuId', 'ID Mesa'], 
+                ['InsumoId', 'ID Insumo']
+            ],
             where: {
                 id
             }

@@ -40,7 +40,13 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarPxCombo = await PlatoCombo.findAll();
+    const listarPxCombo = await PlatoCombo.findAll({
+        attributes: [
+            ['id', 'ID Platos y Combos'],
+            ['ComboId', 'ID Combo'], 
+            ['MenuId', 'Cantidad']
+        ]
+    });
     res.json(listarPxCombo);
 }
 
@@ -52,6 +58,11 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarPxCombo = await PlatoCombo.findAll({
+            attributes: [
+                ['id', 'ID Platos y Combos'],
+                ['ComboId', 'ID Combo'], 
+                ['MenuId', 'Cantidad']
+            ],
             where: {
                 id
             }

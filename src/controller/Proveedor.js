@@ -38,7 +38,20 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarProveedor = await Proveedor.findAll();
+    const listarProveedor = await Proveedor.findAll({
+        attributes: [
+            ['id', 'ID Proveedor'], 
+            ['proveedor', 'Proveedor'], 
+            ['nombreContacto', 'Contacto'], 
+            ['telefono', 'Teléfono']
+        ],
+        include: [{
+            model: Sucursal,
+            attributes: [
+                ['nombre', 'Sucursal']
+            ]
+        }]
+    });
     res.json(listarProveedor);
 }
 
@@ -50,9 +63,22 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarProveedor = await Proveedor.findAll({
+            attributes: [
+                ['id', 'ID Proveedor'], 
+                ['proveedor', 'Proveedor'], 
+                ['nombreContacto', 'Contacto'], 
+                ['telefono', 'Teléfono']
+            ],
+            
             where: {
                 id
-            }
+            },
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Sucursal']
+                ]
+            }]
         });
         res.json(listarProveedor);
     }
