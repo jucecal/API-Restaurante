@@ -48,7 +48,6 @@ exports.Listar = async (req, res) => {
         attributes: [
             ['id', 'Mesa'],
             ['capacidad', 'Capacidad'],
-            'SucursalId'
         ],
         include: [{
             model: Sucursal,
@@ -71,7 +70,6 @@ exports.BuscarId = async (req, res) => {
             attributes: [
                 ['id', 'Mesa'],
                 ['capacidad', 'Capacidad'],
-                'SucursalId'
             ],
             where: {
                 id: id

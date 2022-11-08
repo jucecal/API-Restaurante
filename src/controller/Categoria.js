@@ -53,8 +53,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll({
         attributes: [
-            ['id', 'Código Categoria'],
-            ['categoria', 'Nombre Categoria']
+            ['id', 'ID Categoria'],
+            ['categoria', 'Categoria']
         ]
     });
     res.json(listarCategoria);
@@ -69,8 +69,8 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarCategoria = await Categoria.findAll({
             attributes: [
-                ['id', 'Código Categoria'], 
-                ['categoria', 'Nombre Categoria']
+                ['id', 'ID Categoria'],
+                ['categoria', 'Categoria']
             ],
             where: {
                 id: id
@@ -90,8 +90,8 @@ exports.BuscarCategoria = async (req, res) => {
         const { categoria } = req.query;
         const listarCategoria = await Categoria.findAll({
             attributes: [
-                ['id', 'Código Categoria'], 
-                ['categoria', 'Nombre Categoria']
+                ['id', 'ID Categoria'],
+                ['categoria', 'Categoria']
             ],
             where: {
                 categoria: { 

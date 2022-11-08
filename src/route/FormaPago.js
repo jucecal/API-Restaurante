@@ -13,9 +13,11 @@ ruta.get('/buscarId',
     controladorFormaPago.BuscarId);
 
 ruta.post('/guardar',
+    body('formaPago').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre de la forma de pago con una longitud de 3 - 50 caracteres'),
     controladorFormaPago.Guardar);
 
 ruta.put('/editar',
+    body('formaPago').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre de la forma de pago con una longitud de 3 - 50 caracteres'),
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorFormaPago.Editar);
 
