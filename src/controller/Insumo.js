@@ -148,35 +148,44 @@ exports.BuscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
-    console.log(req);
-    const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
-    if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !TipoId || !ProveedorId) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        var buscarProveedor = await Proveedor.findOne({ where: { id: ProveedorId } });
-        if (!buscarProveedor) {
-            res.send('El id del proveedor no existe');
+    const validacion = validationResult(req);
+    if(!validationResult.isEmpty()){
+        console.log(validacion.errors);
+        res.json({msj: 'errores en los datos enviados'})
+    }
+    else{
+        console.log(req);
+        const { nombre, marca, fechaVencimiento, precioUnitario, TipoId, ProveedorId } = req.body;
+        if (!nombre || !marca || !fechaVencimiento || !precioUnitario || !TipoId || !ProveedorId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarTipo = await Tipo.findOne({ where: { id: TipoId } });
-            if (!buscarTipo) {
-                res.send('El id del tipo de producto no existe');
+            var buscarProveedor = await Proveedor.findOne({ where: { id: ProveedorId } });
+            if (!buscarProveedor) {
+                res.send('El id del proveedor no existe');
             } else {
-                await Insumo.create({
-                    nombre,
-                    marca,
-                    fechaVencimiento,
-                    precioUnitario,
-                    TipoId,
-                    ProveedorId
-                }).then(data => {
-                    res.json({ msj: 'Registro guardado' });
-                })
-                    .catch((er) => {
-                        res.json({ msj: 'Error al guardar el registro' });
+                var buscarTipo = await Tipo.findOne({ where: { id: TipoId } });
+                if (!buscarTipo) {
+                    res.send('El id del tipo de producto no existe');
+                } else {
+                    await Insumo.create({
+                        nombre,
+                        marca,
+                        fechaVencimiento,
+                        precioUnitario,
+                        TipoId,
+                        ProveedorId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
                     })
+                        .catch((er) => {
+                            res.json({ msj: 'Error al guardar el registro' });
+                        })
+                }
             }
         }
+
     }
+   
 }
 
 exports.Editar = async (req, res) => {

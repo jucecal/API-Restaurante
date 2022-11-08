@@ -97,6 +97,7 @@ exports.buscarNombre = async (req, res) => {
 }
 
 exports.Guardar = async (req, res) => {
+    
     console.log(req);
     const { nombre, ubicacion, telefono } = req.body;
     if (!nombre || !ubicacion || !telefono) {
