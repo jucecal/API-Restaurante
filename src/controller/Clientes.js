@@ -64,8 +64,7 @@ exports.Listar = async (req, res) => {
                 ['nombre', 'Nombre de Usuario'],
                 ['estado', 'Estado']
             ]
-        }
-        ]
+        }]
     });
     res.json(listarClientes);
 }
@@ -133,8 +132,7 @@ exports.BuscarNombre = async (req, res) => {
                     ['nombre', 'Nombre de Usuario'],
                     ['estado', 'Estado']
                 ]
-            }
-            ]
+            }]
         });
         res.json(listarClientes);
     }
