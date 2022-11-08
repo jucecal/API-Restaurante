@@ -74,17 +74,18 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarMenu = await Menu.findAll({
         attributes: [
-            ['id', 'Código Producto'], 
-            ['nombre', 'Nombre Producto'], 
-            ['precio', 'Precio Producto'], 
-            ['descripcion', 'Descripción Producto'], 
-            ['imagen', 'Imagen Producto'], ['CategoriumId', 'Código Categoría']
+            ['id', 'ID Producto'],
+            ['nombre', 'Nombre'],
+            ['precio', 'Precio'],
+            ['descripcion', 'Descripción Producto'],
+            ['imagen', 'Imagen Producto'],
+            ['CategoriumId', 'ID Categoría']
         ],
-        include: [{ 
-            model: Categoria, 
+        include: [{
+            model: Categoria,
             attributes: [
                 ['categoria', 'Categoría Producto']
-            ] 
+            ]
         }]
     });
     res.json(listarMenu);
@@ -99,20 +100,21 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
-                ['id', 'Código Producto'], 
-                ['nombre', 'Nombre Producto'], 
-                ['precio', 'Precio Producto'], 
-                ['descripcion', 'Descripción Producto'], 
-                ['imagen', 'Imagen Producto'], 
-                ['CategoriumId', 'Código Categoría']],
+                ['id', 'ID Producto'],
+                ['nombre', 'Nombre'],
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripción Producto'],
+                ['imagen', 'Imagen Producto'],
+                ['CategoriumId', 'ID Categoría']
+            ],
             where: {
                 id: id
             },
-            include: [{ 
-                model: Categoria, 
+            include: [{
+                model: Categoria,
                 attributes: [
                     ['categoria', 'Categoría Producto']
-                ] 
+                ]
             }]
         });
         res.json(listarMenu);
@@ -129,23 +131,23 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
-                ['id', 'Código Producto'], 
-                ['nombre', 'Nombre Producto'], 
-                ['precio', 'Precio Producto'], 
-                ['descripcion', 'Descripción Producto'], 
-                ['imagen', 'Imagen Producto'], 
-                ['CategoriumId', 'Código Categoría']
+                ['id', 'ID Producto'],
+                ['nombre', 'Nombre'],
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripción Producto'],
+                ['imagen', 'Imagen Producto'],
+                ['CategoriumId', 'ID Categoría']
             ],
             where: {
-                nombre: { 
-                    [Op.like]: nombre 
+                nombre: {
+                    [Op.like]: nombre
                 }
             },
-            include: [{ 
-                model: Categoria, 
+            include: [{
+                model: Categoria,
                 attributes: [
                     ['categoria', 'Categoría Producto']
-                ] 
+                ]
             }]
         });
         res.json(listarMenu);
@@ -162,22 +164,23 @@ exports.BuscarPorCategoria = async (req, res) => {
         const { nombre } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
-                ['id', 'Código Producto'], 
-                ['nombre', 'Nombre Producto'], 
-                ['precio', 'Precio Producto'], 
-                ['descripcion', 'Descripción Producto'], 
-                ['imagen', 'Imagen Producto'], 
-                ['CategoriumId', 'Código Categoría']],
-            include: [{ 
-                model: Categoria, 
+                ['id', 'ID Producto'],
+                ['nombre', 'Nombre'],
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripción Producto'],
+                ['imagen', 'Imagen Producto'],
+                ['CategoriumId', 'ID Categoría']
+            ],
+            include: [{
+                model: Categoria,
                 attributes: [
                     ['categoria', 'Categoría Producto']
-                ], 
-                where: { 
+                ],
+                where: {
                     Categoria: {
-                        [Op.like]: nombre 
-                    } 
-                } 
+                        [Op.like]: nombre
+                    }
+                }
             }]
         });
         res.json(listarMenu);
