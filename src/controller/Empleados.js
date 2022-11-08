@@ -33,6 +33,24 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+             {
+                ruta: '/api/empleados/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/empleado/buscarNombre',
+                descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/empleado/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
             {
                 ruta: '/api/empleados/editar',
                 descripcion: 'Modifica los datos de un empleado',
@@ -185,11 +203,10 @@ exports.BuscarNombre = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         console.log(req);
         const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
         if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {

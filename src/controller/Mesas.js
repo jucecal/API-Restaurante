@@ -27,6 +27,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/cargos/buscarId',
+                descripcion: 'Muestra una mesa en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/mesas/eliminar',
                 descripcion: 'Elimina las Mesas',
                 metodo: 'DELETE',
@@ -58,9 +64,8 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { id } = req.query;
         const listarMesas = await Mesas.findAll({
             attributes: [

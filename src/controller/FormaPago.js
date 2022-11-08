@@ -20,6 +20,14 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+               {
+                ruta: '/api/formaspago/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+
             {
                 ruta: '/api/formaspago/editar',
                 descripcion: 'Modifica los datos de una formas de pago',
@@ -51,6 +59,9 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
+        res.json({ msj: 'Errores en los datos enviados' });
+    } if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
@@ -71,11 +82,10 @@ exports.BuscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else{
         console.log(req);
         const { formaPago } = req.body;
     if (!formaPago) {

@@ -23,6 +23,20 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/insumos/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/cargos/buscarNombre',
+                descripcion: 'Muestra el o los nombres que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+
+            {
                 ruta: '/api/insumos/editar',
                 descripcion: 'Modifica los datos de un insumo',
                 metodo: 'PUT',
@@ -110,9 +124,8 @@ exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre } = req.query;
         const listarInsumo = await Insumo.findAll({
             attributes: [

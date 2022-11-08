@@ -61,13 +61,12 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { id } = req.query;
         const listarCargos = await Cargo.findAll({
             attributes: [
-                ['id', 'Código Cargo'], 
+                ['id', 'Código Cargo'],
                 ['nombre', 'Nombre Cargo']
             ],
             where: {
@@ -82,18 +81,17 @@ exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre } = req.query;
         const listarCargos = await Cargo.findAll({
             attributes: [
-                ['id', 'Código Cargo'], 
+                ['id', 'Código Cargo'],
                 ['nombre', 'Nombre Cargo']
             ],
             where: {
-                nombre: { 
-                    [Op.like]: nombre 
+                nombre: {
+                    [Op.like]: nombre
                 }
             }
         });
@@ -105,9 +103,8 @@ exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre } = req.body;
 
         if (!nombre) {
@@ -137,7 +134,6 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { nombre } = req.body;
-
     if (!nombre || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     }
@@ -164,7 +160,6 @@ exports.Editar = async (req, res) => {
 
 exports.Eliminar = async (req, res) => {
     const { id } = req.query;
-
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
     }

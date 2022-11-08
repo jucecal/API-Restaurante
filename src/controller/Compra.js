@@ -44,6 +44,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/compras/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/compras/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
@@ -156,6 +162,9 @@ exports.BuscarPorSucursal = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
+        res.json({ msj: 'Errores en los datos enviados' });
+    } if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
@@ -188,9 +197,8 @@ exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { fecha, totalPagar, SucursalId } = req.body;
         if (!fecha || !totalPagar || !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })

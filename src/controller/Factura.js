@@ -26,6 +26,14 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+               {
+                ruta: '/api/facturas/buscarId',
+                descripcion: 'Muestra un factura en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+
             {
                 ruta: '/api/facturas/editar',
                 descripcion: 'Modifica los datos de una factura',
@@ -157,11 +165,10 @@ exports.buscarId = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else{
         console.log(req);
         const { fecha, ISV, totalPagar, efectivo, cambio, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
         if (!fecha || !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {

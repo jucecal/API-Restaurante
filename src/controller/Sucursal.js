@@ -21,6 +21,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/sucursales/buscarId',
+                descripcion: 'Muestra un surcursal en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
+                ruta: '/api/surcursales/buscarNombre',
+                descripcion: 'Muestra el o los sucursales que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/sucursales/editar',
                 descripcion: 'Modifica los datos de una sucursal',
                 metodo: 'PUT',
@@ -100,9 +113,8 @@ exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         console.log(req);
         const { nombre, ubicacion, telefono } = req.body;
         if (!nombre || !ubicacion || !telefono) {

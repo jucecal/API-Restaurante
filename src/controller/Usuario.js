@@ -27,6 +27,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/cargos/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
+                ruta: '/api/cargos/buscarNombre',
+                descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/usuarios/eliminar',
                 descripcion: 'Elimina los usuarios',
                 metodo: 'DELETE',
@@ -57,9 +70,8 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { id } = req.query;
         const listarUsuario = await Usuario.findAll({
             attributes: [
@@ -85,9 +97,8 @@ exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         var buscarUsuario = await Usuario.findOne({ where: { nombre: nombre } });
         if (!buscarUsuario) {
             res.send('El nombre del usuario no existe');

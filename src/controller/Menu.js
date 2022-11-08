@@ -37,6 +37,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/menu/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/menu/buscarporCategoria',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
                 metodo: 'GET',
@@ -88,9 +94,8 @@ exports.BuscarId = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { id } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
@@ -119,9 +124,8 @@ exports.BuscarNombre = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
@@ -153,9 +157,8 @@ exports.BuscarPorCategoria = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
@@ -186,9 +189,8 @@ exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         const { nombre, precio, descripcion, CategoriumId } = req.body;
         if (!nombre || !precio || !descripcion || !CategoriumId) {
             res.json({ msj: 'Debe enviar los datos completos' })

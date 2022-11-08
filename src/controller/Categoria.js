@@ -15,6 +15,18 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/categoria/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/categoria/buscarCategoria',
+                descripcion: 'Muestra una categoria en específico según la categoria indicada',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/categorias/guardar',
                 descripcion: 'Guardar los datos de una categoria',
                 metodo: 'POST',
@@ -93,11 +105,10 @@ exports.BuscarCategoria = async (req, res) => {
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
-    if(!validationResult.isEmpty()){
+    if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({msj: 'errores en los datos enviados'})
-    }
-    else{
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
         console.log(req);
         const { categoria } = req.body;
     if (!categoria) {

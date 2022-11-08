@@ -3,6 +3,7 @@ const Clientes = require('../model/Clientes');
 const Mesas = require('../model/Mesas');
 const Sucursal = require('../model/Sucursal');
 const { validationResult } = require('express-validator');
+const { Op } = require('sequelize');
 const { request } = require('express');
 
 exports.Inicio = (req, res) => {
@@ -23,6 +24,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/reservaciones/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/reservaciones/buscarNombre',
+                descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
                 ruta: '/api/reservaciones/editar',
                 descripcion: 'Modifica las Reservaciones',
                 metodo: 'PUT',
@@ -42,9 +56,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarReservaciones = await Reservaciones.findAll({
         attributes: [
-            ['id', 'ID Sucursal'],
+            ['id', 'ID Reservacion'],
             ['fechaHora', 'Fecha y Hora'],
-            ['SucursalId', 'Sucursal'],
+            ['SucursalId', 'ID Sucursal'],
             ['ClienteId', 'ID Cliente'],
             ['MesaId', 'ID Mesa']
         ],
@@ -79,11 +93,11 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarReservaciones = await Clientes.findAll({
+        const listarReservaciones = await Reservaciones.findAll({
             attributes: [
                 ['id', 'ID Sucursal'],
                 ['fechaHora', 'Fecha y Hora'],
-                ['SucursalId', 'Sucursal'],
+                ['SucursalId', 'ID Sucursal'],
                 ['ClienteId', 'ID Cliente'],
                 ['MesaId', 'ID Mesa']
             ],
@@ -114,53 +128,6 @@ exports.BuscarId = async (req, res) => {
         res.json(listarReservaciones);
     }
 }
-
-exports.BuscarNombre = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
-        const { nombre } = req.query;
-        const listarClientes = await Clientes.findAll({
-            attributes: [
-                ['id', 'ID Sucursal'],
-                ['fechaHora', 'Fecha y Hora'],
-                ['SucursalId', 'Sucursal'],
-                ['ClienteId', 'ID Cliente'],
-                ['MesaId', 'ID Mesa']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
-            },
-            include: [
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal']
-                    ]
-                },
-                {
-                    model: Clientes,
-                    attributes: [
-                        ['nombre', 'Cliente']
-                    ]
-                },
-                {
-                    model: Mesas,
-                    attributes: [
-                        ['id', 'Mesa']
-                    ]
-                },
-            ]
-        });
-        res.json(listarClientes);
-    }
-}
-
 
 exports.Guardar = async (req, res) => {
     const validacion = validationResult(req);
