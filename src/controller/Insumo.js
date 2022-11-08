@@ -60,9 +60,7 @@ exports.Listar = async (req, res) => {
             ['nombre', 'Nombre'],
             ['marca', 'Marca'],
             ['fechaVencimiento', 'Fecha de Vencimiento'],
-            ['precioUnitario', 'Precio Unitario'],
-            ['TipoId', 'ID Tipo'],
-            ['ProveedorId', 'ID Proveedor']
+            ['precioUnitario', 'Precio Unitario']
         ],
         include: [{
             model: Proveedor,
@@ -95,8 +93,6 @@ exports.buscarId = async (req, res) => {
                 ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
                 ['precioUnitario', 'Precio Unitario'],
-                ['TipoId', 'ID Tipo'],
-                ['ProveedorId', 'ID Proveedor']
             ],
 
             where: {
@@ -134,8 +130,6 @@ exports.BuscarNombre = async (req, res) => {
                 ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
                 ['precioUnitario', 'Precio Unitario'],
-                'ProveedorId',
-                'TipoId'
             ],
             where: {
                 nombre: {
