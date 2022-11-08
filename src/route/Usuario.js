@@ -7,6 +7,12 @@ ruta.get('/', controladorUsuario.Inicio);
 
 ruta.get('/listar', controladorUsuario.Listar);
 
+ruta.get('/buscarId',
+    controladorUsuario.BuscarId)
+
+ruta.get('/buscarNombre',
+    controladorUsuario.BuscarNombre)
+
 ruta.post('/guardar', 
     body('nombre'), 
     controladorUsuario.Guardar);

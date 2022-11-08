@@ -28,8 +28,9 @@ const Usuario = db.define(
         },
 
         tipo: {
-            type: DataTypes.STRING(50),
-            allowNull: false
+            type: DataTypes.ENUM('CLI', 'EMP'),
+            allowNull: false,
+            defaultValue: 'CLI'
         },
 
         codigo: { 

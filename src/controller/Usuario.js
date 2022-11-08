@@ -1,5 +1,6 @@
 const Usuario = require('../model/Usuario');
 const { validationResult } = require('express-validator');
+const { Op } = require('sequelize');
 const { request } = require('express');
 
 exports.Inicio = (req, res) => {
@@ -37,8 +38,75 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarUsuario = await Usuario.findAll();
+    const listarUsuario = await Usuario.findAll({
+        attributes: [
+        ['id', 'ID Usuario'], 
+        ['nombre', 'Nombre'], 
+        ['correo', 'Correo'], 
+        ['password', 'Contraseña'], 
+        ['tipo', 'Tipo'], 
+        ['estado', 'Estado'], 
+        ['codigo', 'Codigo'], 
+        ['fallido', 'Fallido']
+    ],
+    });
     res.json(listarUsuario);
+}
+
+exports.BuscarId = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { id } = req.query;
+        const listarUsuario = await Usuario.findAll({
+            attributes: [
+                ['id', 'ID Usuario'], 
+                ['nombre', 'Nombre'], 
+                ['correo', 'Correo'], 
+                ['password', 'Contraseña'], 
+                ['tipo', 'Tipo'], 
+                ['estado', 'Estado'], 
+                ['codigo', 'Codigo'], 
+                ['fallido', 'Fallido']
+            ],
+            where: {
+                id: id
+            },
+        });
+        res.json(listarUsuario);
+    }
+}
+
+exports.BuscarNombre = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombre } = req.query;
+        const listarUsuario = await Usuario.findAll({
+            attributes: [
+                ['id', 'ID Usuario'], 
+                ['nombre', 'Nombre'], 
+                ['correo', 'Correo'], 
+                ['password', 'Contraseña'], 
+                ['tipo', 'Tipo'], 
+                ['estado', 'Estado'], 
+                ['codigo', 'Codigo'], 
+                ['fallido', 'Fallido']
+            ],
+            where: {
+                nombre: {
+                    [Op.like]: nombre
+                }
+            },
+        });
+        res.json(listarUsuario);
+    }
 }
 
 exports.Guardar = async (req, res) => {
@@ -48,16 +116,16 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
 
     } else {
-        const { nombre, correo, password, tipo} = req.body;
-        //console.log(nombre, correo, password, tipo);
-        if (!nombre || !correo || !password || !tipo) {
+        const { nombre, correo, password, tipo, estado } = req.body;
+        if (!nombre || !correo || !password || !tipo || !estado) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Usuario.create({
-                nombre: nombre,
-                correo: correo,
-                password: password,
-                tipo: tipo
+                nombre,
+                correo,
+                password,
+                tipo,
+                estado
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
             })
@@ -75,8 +143,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, correo, password, tipo } = req.body;
-    if (!nombre || !correo || !password || !tipo || !id) {
+    const { nombre, correo, password, tipo, estado } = req.body;
+    if (!nombre || !correo || !password || !tipo || !estado || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarUsuario = await Usuario.findOne({ where: { id: id } });
@@ -87,6 +155,7 @@ exports.Editar = async (req, res) => {
             buscarUsuario.correo = correo;
             buscarUsuario.password = password;
             buscarUsuario.tipo = tipo;
+            buscarUsuario.estado = estado;
             await buscarUsuario.save()
                 .then((data) => {
                     console.log(data);
