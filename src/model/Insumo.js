@@ -31,7 +31,7 @@ const Insumos = db.define(
             validate: {
                 isDate: true,
                 notEmpty: true,
-                isBefore: today.format('YYYY-MM-DD')
+                isAfter: today.format('YYYY-MM-DD')
             }
         },
 

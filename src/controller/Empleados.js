@@ -33,7 +33,7 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
-             {
+            {
                 ruta: '/api/empleados/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
@@ -71,15 +71,12 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarEmpleado = await Empleado.findAll({
         attributes: [
-            ['id', 'Código Empleado'],
+            ['id', 'ID Empleado'],
             ['nombre', 'Nombre'],
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
             ['fechaNacimiento', 'Fecha de Nacimiento'],
-            ['direccion', 'Dirección'],
-            'SucursalId',
-            'CargoId',
-            'UsuarioId'
+            ['direccion', 'Dirección']
         ],
         include: [
             {
@@ -106,98 +103,102 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarEmpleado = await Empleado.findAll({
-
-            attributes: [
-                ['id', 'ID Empleado'],
-                ['nombre', 'Nombre'],
-                ['apellido', 'Apellido'],
-                ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección'],
-                ['SucursalId', 'ID Sucursal'],
-                ['CargoId', 'ID Cargo'],
-                ['UsuarioId', 'ID Usuario']
-            ],
-            where: {
-                id
-            },
-            include: [
-                {
-                    model: Usuario,
-                    attributes: [
-                        ['nombre', 'Nombre de Usuario']
-                    ]
+        var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
+        if (!buscarEmpleado) {
+            res.send('El id del empleado no existe');
+        } else {
+            const listarEmpleado = await Empleado.findAll({
+                attributes: [
+                    ['id', 'ID Empleado'],
+                    ['nombre', 'Nombre'],
+                    ['apellido', 'Apellido'],
+                    ['telefono', 'Telefono'],
+                    ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['direccion', 'Dirección']
+                ],
+                where: {
+                    id
                 },
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal']
-                    ]
-                },
-                {
-                    model: Cargo,
-                    attributes: [
-                        ['nombre', 'Cargo']
-                    ]
-                }
-            ]
-        });
-        res.json(listarEmpleado);
+                include: [
+                    {
+                        model: Usuario,
+                        attributes: [
+                            ['nombre', 'Nombre de Usuario']
+                        ]
+                    },
+                    {
+                        model: Sucursal,
+                        attributes: [
+                            ['nombre', 'Sucursal']
+                        ]
+                    },
+                    {
+                        model: Cargo,
+                        attributes: [
+                            ['nombre', 'Cargo']
+                        ]
+                    }
+                ]
+            });
+            res.json(listarEmpleado);
+        }
     }
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
-        const { nombre } = req.query;
-        const listarEmpleado = await Empleado.findAll({
-            attributes: [
-                ['id', 'ID Cliente'],
-                ['nombre', 'Nombre'],
-                ['apellido', 'Apellido'],
-                ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección'],
-                'UsuarioId'
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
-            },
-            include: [
-                {
-                    model: Usuario,
-                    attributes: [
-                        ['nombre', 'Nombre de Usuario']
-                    ]
+        res.json({ msj: 'errores en los datos enviados' });
+    } else {
+        var buscarEmpleado = await Empleado.findOne({ where: { nombre: nombre } });
+        if (!buscarEmpleado) {
+            res.send('El nombre del empleado no existe');
+        } else {
+            const listarEmpleado = await Empleado.findAll({
+                attributes: [
+                    ['id', 'ID Empleado'],
+                    ['nombre', 'Nombre'],
+                    ['apellido', 'Apellido'],
+                    ['telefono', 'Telefono'],
+                    ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['direccion', 'Dirección']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
                 },
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal']
-                    ]
-                },
-                {
-                    model: Cargo,
-                    attributes: [
-                        ['nombre', 'Cargo']
-                    ]
-                }
-            ]
-        });
-        res.json(listarEmpleado);
+                include: [
+                    {
+                        model: Usuario,
+                        attributes: [
+                            ['nombre', 'Nombre de Usuario']
+                        ]
+                    },
+                    {
+                        model: Sucursal,
+                        attributes: [
+                            ['nombre', 'Sucursal']
+                        ]
+                    },
+                    {
+                        model: Cargo,
+                        attributes: [
+                            ['nombre', 'Cargo']
+                        ]
+                    }
+                ]
+            });
+            res.json(listarEmpleado);
+        }
     }
 }
 
@@ -245,7 +246,7 @@ exports.Guardar = async (req, res) => {
             }
         }
     }
-   
+
 }
 
 exports.Editar = async (req, res) => {
