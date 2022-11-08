@@ -20,6 +20,14 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+               {
+                ruta: '/api/formaspago/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+
             {
                 ruta: '/api/formaspago/editar',
                 descripcion: 'Modifica los datos de una formas de pago',

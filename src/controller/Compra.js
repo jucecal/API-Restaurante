@@ -44,6 +44,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/compras/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/compras/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',

@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const { request } = require('express');
 const Combo = require('../model/Combo');
 const MSJ = require('../components/mensaje');
@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 var errores = [];
 var data = [];
+
 var error = {
     msg: '',
     parametro: ''
@@ -28,6 +29,18 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/combos/guardar',
                 descripcion: 'Guardar los datos de un combo',
                 metodo: 'POST',
+                parametros: 'Ninguno'
+            },
+             {
+                ruta: '/api/combos/buscarCombo',
+                descripcion: 'Muestra un combo en específico según el numero ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/combos/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
                 parametros: 'Ninguno'
             },
             {
@@ -107,7 +120,10 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else {
+
+    }
+    else {
+
         console.log(req);
         const { combo, precio } = req.body;
         if (!combo || !precio) {

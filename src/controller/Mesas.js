@@ -27,6 +27,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/cargos/buscarId',
+                descripcion: 'Muestra una mesa en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/mesas/eliminar',
                 descripcion: 'Elimina las Mesas',
                 metodo: 'DELETE',

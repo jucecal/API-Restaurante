@@ -26,6 +26,14 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+               {
+                ruta: '/api/facturas/buscarId',
+                descripcion: 'Muestra un factura en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+
             {
                 ruta: '/api/facturas/editar',
                 descripcion: 'Modifica los datos de una factura',

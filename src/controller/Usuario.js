@@ -27,6 +27,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/cargos/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
+                ruta: '/api/cargos/buscarNombre',
+                descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/usuarios/eliminar',
                 descripcion: 'Elimina los usuarios',
                 metodo: 'DELETE',
