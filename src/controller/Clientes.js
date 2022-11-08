@@ -109,7 +109,7 @@ exports.BuscarNombre = async (req, res) => {
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        const { nombres } = req.query;
+        const { nombre } = req.query;
         const listarClientes = await Clientes.findAll({
             attributes: [
             ['id', 'ID Cliente'], 
@@ -121,8 +121,8 @@ exports.BuscarNombre = async (req, res) => {
             'UsuarioId'
             ],
             where: {
-                nombres: {
-                    [Op.like]: nombres
+                nombre: {
+                    [Op.like]: nombre
                 }
             },
             include: [{ 
