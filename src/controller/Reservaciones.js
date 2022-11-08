@@ -23,6 +23,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/reservaciones/buscarId',
+                descripcion: 'Muestra un cargo en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/reservaciones/buscarNombre',
+                descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
                 ruta: '/api/reservaciones/editar',
                 descripcion: 'Modifica las Reservaciones',
                 metodo: 'PUT',

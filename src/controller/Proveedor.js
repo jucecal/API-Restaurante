@@ -21,6 +21,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/proveedor/buscarId',
+                descripcion: 'Muestra un proveedor en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/proveedor/editar',
                 descripcion: 'Modifica los datos de un proveedor',
                 metodo: 'PUT',

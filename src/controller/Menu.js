@@ -37,6 +37,12 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/menu/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/menu/buscarporCategoria',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
                 metodo: 'GET',

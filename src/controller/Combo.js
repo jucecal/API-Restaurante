@@ -30,6 +30,18 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: 'Ninguno'
             },
+             {
+                ruta: '/api/combos/buscarCombo',
+                descripcion: 'Muestra un combo en específico según el numero ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/combos/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
             {
                 ruta: '/api/combos/editar',
                 descripcion: 'Modifica los datos de un combo',

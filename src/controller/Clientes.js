@@ -26,6 +26,24 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/cliente/recibirImagen',
+                descripcion: 'almacena la imagen ingresada por el usuario',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/clientes/buscarId',
+                descripcion: 'Muestra un cliente en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
+                ruta: '/api/clientes/buscarNombre',
+                descripcion: 'Muestra el o los clientes que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/clientes/guardar',
                 descripcion: 'Guardar los Clientes',
                 metodo: 'POST',

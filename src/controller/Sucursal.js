@@ -21,6 +21,19 @@ exports.Inicio = (req, res) => {
                 parametros: 'Ninguno'
             },
             {
+                ruta: '/api/sucursales/buscarId',
+                descripcion: 'Muestra un surcursal en específico según el id ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+
+            {
+                ruta: '/api/surcursales/buscarNombre',
+                descripcion: 'Muestra el o los sucursales que coincidan con el nombre ingresado',
+                metodo: 'GET',
+                parametros: 'Ninguno'
+            },
+            {
                 ruta: '/api/sucursales/editar',
                 descripcion: 'Modifica los datos de una sucursal',
                 metodo: 'PUT',
