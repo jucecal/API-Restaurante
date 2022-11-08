@@ -43,32 +43,25 @@ exports.Listar = async (req, res) => {
     const listarPxCombo = await PlatoCombo.findAll({
         attributes: [
             ['id', 'ID Platos y Combos'],
-            ['ComboId', 'ID Combo'], 
+            ['ComboId', 'ID Combo'],
             ['MenuId', 'Cantidad']
+        ],
+        include: [
+            {
+                model: Menu,
+                attributes: [
+                    ['nombre', 'Nombre']
+                ]
+            },
+            {
+                model: Combo,
+                attributes: [
+                    ['combo', 'Combo']
+                ]
+            }
         ]
     });
     res.json(listarPxCombo);
-}
-
-exports.buscarId = async (req, res) => {
-    const validacion = validationResult(req);
-    if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        const { id } = req.query;
-        const listarPxCombo = await PlatoCombo.findAll({
-            attributes: [
-                ['id', 'ID Platos y Combos'],
-                ['ComboId', 'ID Combo'], 
-                ['MenuId', 'Cantidad']
-            ],
-            where: {
-                id
-            }
-        });
-        res.json(listarPxCombo);
-    }
 }
 
 exports.Guardar = async (req, res) => {

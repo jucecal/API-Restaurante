@@ -75,12 +75,14 @@ exports.Listar = async (req, res) => {
             ['imagen', 'Imagen Comprobante'],
             ['SucursalId', 'Código Sucursal']
         ],
-        include: [{
+        include: [
+        {
             model: Sucursal,
             attributes: [
                 ['nombre', 'Nombre Sucursal']
             ]
-        }]
+        },
+        ]
     });
     res.json(listarCompras);
 }

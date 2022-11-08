@@ -40,10 +40,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFormaPago = await FormaPago.findAll({
         attributes: [
-
             ['id', 'ID Formas de Pago'], 
             ['formaPago', 'Forma de Pago']
-        ]
+        ],
     });
     res.json(listarFormaPago);
 }

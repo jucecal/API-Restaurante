@@ -40,15 +40,15 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarUsuario = await Usuario.findAll({
         attributes: [
-        ['id', 'ID Usuario'], 
-        ['nombre', 'Nombre'], 
-        ['correo', 'Correo'], 
-        ['password', 'Contraseña'], 
-        ['tipo', 'Tipo'], 
-        ['estado', 'Estado'], 
-        ['codigo', 'Codigo'], 
-        ['fallido', 'Fallido']
-    ],
+            ['id', 'ID Usuario'],
+            ['nombre', 'Nombre'],
+            ['correo', 'Correo'],
+            ['password', 'Contraseña'],
+            ['tipo', 'Tipo'],
+            ['estado', 'Estado'],
+            ['codigo', 'Codigo'],
+            ['fallido', 'Fallido']
+        ],
     });
     res.json(listarUsuario);
 }
@@ -63,13 +63,13 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarUsuario = await Usuario.findAll({
             attributes: [
-                ['id', 'ID Usuario'], 
-                ['nombre', 'Nombre'], 
-                ['correo', 'Correo'], 
-                ['password', 'Contraseña'], 
-                ['tipo', 'Tipo'], 
-                ['estado', 'Estado'], 
-                ['codigo', 'Codigo'], 
+                ['id', 'ID Usuario'],
+                ['nombre', 'Nombre'],
+                ['correo', 'Correo'],
+                ['password', 'Contraseña'],
+                ['tipo', 'Tipo'],
+                ['estado', 'Estado'],
+                ['codigo', 'Codigo'],
                 ['fallido', 'Fallido']
             ],
             where: {
@@ -90,13 +90,13 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarUsuario = await Usuario.findAll({
             attributes: [
-                ['id', 'ID Usuario'], 
-                ['nombre', 'Nombre'], 
-                ['correo', 'Correo'], 
-                ['password', 'Contraseña'], 
-                ['tipo', 'Tipo'], 
-                ['estado', 'Estado'], 
-                ['codigo', 'Codigo'], 
+                ['id', 'ID Usuario'],
+                ['nombre', 'Nombre'],
+                ['correo', 'Correo'],
+                ['password', 'Contraseña'],
+                ['tipo', 'Tipo'],
+                ['estado', 'Estado'],
+                ['codigo', 'Codigo'],
                 ['fallido', 'Fallido']
             ],
             where: {

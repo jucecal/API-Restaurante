@@ -46,13 +46,21 @@ exports.Listar = async (req, res) => {
             ['observaciones', 'Observaciones'],
             ['InsumoId', 'ID Producto'],
             ['CompraId', 'Orden de Compra']],
-        include: [{
+        include: [
+        {
             model: Insumo,
             attributes: [
                 ['nombre', 'Producto'],
                 ['precioUnitario', 'Precio']
             ]
-        }]
+        },
+        {
+            model: Compra,
+            attributes: [
+                ['id', 'Orden de Compra']
+            ]
+        },
+        ]
     });
     res.json(listarDetalleCompra);
 }
