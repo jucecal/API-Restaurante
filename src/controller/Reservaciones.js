@@ -45,7 +45,13 @@ exports.Listar = async (req, res) => {
             ['fechaHora', 'Fecha y Hora'], 
             ['ClienteId', 'ID Cliente'], 
             ['MesaId', 'ID Mesa']
-        ]
+        ],
+        include: [{
+            model: Sucursal,
+            attributes: [
+                ['nombre', 'Sucursal']
+            ]
+        }]
     });
     res.json(listarReservaciones);
 }

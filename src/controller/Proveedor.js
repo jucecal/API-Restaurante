@@ -44,7 +44,13 @@ exports.Listar = async (req, res) => {
             ['proveedor', 'Proveedor'], 
             ['nombreContacto', 'Contacto'], 
             ['telefono', 'Teléfono']
-        ]
+        ],
+        include: [{
+            model: Sucursal,
+            attributes: [
+                ['nombre', 'Sucursal']
+            ]
+        }]
     });
     res.json(listarProveedor);
 }
@@ -63,9 +69,16 @@ exports.buscarId = async (req, res) => {
                 ['nombreContacto', 'Contacto'], 
                 ['telefono', 'Teléfono']
             ],
+            
             where: {
                 id
-            }
+            },
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Sucursal']
+                ]
+            }]
         });
         res.json(listarProveedor);
     }
