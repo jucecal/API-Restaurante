@@ -49,7 +49,15 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCargo = await Cargo.findAll({
-        attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']]
+<<<<<<< HEAD
+        attributes: [['id', 'Código Cargo'],
+                    ['nombre', 'Nombre Cargo']]
+=======
+        attributes: [
+            ['id', 'Código Cargo'], 
+            ['nombre', 'Nombre Cargo']
+        ]
+>>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
     });
     res.json(listarCargo);
 }
@@ -63,7 +71,15 @@ exports.BuscarId = async (req, res) => {
     else {
         const { id } = req.query;
         const listarCargos = await Cargo.findAll({
-            attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']],
+<<<<<<< HEAD
+            attributes: [['id', 'Código Cargo'],
+                        ['nombre', 'Nombre Cargo']],
+=======
+            attributes: [
+                ['id', 'Código Cargo'], 
+                ['nombre', 'Nombre Cargo']
+            ],
+>>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
             where: {
                 id: id
             }
@@ -82,17 +98,21 @@ exports.BuscarNombre = async (req, res) => {
     else {
         const { nombre } = req.query;
         const listarCargos = await Cargo.findAll({
-            attributes: [['id', 'Código Cargo'], ['nombre', 'Nombre Cargo']],
+<<<<<<< HEAD
+            attributes: [['id', 'Código Cargo'], 
+                        ['nombre', 'Nombre Cargo']],
+=======
+            attributes: [
+                ['id', 'Código Cargo'], 
+                ['nombre', 'Nombre Cargo']
+            ],
+>>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
             where: {
-
                 nombre: { [Op.like]: nombre }
-
             }
-
         });
         res.json(listarCargos);
     }
-
 }
 
 exports.Guardar = async (req, res) => {

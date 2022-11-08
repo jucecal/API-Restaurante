@@ -38,8 +38,39 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarFormaPago = await FormaPago.findAll();
+    const listarFormaPago = await FormaPago.findAll({
+        attributes: [
+<<<<<<< HEAD
+            ['id', 'ID Formas de Pago'], 
+=======
+            ['id', 'ID Forma de Forma'], 
+>>>>>>> 4c9c7f6d4d2e70039c71fcfc69c3c7695c92347b
+            ['formaPago', 'Forma de Pago']
+        ]
+    });
     res.json(listarFormaPago);
+}
+
+exports.BuscarId = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { id } = req.query;
+        const listarFormaPago = await FormaPago.findAll({
+            attributes: [
+                ['id', 'ID Forma de Forma'], 
+                ['formaPago', 'Forma de Pago']
+            ],
+            where: {
+                id: id
+            }
+        });
+        res.json(listarFormaPago);
+    }
+
 }
 
 exports.Guardar = async (req, res) => {

@@ -25,7 +25,7 @@ ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorCombo.buscarId);
 
-ruta.get('/buscarCombo',
+ruta.get('/buscarNombre',
     controladorCombo.BuscarCombo);
 
 ruta.post('/guardar',

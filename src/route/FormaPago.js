@@ -5,7 +5,12 @@ const ruta = Router();
 
 ruta.get('/', controladorFormaPago.Inicio);
 
-ruta.get('/listar', controladorFormaPago.Listar);
+ruta.get('/listar', 
+    controladorFormaPago.Listar);
+
+ruta.get('/buscarId', 
+    query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
+    controladorFormaPago.BuscarId);
 
 ruta.post('/guardar',
     controladorFormaPago.Guardar);

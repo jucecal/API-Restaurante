@@ -44,7 +44,25 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarFactura = await Factura.findAll();
+    const listarFactura = await Factura.findAll({
+        attributes: [
+                    ['id', 'ID Factura'], 
+                    ['fecha', 'Fecha de Factura'], 
+                    ['ISV', 'ISV'],
+                    ['totalPagar', 'Total a Pagar'], 
+                    ['efectivo', 'Efectivo'], 
+                    ['cambio', 'Cambio'],
+                    ['MesaId', 'ID Mesa'],
+                    ['ReservacioneId', 'ID Reservación'],
+                    ['ClienteId', 'ID Cliente'],
+                    ['FormaPago', 'Forma de Pago'],
+                    ['EmpleadoId', 'ID Empleado'],
+                ],
+        include: [{ 
+            model: Insumo, attributes: [['nombre', 'Producto'], 
+                                        ['precioUnitario', 'Precio']]
+        }]
+    });
     res.json(listarFactura);
 }
 
@@ -56,6 +74,25 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarSucursal = await Factura.findAll({
+            attributes: [
+                ['id', 'ID Factura'], 
+                ['fecha', 'Fecha de Factura'], 
+                ['ISV', 'ISV'],
+                ['totalPagar', 'Total a Pagar'], 
+                ['efectivo', 'Efectivo'], 
+                ['cambio', 'Cambio'],
+                ['MesaId', 'ID Mesa'],
+                ['ReservacioneId', 'ID Reservación'],
+                ['ClienteId', 'ID Cliente'],
+                ['FormaPago', 'Forma de Pago'],
+                ['EmpleadoId', 'ID Empleado']
+            ],
+            include: [{ 
+                model: Insumo, attributes: [
+                    ['nombre', 'Producto'], 
+                    ['precioUnitario', 'Precio']
+                ]
+            }],
             where: {
                 id
             }

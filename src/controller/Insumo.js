@@ -40,7 +40,17 @@ exports.Inicio = (req, res) => {
 }
 
 exports.Listar = async (req, res) => {
-    const listarInsumo = await Insumo.findAll();
+    const listarInsumo = await Insumo.findAll({
+        attributes: [
+            ['id', 'ID Insumos'], 
+            ['nombre', 'Nombre'],
+            ['marca', 'Marca'], 
+            ['fechaVencimiento', 'Fecha de Vencimiento'],
+            ['precioUnitario', 'Precio Unitario'], 
+            ['TipoId', 'ID Tipo'],
+            ['ProveedorId', 'ID Proveedor']
+        ]
+    });
     res.json(listarInsumo);
 }
 
@@ -52,9 +62,59 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarInsumo = await Insumo.findAll({
+            attributes: [
+                ['id', 'ID Insumos'], 
+                ['nombre', 'Nombre'],
+                ['marca', 'Marca'], 
+                ['fechaVencimiento', 'Fecha de Vencimiento'],
+                ['precioUnitario', 'Precio Unitario'], 
+                ['TipoId', 'ID Tipo'],
+                ['ProveedorId', 'ID Proveedor']
+            ],
+
             where: {
                 id
-            }
+            },
+            include: [{
+                model: Proveedor,
+                attributes: [
+                    ['proveedor', 'Proveedor']
+                ]
+            }]
+        });
+        res.json(listarInsumo);
+    }
+}
+
+exports.BuscarNombre = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombre } = req.query;
+        const listarInsumo = await Insumo.findAll({
+            attributes: [
+                ['id', 'ID Insumo'], 
+                ['nombre', 'Nombre'],
+                ['marca', 'Marca'],
+                ['fechaVencimiento', 'Fecha de Vencimiento'],
+                ['precioUnitario', 'Precio Unitario'],
+                'ProveedorId',
+                'TipoId'
+            ],
+            where: {
+                nombre: {
+                    [Op.like]: nombre
+                }
+            },
+            include: [{
+                model: Proveedor,
+                attributes: [
+                    ['proveedor', 'Proveedor']
+                ]
+            }]
         });
         res.json(listarInsumo);
     }
