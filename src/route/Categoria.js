@@ -4,9 +4,11 @@ const { body, query } = require('express-validator');
 const ruta = Router();
 
 
-ruta.get('/', controladorCategoria.Inicio);
+ruta.get('/', 
+    controladorCategoria.Inicio);
 
-ruta.get('/listar', controladorCategoria.Listar);
+ruta.get('/listar', 
+    controladorCategoria.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),

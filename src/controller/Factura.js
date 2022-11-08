@@ -53,16 +53,11 @@ exports.Listar = async (req, res) => {
     const listarFactura = await Factura.findAll({
         attributes: [
             ['id', 'ID Factura'],
-            ['fecha', 'Fecha de Factura'],
+            ['fecha', 'Fecha'],
             ['ISV', 'ISV'],
             ['totalPagar', 'Total a Pagar'],
             ['efectivo', 'Efectivo'],
-            ['cambio', 'Cambio'],
-            ['MesaId', 'ID Mesa'],
-            ['ReservacioneId', 'ID Reservación'],
-            ['ClienteId', 'ID Cliente'],
-            ['FormaPagoId', 'Forma de Pago'],
-            ['EmpleadoId', 'ID Empleado']
+            ['cambio', 'Cambio']
         ],
         include: [
             {
@@ -115,11 +110,6 @@ exports.buscarId = async (req, res) => {
                 ['totalPagar', 'Total a Pagar'],
                 ['efectivo', 'Efectivo'],
                 ['cambio', 'Cambio'],
-                ['MesaId', 'ID Mesa'],
-                ['ReservacioneId', 'ID Reservación'],
-                ['ClienteId', 'ID Cliente'],
-                ['FormaPago', 'Forma de Pago'],
-                ['EmpleadoId', 'ID Empleado']
             ],
             where: {
                 id
@@ -193,7 +183,7 @@ exports.Guardar = async (req, res) => {
                                 res.send('El id de la reservacion no existe');
                             } else {
                                 await Factura.create({
-                                    fecha: Date(),
+                                    fecha: now(),
                                     ISV,
                                     totalPagar,
                                     efectivo,

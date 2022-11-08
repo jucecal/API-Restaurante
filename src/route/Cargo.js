@@ -14,6 +14,7 @@ ruta.get('/buscarId',
     controladorCargos.BuscarId);
 
 ruta.get('/buscarNombre',
+    query('nombre').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cargo'),
     controladorCargos.BuscarNombre);
 
 ruta.post('/guardar',

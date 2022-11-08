@@ -44,8 +44,7 @@ exports.Listar = async (req, res) => {
             ['cantidad', 'Cantidad'],
             ['subTotal', 'SubTotal'],
             ['observaciones', 'Observaciones'],
-            ['CompraId', 'Orden de Compra'],
-            ['InsumoId', 'ID Producto']
+            ['CompraId', 'Orden de Compra']
         ],
         include: [{
             model: Insumo,

@@ -18,9 +18,12 @@ const uploadCliente = multer({ storage: storageCliente });
 
 const ruta = Router();
 
-ruta.get('/', controladorClientes.Inicio);
+ruta.get('/', 
+    controladorClientes.Inicio);
 
-ruta.get('/listar', ValidarAutenticado, controladorClientes.Listar);
+ruta.get('/listar', 
+    ValidarAutenticado, 
+    controladorClientes.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'), 
@@ -28,16 +31,23 @@ ruta.get('/buscarId',
     controladorClientes.BuscarId);
 
 ruta.get('/buscarNombre',
+    query('nombre').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cliente'),
     ValidarAutenticado,
     controladorClientes.BuscarNombre);
 
 ruta.post('/guardar',
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del tipo con una longitud de 3 - 50 caracteres'),
+    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del cliente con una longitud de 3 - 50 caracteres'),
+    body('nombre').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cliente'),
+    body('apellido').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el apellido del cliente con una longitud de 3 - 50 caracteres'),
+    body('apellido').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el apellido del cliente'),
     controladorClientes.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del tipo con una longitud de 3 - 50 caracteres'),
+    body('nombre').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el nombre del cliente con una longitud de 3 - 50 caracteres'),
+    body('nombre').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cliente'),
+    body('apellido').isLength({ min: 3, max: 50 }).withMessage('Debe escribir el apellido del cliente con una longitud de 3 - 50 caracteres'),
+    body('apellido').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el apellido del cliente'),
     controladorClientes.Editar);
 
 ruta.delete('/eliminar',

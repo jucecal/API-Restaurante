@@ -19,9 +19,11 @@ const uploadCompras = multer({ storage: storageCompras });
 
 const ruta = Router();
 
-ruta.get('/', controladorCompra.Inicio);
+ruta.get('/', 
+    controladorCompra.Inicio);
 
-ruta.get('/listar', controladorCompra.Listar);
+ruta.get('/listar', 
+    controladorCompra.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
