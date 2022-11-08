@@ -73,6 +73,11 @@ exports.CrearModelos = () => {
     Empleado.belongsTo(Sucursal)
 
 
+    //RELACIÓN TABLA SUCURSAL Y RESERVACIONES
+    Sucursal.hasMany(Reservaciones)
+    Reservaciones.belongsTo(Sucursal)
+
+
     //RELACION ENTRE CARGO Y EMPLEADO
     Cargo.hasMany(Empleado)
     Empleado.belongsTo(Cargo)
