@@ -24,7 +24,7 @@ const Clientes = db.define(
         },
 
         telefono: {
-            type: DataTypes.TEXT,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
 
