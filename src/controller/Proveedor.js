@@ -40,9 +40,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarProveedor = await Proveedor.findAll({
         attributes: [
-            ['id', 'ID Proveedor'], 
-            ['proveedor', 'Proveedor'], 
-            ['nombreContacto', 'Contacto'], 
+            ['id', 'ID Proveedor'],
+            ['proveedor', 'Proveedor'],
+            ['nombreContacto', 'Contacto'],
             ['telefono', 'Teléfono']
         ]
     });
@@ -58,15 +58,40 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarProveedor = await Proveedor.findAll({
             attributes: [
-                ['id', 'ID Proveedor'], 
-                ['proveedor', 'Proveedor'], 
-                ['nombreContacto', 'Contacto'], 
+                ['id', 'ID Proveedor'],
+                ['proveedor', 'Proveedor'],
+                ['nombreContacto', 'Contacto'],
                 ['telefono', 'Teléfono']
             ],
-            
+
             where: {
                 id
             }
+        });
+        res.json(listarProveedor);
+    }
+}
+
+exports.BuscarNombre = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { proveedor } = req.query;
+        const listarProveedor = await Proveedor.findAll({
+            attributes: [
+                ['id', 'ID Proveedor'],
+                ['proveedor', 'Proveedor'],
+                ['nombreContacto', 'Contacto'],
+                ['telefono', 'Teléfono']
+            ],
+            where: {
+                proveedor: {
+                    [Op.like]: proveedor
+                }
+            },
         });
         res.json(listarProveedor);
     }
