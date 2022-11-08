@@ -41,17 +41,37 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarDetallefactura = await DetalleFactura.findAll({
-        attributes: [['cantidad', 'Cantidad'], 
-                    ['observaciones', 'Observaciones'],
-                    ['subtotal', 'Sub-Total'], 
-                    ['InsumoId', 'ID Producto'], 
-                    ['CompraId', 'Orden de Compra']],
-        include: [{ 
-            model: Insumo, attributes: [['nombre', 'Producto'], 
-                                        ['precioUnitario', 'Precio']]
-        }]
+        attributes: [
+            ['cantidad', 'Cantidad'],
+            ['observaciones', 'Observaciones'],
+            ['subtotal', 'Sub-Total'],
+            ['InsumoId', 'ID Producto'],
+            ['FacturaId', 'Id Factura']
+        ],
+        include: [
+            {
+                model: Combo,
+                attributes: [
+                    ['combo', 'Combo'],
+                    ['precio', 'Precio']
+                ]
+            },
+            {
+                model: Factura,
+                attributes: [
+                    ['id', 'ID Facturas']
+                ]
+            },
+            {
+                model: Menu,
+                attributes: [
+                    ['nombre', 'Nombre'],
+                    ['precio', 'Precio']
+                ]
+            }
+        ]
     });
-    
+
     res.json(listarDetallefactura);
 }
 
@@ -62,7 +82,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { cantidad, subTotal, estado, ComboId, FacturaId, MenuId } = req.body;
-        if (!cantidad || !subTotal || !estado || !ComboId || !FacturaId || !MenuId) {
+        if (!cantidad || !subTotal || !estado  || !FacturaId ) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarFactura = await Factura.findOne({ where: { id: FacturaId } });

@@ -63,12 +63,26 @@ exports.Listar = async (req, res) => {
             'CargoId',
             'UsuarioId'
         ],
-        include: [{
-            model: Usuario,
-            attributes: [
-                ['nombre', 'Nombre de Usuario']
-            ]
-        }]
+        include: [
+            {
+                model: Usuario,
+                attributes: [
+                    ['nombre', 'Nombre de Usuario']
+                ]
+            },
+            {
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Sucursal']
+                ]
+            },
+            {
+                model: Cargo,
+                attributes: [
+                    ['nombre', 'Cargo']
+                ]
+            }
+        ]
     });
     res.json(listarEmpleado);
 }
@@ -83,38 +97,39 @@ exports.buscarId = async (req, res) => {
         const listarEmpleado = await Empleado.findAll({
 
             attributes: [
-                ['id', 'ID Empleado'], 
-                ['nombre', 'Nombre'], 
-                ['apellido', 'Apellido'], 
-                ['telefono', 'Telefono'], 
-                ['fechaNacimiento', 'Fecha de Nacimiento'], 
-                ['direccion', 'Dirección'],
-                ['SucursalId', 'ID Sucursal'], 
-                ['CargoId', 'ID Cargo'], 
-                ['UsuarioId', 'ID Usuario']
-                ],
-
-            attributes: [
-                ['id', 'Código Empleado'],
+                ['id', 'ID Empleado'],
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
                 ['telefono', 'Telefono'],
                 ['fechaNacimiento', 'Fecha de Nacimiento'],
                 ['direccion', 'Dirección'],
-                'SucursalId',
-                'CargoId',
-                'UsuarioId'
+                ['SucursalId', 'ID Sucursal'],
+                ['CargoId', 'ID Cargo'],
+                ['UsuarioId', 'ID Usuario']
             ],
-
             where: {
                 id
             },
-            include: [{
-                model: Usuario,
-                attributes: [
-                    ['nombre', 'Nombre de Usuario']
-                ]
-            }]
+            include: [
+                {
+                    model: Usuario,
+                    attributes: [
+                        ['nombre', 'Nombre de Usuario']
+                    ]
+                },
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ]
+                },
+                {
+                    model: Cargo,
+                    attributes: [
+                        ['nombre', 'Cargo']
+                    ]
+                }
+            ]
         });
         res.json(listarEmpleado);
     }
@@ -143,13 +158,25 @@ exports.BuscarNombre = async (req, res) => {
                     [Op.like]: nombre
                 }
             },
-            include: [{
-                model: Usuario,
-                attributes: [
-                    ['nombre', 'Nombre de Usuario'],
-                    ['estado', 'Estado']
-                ]
-            }
+            include: [
+                {
+                    model: Usuario,
+                    attributes: [
+                        ['nombre', 'Nombre de Usuario']
+                    ]
+                },
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ]
+                },
+                {
+                    model: Cargo,
+                    attributes: [
+                        ['nombre', 'Cargo']
+                    ]
+                }
             ]
         });
         res.json(listarEmpleado);

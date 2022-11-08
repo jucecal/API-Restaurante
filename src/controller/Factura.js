@@ -46,22 +46,57 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFactura = await Factura.findAll({
         attributes: [
-                    ['id', 'ID Factura'], 
-                    ['fecha', 'Fecha de Factura'], 
-                    ['ISV', 'ISV'],
-                    ['totalPagar', 'Total a Pagar'], 
-                    ['efectivo', 'Efectivo'], 
-                    ['cambio', 'Cambio'],
-                    ['MesaId', 'ID Mesa'],
-                    ['ReservacioneId', 'ID Reservación'],
-                    ['ClienteId', 'ID Cliente'],
-                    ['FormaPago', 'Forma de Pago'],
-                    ['EmpleadoId', 'ID Empleado'],
-                ],
-        include: [{ 
-            model: Insumo, attributes: [['nombre', 'Producto'], 
-                                        ['precioUnitario', 'Precio']]
-        }]
+            ['id', 'ID Factura'],
+            ['fecha', 'Fecha de Factura'],
+            ['ISV', 'ISV'],
+            ['totalPagar', 'Total a Pagar'],
+            ['efectivo', 'Efectivo'],
+            ['cambio', 'Cambio'],
+            ['MesaId', 'ID Mesa'],
+            ['ReservacioneId', 'ID Reservación'],
+            ['ClienteId', 'ID Cliente'],
+            ['FormaPago', 'Forma de Pago'],
+            ['EmpleadoId', 'ID Empleado'],
+        ],
+        include: [
+            {
+                model: Insumo,
+                attributes: [
+                    ['nombre', 'Producto'],
+                    ['precioUnitario', 'Precio']
+                ]
+            },
+            {
+                model: Empleado,
+                attributes: [
+                    ['nombre', 'Empleado'],
+                ]
+            },
+            {
+                model: Cliente,
+                attributes: [
+                    ['nombre', 'Cliente'],
+                ]
+            },
+            {
+                model: Mesa,
+                attributes: [
+                    ['id', 'Mesa'],
+                ]
+            },
+            {
+                model: Reservacion,
+                attributes: [
+                    ['id', 'Reservación'],
+                ]
+            },
+            {
+                model: FormaPago,
+                attributes: [
+                    ['formaPago', 'Forma de Pago'],
+                ]
+            },
+        ]
     });
     res.json(listarFactura);
 }
@@ -75,11 +110,11 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarSucursal = await Factura.findAll({
             attributes: [
-                ['id', 'ID Factura'], 
-                ['fecha', 'Fecha de Factura'], 
+                ['id', 'ID Factura'],
+                ['fecha', 'Fecha de Factura'],
                 ['ISV', 'ISV'],
-                ['totalPagar', 'Total a Pagar'], 
-                ['efectivo', 'Efectivo'], 
+                ['totalPagar', 'Total a Pagar'],
+                ['efectivo', 'Efectivo'],
                 ['cambio', 'Cambio'],
                 ['MesaId', 'ID Mesa'],
                 ['ReservacioneId', 'ID Reservación'],
@@ -87,15 +122,41 @@ exports.buscarId = async (req, res) => {
                 ['FormaPago', 'Forma de Pago'],
                 ['EmpleadoId', 'ID Empleado']
             ],
-            include: [{ 
-                model: Insumo, attributes: [
-                    ['nombre', 'Producto'], 
-                    ['precioUnitario', 'Precio']
-                ]
-            }],
             where: {
                 id
-            }
+            },
+            include: [
+                {
+                    model: Empleado,
+                    attributes: [
+                        ['nombre', 'Empleado'],
+                    ]
+                },
+                {
+                    model: Cliente,
+                    attributes: [
+                        ['nombre', 'Cliente'],
+                    ]
+                },
+                {
+                    model: Mesa,
+                    attributes: [
+                        ['id', 'Mesa'],
+                    ]
+                },
+                {
+                    model: Reservacion,
+                    attributes: [
+                        ['id', 'Reservación'],
+                    ]
+                },
+                {
+                    model: FormaPago,
+                    attributes: [
+                        ['formaPago', 'Forma de Pago'],
+                    ]
+                },
+            ]
         });
         res.json(listarFactura);
     }

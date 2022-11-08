@@ -40,11 +40,10 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll({
-
-        attributes: [['id', 'Código Categoria'],
-                    ['categoria', 'Nombre Categoria']
-                ]
-
+        attributes: [
+            ['id', 'Código Categoria'],
+            ['categoria', 'Nombre Categoria']
+        ]
     });
     res.json(listarCategoria);
 }
@@ -83,7 +82,9 @@ exports.BuscarCategoria = async (req, res) => {
                 ['categoria', 'Nombre Categoria']
             ],
             where: {
-                categoria: { [Op.like]: categoria }
+                categoria: { 
+                    [Op.like]: categoria 
+                }
             },
         });
         res.json(listarCategoria);

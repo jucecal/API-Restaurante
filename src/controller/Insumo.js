@@ -42,13 +42,26 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarInsumo = await Insumo.findAll({
         attributes: [
-            ['id', 'ID Insumos'], 
+            ['id', 'ID Insumos'],
             ['nombre', 'Nombre'],
-            ['marca', 'Marca'], 
+            ['marca', 'Marca'],
             ['fechaVencimiento', 'Fecha de Vencimiento'],
-            ['precioUnitario', 'Precio Unitario'], 
+            ['precioUnitario', 'Precio Unitario'],
             ['TipoId', 'ID Tipo'],
             ['ProveedorId', 'ID Proveedor']
+        ],
+        include: [{
+            model: Proveedor,
+            attributes: [
+                ['proveedor', 'Proveedor']
+            ]
+        },
+        {
+            model: Tipo,
+            attributes: [
+                ['tipo', 'Tipo Producto']
+            ]
+        }
         ]
     });
     res.json(listarInsumo);
@@ -63,11 +76,11 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarInsumo = await Insumo.findAll({
             attributes: [
-                ['id', 'ID Insumos'], 
+                ['id', 'ID Insumos'],
                 ['nombre', 'Nombre'],
-                ['marca', 'Marca'], 
+                ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
-                ['precioUnitario', 'Precio Unitario'], 
+                ['precioUnitario', 'Precio Unitario'],
                 ['TipoId', 'ID Tipo'],
                 ['ProveedorId', 'ID Proveedor']
             ],
@@ -80,7 +93,14 @@ exports.buscarId = async (req, res) => {
                 attributes: [
                     ['proveedor', 'Proveedor']
                 ]
-            }]
+            },
+            {
+                model: Tipo,
+                attributes: [
+                    ['tipo', 'Tipo Producto']
+                ]
+            }
+            ]
         });
         res.json(listarInsumo);
     }
@@ -96,7 +116,7 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarInsumo = await Insumo.findAll({
             attributes: [
-                ['id', 'ID Insumo'], 
+                ['id', 'ID Insumo'],
                 ['nombre', 'Nombre'],
                 ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
@@ -114,7 +134,14 @@ exports.BuscarNombre = async (req, res) => {
                 attributes: [
                     ['proveedor', 'Proveedor']
                 ]
-            }]
+            },
+            {
+                model: Tipo,
+                attributes: [
+                    ['tipo', 'Tipo Producto']
+                ]
+            }
+            ]
         });
         res.json(listarInsumo);
     }

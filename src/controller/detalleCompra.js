@@ -40,9 +40,18 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarDetalleCompra = await DetalleCompra.findAll({
-        attributes: [['cantidad', 'Cantidad'], ['subTotal', 'SubTotal'], ['observaciones', 'Observaciones'], ['InsumoId', 'ID Producto'], ['CompraId', 'Orden de Compra']],
-        include: [{ 
-            model: Insumo, attributes: [['nombre', 'Producto'], ['precioUnitario', 'Precio']]
+        attributes: [
+            ['cantidad', 'Cantidad'],
+            ['subTotal', 'SubTotal'],
+            ['observaciones', 'Observaciones'],
+            ['InsumoId', 'ID Producto'],
+            ['CompraId', 'Orden de Compra']],
+        include: [{
+            model: Insumo,
+            attributes: [
+                ['nombre', 'Producto'],
+                ['precioUnitario', 'Precio']
+            ]
         }]
     });
     res.json(listarDetalleCompra);

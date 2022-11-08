@@ -68,10 +68,19 @@ exports.Inicio = (req, res) => {
 
 exports.Listar = async (req, res) => {
     const listarCompras = await Compra.findAll({
-        attributes: [['id', 'Código Compra'], ['fecha', 'Fecha'], ['totalPagar', 'Pago Total'], ['imagen', 'Imagen Comprobante'], ['SucursalId', 'Código Sucursal']],
-        include: [
-            { model: Sucursal, attributes: [['nombre', 'Nombre Sucursal']] }
-        ]
+        attributes: [
+            ['id', 'Código Compra'],
+            ['fecha', 'Fecha'],
+            ['totalPagar', 'Pago Total'],
+            ['imagen', 'Imagen Comprobante'],
+            ['SucursalId', 'Código Sucursal']
+        ],
+        include: [{
+            model: Sucursal,
+            attributes: [
+                ['nombre', 'Nombre Sucursal']
+            ]
+        }]
     });
     res.json(listarCompras);
 }
@@ -84,13 +93,22 @@ exports.buscarId = async (req, res) => {
     } else {
         const { id } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'], ['fecha', 'Fecha'], ['totalPagar', 'Pago Total'], ['imagen', 'Imagen Comprobante'], ['SucursalId', 'Código Sucursal']],
+            attributes: [
+                ['id', 'Código Compra'],
+                ['fecha', 'Fecha'],
+                ['totalPagar', 'Pago Total'],
+                ['imagen', 'Imagen Comprobante'],
+                ['SucursalId', 'Código Sucursal']
+            ],
             where: {
                 id: id
             },
-            include: [
-                { model: Sucursal, attributes: [['nombre', 'Nombre Sucursal']] }
-            ]
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Nombre Sucursal']
+                ]
+            }]
         });
         res.json(listarCompra);
     }
@@ -104,7 +122,13 @@ exports.buscarFecha = async (req, res) => {
     } else {
         const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'], ['fecha', 'Fecha'], ['totalPagar', 'Pago Total'], ['imagen', 'Imagen Comprobante'], ['SucursalId', 'Código Sucursal']],
+            attributes: [
+                ['id', 'Código Compra'],
+                ['fecha', 'Fecha'],
+                ['totalPagar', 'Pago Total'],
+                ['imagen', 'Imagen Comprobante'],
+                ['SucursalId', 'Código Sucursal']
+            ],
             where: {
                 [Op.and]: {
                     fecha: {
@@ -115,9 +139,12 @@ exports.buscarFecha = async (req, res) => {
                     }
                 }
             },
-            include: [
-                { model: Sucursal, attributes: [['nombre', 'Nombre Sucursal']] }
-            ]
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Nombre Sucursal']
+                ]
+            }]
         });
         res.json(listarCompra);
     }
@@ -132,11 +159,23 @@ exports.BuscarPorSucursal = async (req, res) => {
     else {
         const { nombre } = req.query;
         const listarCompra = await Compra.findAll({
-            attributes: [['id', 'Código Compra'], ['fecha', 'Fecha'], ['totalPagar', 'Pago Total'], ['imagen', 'Imagen Comprobante'], ['SucursalId', 'Código Sucursal']],
-            include: [
-                { model: Sucursal, attributes: [['nombre', 'Nombre Sucursal']], where: { nombre: { [Op.like]: nombre } } }
-            ]
-
+            attributes: [
+                ['id', 'Código Compra'],
+                ['fecha', 'Fecha'],
+                ['totalPagar', 'Pago Total'],
+                ['imagen', 'Imagen Comprobante'],
+                ['SucursalId', 'Código Sucursal']],
+            include: [{
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Nombre Sucursal']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
+                }
+            }]
         });
         res.json(listarCompra);
     }

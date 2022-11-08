@@ -127,7 +127,7 @@ exports.BuscarNombre = async (req, res) => {
                 }
             },
             include: [{
-                model: Usuario,
+                model: Usuario, 
                 attributes: [
                     ['nombre', 'Nombre de Usuario'],
                     ['estado', 'Estado']
