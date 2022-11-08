@@ -60,13 +60,6 @@ exports.Listar = async (req, res) => {
         ],
         include: [
             {
-                model: Insumo,
-                attributes: [
-                    ['nombre', 'Producto'],
-                    ['precioUnitario', 'Precio']
-                ]
-            },
-            {
                 model: Empleado,
                 attributes: [
                     ['nombre', 'Empleado'],
