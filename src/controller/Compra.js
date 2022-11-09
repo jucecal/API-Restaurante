@@ -88,7 +88,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarCompras = await Compra.findAll({
         attributes: [
-            ['id', 'Código Compra'],
+            ['id', 'Orden de Compra'],
             ['fecha', 'Fecha'],
             ['totalPagar', 'Pago Total'],
             ['imagen', 'Imagen Comprobante']

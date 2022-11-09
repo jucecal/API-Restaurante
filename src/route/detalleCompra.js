@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const controladorDetalleCompra = require('../controller/detalleCompra');
+const controladorDetalleCompra = require('../controller/DetalleCompra');
 const { body, query } = require('express-validator');
 const ruta = Router();
 

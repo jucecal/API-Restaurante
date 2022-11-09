@@ -60,8 +60,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarCargo = await Cargo.findAll({
         attributes: [
-            ['id', 'Código Cargo'],
-            ['nombre', 'Nombre Cargo']
+            ['id', 'ID Cargo'],
+            ['nombre', 'Cargo']
         ]
     });
     res.json(listarCargo);
@@ -76,8 +76,8 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarCargos = await Cargo.findAll({
             attributes: [
-                ['id', 'Código Cargo'],
-                ['nombre', 'Nombre Cargo']
+                ['id', 'ID Cargo'],
+                ['nombre', 'Cargo']
             ],
             where: {
                 id: id
@@ -96,8 +96,8 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarCargos = await Cargo.findAll({
             attributes: [
-                ['id', 'Código Cargo'],
-                ['nombre', 'Nombre Cargo']
+                ['id', 'ID Cargo'],
+                ['nombre', 'Cargo']
             ],
             where: {
                 nombre: {
