@@ -1,4 +1,5 @@
 const Factura = require('../model/Factura');
+const DetalleFactura = require('../model/DetalleFactura');
 const Mesa = require('../model/Mesas');
 const Reservacion = require('../model/Reservaciones');
 const Cliente = require('../model/Clientes');

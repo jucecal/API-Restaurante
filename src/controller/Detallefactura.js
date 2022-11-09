@@ -44,23 +44,20 @@ exports.Listar = async (req, res) => {
         attributes: [
             ['id', 'ID Detalle'],
             ['cantidad', 'Cantidad'],
-            ['subtotal', 'Sub-Total'],
-            ['FacturaId', 'ID Factura'],
-            ['ComboId', 'ID Combo'],
-            ['MenuId', 'ID Producto Menu'],
+            ['subtotal', 'Sub-Total']
         ],
         include: [
+            {
+                model: Factura,
+                attributes: [
+                    ['id', 'ID Factura']
+                ]
+            },
             {
                 model: Combo,
                 attributes: [
                     ['combo', 'Combo'],
                     ['precio', 'Precio']
-                ]
-            },
-            {
-                model: Factura,
-                attributes: [
-                    ['id', 'ID Factura']
                 ]
             },
             {
@@ -82,8 +79,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { cantidad, subTotal, estado, ComboId, FacturaId, MenuId } = req.body;
-        if (!cantidad || !estado || !FacturaId) {
+        const { cantidad, ComboId, FacturaId, MenuId } = req.body;
+        if (!cantidad || !FacturaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             let buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
@@ -100,8 +97,7 @@ exports.Guardar = async (req, res) => {
                     } else {
                         await DetalleFactura.create({
                             cantidad,
-                            subTotal,
-                            estado,
+                            subTotal: (buscarCombo.precio * cantidad) + (buscarMenu.precio * cantidad),
                             FacturaId,
                             ComboId,
                             MenuId
@@ -125,29 +121,28 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { cantidad, subTotal, estado, FacturaId, ComboId, MenuId } = req.body;
-    if (!cantidad || !subTotal || !estado || !FacturaId || !id) {
+    const { cantidad, estado, FacturaId, ComboId, MenuId } = req.body;
+    if (!cantidad || !estado || !FacturaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarDetallefactura = await DetalleFactura.findOne({ where: { id: id } });
+        let buscarDetallefactura = await DetalleFactura.findOne({ where: { id: id } });
         if (!buscarDetallefactura) {
             res.send('El id del detalle no existe');
         } else {
-            var buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
+            let buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
             if (!buscarFactura) {
                 res.send('El id de la factura no existe');
             } else {
-                var buscarCombo = await Combo.findOne({ where: { id: ComboId } });
+                let buscarCombo = await Combo.findOne({ where: { id: ComboId } });
                 if (!buscarCombo) {
                     res.send('El id del combo no existe');
                 } else {
-                    var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
+                    let buscarMenu = await Menu.findOne({ where: { id: MenuId } });
                     if (!buscarMenu) {
                         res.send('El id del menu no existe');
                     } else {
                         buscarDetallefactura.cantidad = cantidad;
-                        buscarDetallefactura.subTotal = subTotal;
-                        buscarDetallefactura.estado = estado;
+                        buscarDetallefactura.subTotal = (buscarCombo.precio * cantidad) + (buscarMenu.precio * cantidad);
                         buscarDetallefactura.FacturaId = FacturaId;
                         buscarDetallefactura.ComboId = ComboId;
                         buscarDetallefactura.MenuId = MenuId;
