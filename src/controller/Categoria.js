@@ -12,25 +12,33 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/categorias/listar',
                 descripcion: 'Listar las categorias',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Dato que se manda para listar las categorias."
+                }
             },
             {
                 ruta: '/api/categoria/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id:"Realizar una busqueda específica de una categoría."
+                }
             },
             {
                 ruta: '/api/categoria/buscarCategoria',
                 descripcion: 'Muestra una categoria en específico según la categoria indicada',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    categoria: "Nombre de la categoria para poder realizar su busqueda."
+                }
             },
             {
                 ruta: '/api/categorias/guardar',
                 descripcion: 'Guardar los datos de una categoria',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    categoria: "Se le enviará a Insumos para saber la categoría del producto que se esta vendiendo."
+                }
             },
             {
                 ruta: '/api/categorias/editar',
