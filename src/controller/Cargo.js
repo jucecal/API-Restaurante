@@ -10,9 +10,7 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/cargos/listar',
                 descripcion: 'Lista los cargos en el negocio',
                 metodo: 'GET',
-                parametros: {
-                    id: "Dato que se manda para poder listar los cargos."
-                }
+                parametros: 'Ninguno'
             },
             {
                 ruta: '/api/cargos/buscarId',

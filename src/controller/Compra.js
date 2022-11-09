@@ -30,13 +30,17 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/compras/buscarId',
                 descripcion: 'Muestra una compra con un Id específico',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id:"Se necesita para poder buscar una compra. Obligatorio"
+                }
             },
             {
                 ruta: '/api/compras/buscarFecha',
                 descripcion: 'Lista las compras realizadas en un periodo de tiempo entre una fecha y otra',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    fecha: "Se necesita para poder buscar una compra en una fecha específica. Obligatorio"
+                }
             },
             {
                 ruta: '/api/compras/buscarporSucursal',
@@ -54,19 +58,25 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/compras/guardar',
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    fecha:"Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio"
+                }
             },
             {
                 ruta: '/api/compras/editar',
                 descripcion: 'Modificar los datos de una compra',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    fecha:"Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio"
+                }
             },
             {
                 ruta: '/api/compras/eliminar',
                 descripcion: 'Eliminar los datos de una compra',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id:"Se necesita el id de compras para poder eliminar una compra. Obligatorio"
+                }
             }
         ]
     }
