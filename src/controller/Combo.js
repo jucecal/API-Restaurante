@@ -29,13 +29,18 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/combos/guardar',
                 descripcion: 'Guardar los datos de un combo',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    combo:"Combo que se manda al detalle de factura. Obligatorio",
+                    precio:"Precio que se calcula en detalle de factura. Obligatorio",
+                }
             },
              {
                 ruta: '/api/combos/buscarCombo',
                 descripcion: 'Muestra un combo en específico según el numero ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    combo:"Necesario para poder realizar la busqueda del combo. Obligatorio"
+                }
             },
             {
                 ruta: '/api/combos/recibirImagen',
@@ -47,13 +52,18 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/combos/editar',
                 descripcion: 'Modifica los datos de un combo',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros:{
+                    combo:"Combo que se manda al detalle de factura. Obligatorio",
+                    precio:"Precio que se calcula en detalle de factura. Obligatorio",
+                }
             },
             {
                 ruta: '/api/combos/eliminar',
                 descripcion: 'Elimina los datos de un combo',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el ID de Combo para poder eliminarlo. Obligatorio"
+                }
             }
         ]
     }

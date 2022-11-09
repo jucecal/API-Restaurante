@@ -43,7 +43,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/clientes/buscarNombre',
                 descripcion: 'Muestra el o los clientes que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Nombre que se manda para poder buscar un cliente por nombre. Obligatorio",
+                }
             },
             {
                 ruta: '/api/clientes/guardar',
