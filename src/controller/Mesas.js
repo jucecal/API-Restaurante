@@ -12,31 +12,31 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/mesas/listar',
                 descripcion: 'Listar las Mesas',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Dato que se manda para poder listar las mesas'
             },
             {
                 ruta: '/api/mesas/guardar',
                 descripcion: 'Guardar las Mesas',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: 'Se enviará a la mesa para saber su ID.'
             },
             {
                 ruta: '/api/mesas/editar',
                 descripcion: 'Modifica las Mesas',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: 'ID de la mesa modificable. Ocacional'
             },
             {
                 ruta: '/api/cargos/buscarId',
                 descripcion: 'Muestra una mesa en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Realizar una busqueda especifica de una mesa'
             },
             {
                 ruta: '/api/mesas/eliminar',
                 descripcion: 'Elimina las Mesas',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: 'ID de para eliminar una mesa'
             }
         ]
     }
