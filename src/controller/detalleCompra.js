@@ -64,8 +64,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { cantidad, observaciones, subTotal, CompraId, InsumoId } = req.body;
-        if (!cantidad || !observaciones || !subTotal || !CompraId || !InsumoId) {
+        const { cantidad, observaciones, CompraId, InsumoId } = req.body;
+        if (!cantidad || !observaciones || !CompraId || !InsumoId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarCompra = await Compra.findOne({ where: { id: CompraId } });
@@ -78,7 +78,7 @@ exports.Guardar = async (req, res) => {
                 } else {
                     await DetalleCompra.create({
                         cantidad,
-                        subTotal,
+                        subTotal: buscarInsumo.precioUnitario * cantidad,
                         observaciones,
                         CompraId,
                         InsumoId
@@ -124,8 +124,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { cantidad, observaciones, subTotal, CompraId, InsumoId } = req.body;
-    if (!cantidad || !observaciones || !subTotal || !CompraId || !InsumoId || !id) {
+    const { cantidad, observaciones, CompraId, InsumoId } = req.body;
+    if (!cantidad || !observaciones || !CompraId || !InsumoId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarDetalleCompra = await DetalleCompra.findOne({ where: { id: id } });
@@ -142,7 +142,7 @@ exports.Editar = async (req, res) => {
                 } else {
                     buscarDetalleCompra.cantidad = cantidad;
                     buscarDetalleCompra.observaciones = observaciones;
-                    buscarDetalleCompra.subTotal = subTotal;
+                    buscarDetalleCompra.subTotal = buscarInsumo.precioUnitario * cantidad;
                     buscarDetalleCompra.CompraId = CompraId;
                     buscarDetalleCompra.InsumoId = InsumoId;
                     await buscarDetalleCompra.save()
