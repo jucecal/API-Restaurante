@@ -22,49 +22,49 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/menu/listar',
                 descripcion: 'Lista los productos del menu en el negocio',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Dato que se manda para poder listar un Menu'
             },
             {
                 ruta: '/api/menu/buscarId',
                 descripcion: 'Muestra un producto en específico del menu según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Realizar una busqueda especifica en el Menu'
             },
             {
                 ruta: '/api/menu/buscarNombre',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Nombre del producto del menu para poder realizr su busqueda.'
             },
             {
                 ruta: '/api/menu/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Se recibe la imagen del usuario'
             },
             {
                 ruta: '/api/menu/buscarporCategoria',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Productos del menu que esten mas relaciobados con alguna categoria'
             },
             {
                 ruta: '/api/menu/guardar',
                 descripcion: 'Guarda los datos de un producto del menu',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: 'Se enviara al Menu para saber su Id'
             },
             {
                 ruta: '/api/menu/editar',
                 descripcion: 'Modifica los datos de un producto del menu',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: 'ID para modificar producto del Menu'
             },
             {
                 ruta: '/api/menu/eliminar',
                 descripcion: 'Elimina los datos de un producto del menu',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: 'ID de para eliminar un producto de Menu'
             }
         ]
     }
