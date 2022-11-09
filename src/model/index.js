@@ -144,6 +144,10 @@ exports.CrearModelos = () => {
     Factura.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Factura)
 
+    //RELACION DE SUCURSAL EN FACTURA
+    Sucursal.hasMany(Factura)
+    Factura.belongsTo(Sucursal)
+
     //RELACION DE MENU CON DETALLE DE FACTURA
     Menu.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Menu)
