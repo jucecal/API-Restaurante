@@ -42,7 +42,6 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarDetallefactura = await DetalleFactura.findAll({
         attributes: [
-            ['id', 'ID Detalle'],
             ['cantidad', 'Cantidad'],
             ['subtotal', 'Sub-Total']
         ],
