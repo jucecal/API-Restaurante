@@ -202,11 +202,7 @@ exports.InicioSesion = async (req, res) => {
         try {
             const { usuario, contrasena } = req.body;
             var buscarUsuario = await Usuario.findOne({
-                attributes: ['id', 'nombre', 'correo', 'password'],
-                include: [{
-                    model: Cliente,
-                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion']
-                }],
+                attributes: ['id', 'nombre', 'correo', 'password'],                
                 where: {
                     [Op.or]: {
                         nombre: usuario,
@@ -226,6 +222,13 @@ exports.InicioSesion = async (req, res) => {
                 msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
             }
             else {
+                var buscarCliente = await Cliente.findOne({
+                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],                
+                    where: {
+                        UsuarioId: buscarUsuario.id
+                    }
+    
+                });
                 console.log(buscarUsuario);
                 if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
                     const token = passport.getToken({ id: buscarUsuario.id });
@@ -234,11 +237,11 @@ exports.InicioSesion = async (req, res) => {
                         usuario: {
                             usuario: buscarUsuario.nombre,
                             correo: buscarUsuario.correo,
-                            //nombre: buscarUsuario.Cliente.nombre,
-                            //apellido: buscarUsuario.Cliente.apellido,
-                            //imagen: buscarUsuario.Cliente.imagen,
-                            //telefono: buscarUsuario.Cliente.telefono,
-                            //direccion: buscarUsuario.Cliente.direcion,
+                            nombre: buscarCliente.nombre,
+                            apellido: buscarCliente.apellido,
+                            imagen: buscarCliente.imagen,
+                            telefono: buscarCliente.telefono,
+                            direccion: buscarCliente.direcion,
                         }
                     };
                     msjRes("Peticion ejecutada correctamente", 200, data, [], res);
