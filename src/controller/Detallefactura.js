@@ -73,13 +73,13 @@ exports.Listar = async (req, res) => {
     res.json(listarDetallefactura);
 }
 
-exports.Guardar = async (req, res) => {
+exports.GuardarCombo = async (req, res) => {
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { cantidad, ComboId, FacturaId, MenuId } = req.body;
+        const { cantidad, ComboId, FacturaId } = req.body;
         if (!cantidad || !FacturaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
@@ -91,28 +91,62 @@ exports.Guardar = async (req, res) => {
                 if (!buscarCombo) {
                     res.send('El id del combo no existe');
                 } else {
-                    let buscarMenu = await Menu.findOne({ where: { id: MenuId } });
-                    if (!buscarMenu) {
-                        res.send('El id del menu no existe');
-                    } else {
-                        await DetalleFactura.create({
-                            cantidad,
-                            subTotal: (buscarCombo.precio * cantidad) + (buscarMenu.precio * cantidad),
-                            FacturaId,
-                            ComboId,
-                            MenuId
-                        }).then(data => {
-                            res.json({ msj: 'Registro guardado' });
-                        })
-                            .catch((er) => {
-                                var errores = '';
-                                er.errors.forEach(element => {
-                                    console.log(element.message);
-                                    errores += element.message + '. ';
-                                })
-                                res.json({ errores });
+                    await DetalleFactura.create({
+                        cantidad,
+                        subTotal: (buscarCombo.precio * cantidad),
+                        FacturaId,
+                        ComboId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
+                    })
+                        .catch((er) => {
+                            var errores = '';
+                            er.errors.forEach(element => {
+                                console.log(element.message);
+                                errores += element.message + '. ';
                             })
-                    }
+                            res.json({ errores });
+                        })
+                }
+            }
+        }
+    }
+}
+
+exports.GuardarMenu = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'Errores en los datos enviados' });
+    } else {
+        const { cantidad, FacturaId, MenuId } = req.body;
+        if (!cantidad || !FacturaId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            let buscarFactura = await Factura.findOne({ where: { id: FacturaId } });
+            if (!buscarFactura) {
+                res.send('El id de la factura no existe');
+            } else {
+                let buscarMenu = await Menu.findOne({ where: { id: MenuId } });
+                if (!buscarMenu) {
+                    res.send('El id del menu no existe');
+                } else {
+                    await DetalleFactura.create({
+                        cantidad,
+                        subTotal: (buscarMenu.precio * cantidad),
+                        FacturaId,
+                        MenuId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
+                    })
+                        .catch((er) => {
+                            var errores = '';
+                            er.errors.forEach(element => {
+                                console.log(element.message);
+                                errores += element.message + '. ';
+                            })
+                            res.json({ errores });
+                        })
                 }
             }
         }
