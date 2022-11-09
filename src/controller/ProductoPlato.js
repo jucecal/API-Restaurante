@@ -13,25 +13,25 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/pxplatos/listar',
                 descripcion: 'Listar los Platps',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: 'Se listan todos los productos que iran en el plato de comida'
             },
             {
                 ruta: '/api/pxplatos/guardar',
                 descripcion: 'Guardar los datos del plato',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: 'Se guardan los productos que van a estar en el plato de comida'
             },
             {
                 ruta: '/api/pxplatos/editar',
                 descripcion: 'Modifica los datos de los platos',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: 'Se modifica si el cliente desea algo diferente a lo establecido'
             },
             {
                 ruta: '/api/pxplatos/eliminar',
                 descripcion: 'Elimina los datos de los platos',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: 'Se eliminan los productos del plato'
             }
         ]
     }

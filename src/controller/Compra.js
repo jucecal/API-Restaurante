@@ -197,8 +197,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { totalPagar, SucursalId } = req.body;
-        if ( !totalPagar || !SucursalId) {
+        const { SucursalId } = req.body;
+        if ( !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })
         }
         else {
@@ -208,7 +208,7 @@ exports.Guardar = async (req, res) => {
             } else {
                 await Compra.create({
                     fecha: now(),
-                    totalPagar,
+                    totalPagar: 0,
                     SucursalId
                 }).then((data) => {
                     res.json({ msj: 'Registro guardado' })

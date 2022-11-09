@@ -44,7 +44,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/categorias/editar',
                 descripcion: 'Modifica los datos de una categoria',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    categoria: "Categoria de los productos modificable. Ocacional"
+                }
             },
             {
                 ruta: '/api/categorias/eliminar',

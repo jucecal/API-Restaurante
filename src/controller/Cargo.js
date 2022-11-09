@@ -35,7 +35,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guarda los datos de un cargo',
                 metodo: 'POST',
                 parametros: {
-                    cargo: "Se le enviará a Insumos para saber la categoría del producto que se va a vender."
+                    cargo: "Se le enviará al empleado para saber su rol."
                 }
             },
             {
@@ -51,7 +51,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Elimina los datos de un cargo',
                 metodo: 'DELETE',
                 parametros: {
-                    id: "ID de para eliminar un cargo"
+                    id: "ID de para eliminar un cargo."
                 }
             }
         ]
