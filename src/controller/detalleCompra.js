@@ -22,7 +22,9 @@ exports.Inicio = (req, res) => {
                 metodo: 'POST',
                 parametros: {
                     cantidad: "Cantidad de productos a comprar. Obligatorio",
-                    observaciones: "Comentarios hacer de la compra"
+                    observaciones: "Comentarios hacer de la compra",
+                    InsumoId: "Id del producto. Obligatorio",
+                    CompraId: "Orden de Compra"
                 }
             },
             {
@@ -31,7 +33,9 @@ exports.Inicio = (req, res) => {
                 metodo: 'PUT',
                 parametros: {
                     cantidad: "Cantidad de productos a comprar. Obligatorio",
-                    observaciones: "Comentarios hacer de la compra"
+                    observaciones: "Comentarios hacer de la compra",
+                    InsumoId: "Id del producto. Obligatorio",
+                    CompraId: "Orden de Compra"
                 }
             },
             {

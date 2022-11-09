@@ -24,7 +24,9 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre del producto. Obligatorio",
                     marca: "Marca del producto. Obligatorio",
                     fechaVencimiento: "Fecha de vencimiento",
-                    precioUnitario: "Precio Unitario. Obligatorio"
+                    precioUnitario: "Precio Unitario. Obligatorio",
+                    TipoId: "Id del tipo de producto. Obligatorio",
+                    ProveedorId: "Id del proveedor. Obligatorio"
                 }
             },
             {
@@ -51,7 +53,9 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre del producto. Obligatorio",
                     marca: "Marca del producto. Obligatorio",
                     fechaVencimiento: "Fecha de vencimiento",
-                    precioUnitario: "Precio Unitario. Obligatorio"
+                    precioUnitario: "Precio Unitario. Obligatorio",
+                    TipoId: "Id del tipo de producto. Obligatorio",
+                    ProveedorId: "Id del proveedor. Obligatorio"
                 }
             },
             {

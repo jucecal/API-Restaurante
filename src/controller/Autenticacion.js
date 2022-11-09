@@ -8,7 +8,7 @@ const gpc = require('generate-pincode');
 const passport = require('../config/passport');
 const bcrypt = require('bcrypt');
 function validacion(req) {
-    var errores=[];
+    var errores = [];
     var validaciones = validationResult(req);
     var error = {
         mensaje: '',
@@ -82,7 +82,7 @@ exports.Inicio = async (req, res) => {
 exports.Pin = async (req, res) => {
     var errores = validacion(req);
     console.log(errores);
-    if (errores.length>0) {
+    if (errores.length > 0) {
         msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
     }
     else {
@@ -108,12 +108,12 @@ exports.Pin = async (req, res) => {
                 pin: pin
             };
             console.log(pin);
-            if ( await EnviarCorreo.EnviarCorreo(data)){
+            if (await EnviarCorreo.EnviarCorreo(data)) {
                 buscarUsuario.codigo = pin;
                 await buscarUsuario.save();
-                msjRes("Peticion ejecutada correctamente", 200, {msj: 'Correo Enviado'}, errores, res);
+                msjRes("Peticion ejecutada correctamente", 200, { msj: 'Correo Enviado' }, errores, res);
             }
-            else{
+            else {
                 errores = [
                     {
                         mensaje: "Error al enviar el correo",
@@ -122,7 +122,7 @@ exports.Pin = async (req, res) => {
                 ];
                 msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
             }
-           
+
         }
     }
 };
@@ -130,7 +130,7 @@ exports.Pin = async (req, res) => {
 exports.Recuperar = async (req, res) => {
     var msj = validacion(req);
     console.log(msj);
-    if (msj.length>0) {
+    if (msj.length > 0) {
         msjRes("Peticion ejecutada correctamente", 200, [], msj, res);
     }
     else {
@@ -156,7 +156,7 @@ exports.Recuperar = async (req, res) => {
         }
         else {
             if (pin != buscarUsuario.codigo) {
-               var errores = [
+                var errores = [
                     {
                         mensaje: "El pin es incorrecto o ha expirado",
                         parametro: "pin"
@@ -165,7 +165,7 @@ exports.Recuperar = async (req, res) => {
                 msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
             }
             else {
-                
+
                 buscarUsuario.password = contrasena;
                 buscarUsuario.estado = 'AC';
                 buscarUsuario.fallidos = 0;
@@ -195,18 +195,18 @@ exports.Error = async (req, res) => {
 
 exports.InicioSesion = async (req, res) => {
     var msj = validacion(req);
-    if (msj.length>0) {
+    if (msj.length > 0) {
         msjRes("Peticion ejecutada correctamente", 200, [], msj, res);
     }
     else {
         try {
             const { usuario, contrasena } = req.body;
             var buscarUsuario = await Usuario.findOne({
-                attributes: ['id','nombre', 'correo', 'password'],    
+                attributes: ['id', 'nombre', 'correo', 'password'],
                 include: [{
                     model: Cliente,
                     attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion']
-                }],            
+                }],
                 where: {
                     [Op.or]: {
                         nombre: usuario,
@@ -214,7 +214,7 @@ exports.InicioSesion = async (req, res) => {
                     },
                     estado: 'AC',
                 }
-                
+
             });
             if (!buscarUsuario) {
                 var errores = [
@@ -231,7 +231,7 @@ exports.InicioSesion = async (req, res) => {
                     const token = passport.getToken({ id: buscarUsuario.id });
                     const data = {
                         token: token,
-                        usuario:{
+                        usuario: {
                             usuario: buscarUsuario.nombre,
                             correo: buscarUsuario.correo,
                             //nombre: buscarUsuario.Cliente.nombre,
@@ -252,18 +252,18 @@ exports.InicioSesion = async (req, res) => {
                     ];
                     buscarUsuario.fallidos = buscarUsuario.fallidos + 1;
                     await buscarUsuario.save()
-                    .then((data)=>{
-                        console.log(data);
-                    }).catch((er)=>{
-                        console.log(er);
-                        errores=er;
-                    });
+                        .then((data) => {
+                            console.log(data);
+                        }).catch((er) => {
+                            console.log(er);
+                            errores = er;
+                        });
                     msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
                 }
             }
         } catch (error) {
             console.log(error);
-           errores = "Error al conectar con la base de datos";
+            errores = "Error al conectar con la base de datos";
             msjRes("Error al Ejecutar la Peticion", 500, [], errores, res);
         }
 

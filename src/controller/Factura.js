@@ -26,11 +26,16 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los datos de una factura',
                 metodo: 'POST',
                 parametros: {
-                    fecha:"Queda registrada la fecha de la factura. Obligatorio",
-                    ISV:"Calculable con el subtotal del detalle venta. Obligatorio",
-                    totalPagar:"Total del calculo en la tabla detalle venta. Obligatorio",
-                    efectivo:"Cantidad de pago. Obligatorio",
-                    cambio:"Cantidad sobrante del pago realizado. Obligatorio"
+                    fecha: "Queda registrada la fecha de la factura. Obligatorio",
+                    ISV: "Calculable con el subtotal del detalle venta. Obligatorio",
+                    totalPagar: "Total del calculo en la tabla detalle venta. Obligatorio",
+                    efectivo: "Cantidad de pago. Obligatorio",
+                    cambio: "Cantidad sobrante del pago realizado. Obligatorio",
+                    EmpleadoId: "Id del empleado que realiza la factura. Obligatorio",
+                    ClienteId: "Id del cliente. Obligatorio",
+                    MesaId: "Id de la mesa",
+                    ReservacioneId: "Id de la reservación",
+                    FormaPagoId: "Id de la forma de pago. Obligatorio"
                 }
             },
             {
@@ -45,12 +50,17 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/facturas/editar',
                 descripcion: 'Modifica los datos de una factura',
                 metodo: 'PUT',
-                parametros:  {
-                    fecha:"Queda registrada la fecha de la factura. Obligatorio",
-                    ISV:"Calculable con el subtotal del detalle venta. Obligatorio",
-                    totalPagar:"Total del calculo en la tabla detalle venta. Obligatorio",
-                    efectivo:"Cantidad de pago. Obligatorio",
-                    cambio:"Cantidad sobrante del pago realizado. Obligatorio"
+                parametros: {
+                    fecha: "Queda registrada la fecha de la factura. Obligatorio",
+                    ISV: "Calculable con el subtotal del detalle venta. Obligatorio",
+                    totalPagar: "Total del calculo en la tabla detalle venta. Obligatorio",
+                    efectivo: "Cantidad de pago. Obligatorio",
+                    cambio: "Cantidad sobrante del pago realizado. Obligatorio",
+                    EmpleadoId: "Id del empleado que realiza la factura. Obligatorio",
+                    ClienteId: "Id del cliente. Obligatorio",
+                    MesaId: "Id de la mesa",
+                    ReservacioneId: "Id de la reservación",
+                    FormaPagoId: "Id de la forma de pago. Obligatorio"
                 }
             },
             {
@@ -175,8 +185,8 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         console.log(req);
-        const {ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-        if ( !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
+        const { ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
+        if (!efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });

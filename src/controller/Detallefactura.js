@@ -21,7 +21,10 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los detalles de factura',
                 metodo: 'POST',
                 parametros: {
-                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio"
+                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio",
+                    FacturaId: "Id de la factura. Obligatorio",
+                    ComboId: "Id del combo. Obligatorio",
+                    MenuId: "Id del producto del menu. Obligatorio"
                 }
             },
             {
@@ -29,7 +32,10 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modifica los detalles de factura',
                 metodo: 'PUT',
                 parametros: {
-                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio"
+                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio",
+                    FacturaId: "Id de la factura. Obligatorio",
+                    ComboId: "Id del combo. Obligatorio",
+                    MenuId: "Id del producto del menu. Obligatorio"
                 }
             },
             {

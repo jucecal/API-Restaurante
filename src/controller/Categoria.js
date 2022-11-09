@@ -19,7 +19,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
                 parametros: {
-                    id:"Realizar una busqueda específica de una categoría."
+                    id: "Realizar una busqueda específica de una categoría."
                 }
             },
             {
@@ -104,8 +104,8 @@ exports.BuscarCategoria = async (req, res) => {
                 ['categoria', 'Categoria']
             ],
             where: {
-                categoria: { 
-                    [Op.like]: categoria 
+                categoria: {
+                    [Op.like]: categoria
                 }
             },
         });
@@ -121,20 +121,20 @@ exports.Guardar = async (req, res) => {
     } else {
         console.log(req);
         const { categoria } = req.body;
-    if (!categoria) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await Categoria.create({
-            categoria
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
+        if (!categoria) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            await Categoria.create({
+                categoria
+            }).then(data => {
+                res.json({ msj: 'Registro guardado' });
             })
+                .catch((er) => {
+                    res.json({ msj: 'Error al guardar el registro' });
+                })
+        }
     }
-    }
-    
+
 }
 
 

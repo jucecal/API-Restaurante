@@ -49,23 +49,23 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarPxPlato = await ProductoPlato.findAll({
         attributes: [
-            ['cantidad', 'Cantidad'], 
-            ['MenuId', 'ID Plato'], 
+            ['cantidad', 'Cantidad'],
+            ['MenuId', 'ID Plato'],
             ['InsumoId', 'ID Insumo']
         ],
         include: [
-        {
-            model: Menu,
-            attributes:[
-                ['nombre', 'Plato']
-            ]
-        },
-        {
-            model: Insumo,
-            attributes:[
-                ['nombre', 'Producto']
-            ]
-        },
+            {
+                model: Menu,
+                attributes: [
+                    ['nombre', 'Plato']
+                ]
+            },
+            {
+                model: Insumo,
+                attributes: [
+                    ['nombre', 'Producto']
+                ]
+            },
         ]
     });
     res.json(listarPxPlato);
@@ -76,37 +76,37 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else{
-        console.log(req);
-    const { cantidad, MenuId, InsumoId } = req.body;
-    if (!cantidad || !MenuId || !InsumoId) {
-        res.json({ msj: 'Debe enviar los datos completos' });
     } else {
-        var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
-        if (!buscarMenu) {
-            res.send('El id del producto del menu no existe');
+        console.log(req);
+        const { cantidad, MenuId, InsumoId } = req.body;
+        if (!cantidad || !MenuId || !InsumoId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
-            if (!buscarInsumo) {
-                res.send('El id del insumo no existe');
+            var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
+            if (!buscarMenu) {
+                res.send('El id del producto del menu no existe');
             } else {
-                await ProductoPlato.create({
-                    cantidad,
-                    MenuId,
-                    InsumoId
-                }).then(data => {
-                    res.json({ msj: 'Registro guardado' });
-                })
-                    .catch((er) => {
-                        res.json({ msj: 'Error al guardar el registro' });
+                var buscarInsumo = await Insumo.findOne({ where: { id: InsumoId } });
+                if (!buscarInsumo) {
+                    res.send('El id del insumo no existe');
+                } else {
+                    await ProductoPlato.create({
+                        cantidad,
+                        MenuId,
+                        InsumoId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
                     })
+                        .catch((er) => {
+                            res.json({ msj: 'Error al guardar el registro' });
+                        })
+                }
             }
         }
-    }
 
 
     }
-   
+
 }
 
 exports.Editar = async (req, res) => {

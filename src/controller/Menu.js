@@ -29,7 +29,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra un producto en específico del menu según el id ingresado',
                 metodo: 'GET',
                 parametros: {
-                    id:"Necesario para realizar una busqueda por id, Obligatorio"
+                    id: "Necesario para realizar una busqueda por id, Obligatorio"
                 }
             },
             {
@@ -37,7 +37,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre ingresado',
                 metodo: 'GET',
                 parametros: {
-                    nombre:"Nombre del producto para poder realizar su busqueda. Obligatorio"
+                    nombre: "Nombre del producto para poder realizar su busqueda. Obligatorio"
                 }
             },
             {
@@ -51,7 +51,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
                 metodo: 'GET',
                 parametros: {
-                    CategoriumId:"Campo necesario para poder realizar una busqueda de la categoria del producto. Obligatorio"
+                    CategoriumId: "Campo necesario para poder realizar una busqueda de la categoria del producto. Obligatorio"
                 }
             },
             {
@@ -59,10 +59,10 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guarda los datos de un producto del menu',
                 metodo: 'POST',
                 parametros: {
-                    nombre:"Necesario para ingresar en detalle factura. Obligatório",
+                    nombre: "Necesario para ingresar en detalle factura. Obligatório",
                     precio: "Se establece el precio requerido del prodcuto en el menú. Obligatorio",
-                    descripcion:"Descripción del plato que se sirve. Obligatorio ",
-                    CategoriumId:"Relación de la categoria con el menú. Obligatorio"
+                    descripcion: "Descripción del plato que se sirve. Obligatorio ",
+                    CategoriumId: "Relación de la categoria con el menú. Obligatorio"
                 }
             },
             {
@@ -70,19 +70,19 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modifica los datos de un producto del menu',
                 metodo: 'PUT',
                 parametros: {
-                    nombre:"Necesario para ingresar en detalle factura. Obligatório",
+                    nombre: "Necesario para ingresar en detalle factura. Obligatório",
                     precio: "Se establece el precio requerido del prodcuto en el menú. Obligatorio",
-                    descripcion:"Descripción del plato que se sirve. Obligatorio ",
-                    CategoriumId:"Relación de la categoria con el menú. Obligatorio"
+                    descripcion: "Descripción del plato que se sirve. Obligatorio ",
+                    CategoriumId: "Relación de la categoria con el menú. Obligatorio"
                 }
-                
+
             },
             {
                 ruta: '/api/menu/eliminar',
                 descripcion: 'Elimina los datos de un producto del menu',
                 metodo: 'DELETE',
                 parametros: {
-                    id:" 'ID de para eliminar un producto de Menu'"
+                    id: " 'ID de para eliminar un producto de Menu'"
                 }
             }
         ]

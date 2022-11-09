@@ -44,7 +44,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra el o los clientes que coincidan con el nombre ingresado',
                 metodo: 'GET',
                 parametros: {
-                    nombre:"Nombre que se manda para poder buscar un cliente por nombre. Obligatorio",
+                    nombre: "Nombre que se manda para poder buscar un cliente por nombre. Obligatorio",
                 }
             },
             {
@@ -52,12 +52,13 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los Clientes',
                 metodo: 'POST',
                 parametros: {
-                    nombre:"Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
-                    apellido:"Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
-                    telefono:"Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
-                    fechaNacimiento:"Fecha enviado al cliente. Obligatorio",
-                    correo:"Correo electrónico del cliente, va junto con el usuario. Obligatorio",
-                    direccion:"Dato de identificación del cliente. Obligatorio"
+                    nombre: "Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    apellido: "Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    telefono: "Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
+                    fechaNacimiento: "Fecha enviado al cliente. Obligatorio",
+                    correo: "Correo electrónico del cliente, va junto con el usuario. Obligatorio",
+                    direccion: "Dato de identificación del cliente. Obligatorio",
+                    UsuarioId: "Usuario del Cliente. Obligatorio"
                 }
             },
             {
@@ -65,12 +66,13 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modifica los Clientes',
                 metodo: 'PUT',
                 parametros: {
-                    nombre:"Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
-                    apellido:"Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
-                    telefono:"Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
-                    fechaNacimiento:"Fecha enviado al cliente. Obligatorio",
-                    correo:"Correo electrónico del cliente, va junto con el usuario. Obligatorio",
-                    direccion:"Dato de identificación del cliente. Obligatorio"
+                    nombre: "Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    apellido: "Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    telefono: "Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
+                    fechaNacimiento: "Fecha enviado al cliente. Obligatorio",
+                    correo: "Correo electrónico del cliente, va junto con el usuario. Obligatorio",
+                    direccion: "Dato de identificación del cliente. Obligatorio",
+                    UsuarioId: "Usuario del Cliente. Obligatorio"
                 }
             },
             {
@@ -164,7 +166,7 @@ exports.BuscarNombre = async (req, res) => {
                 }
             },
             include: [{
-                model: Usuario, 
+                model: Usuario,
                 attributes: [
                     ['nombre', 'Nombre de Usuario'],
                     ['estado', 'Estado']

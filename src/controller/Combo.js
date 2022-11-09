@@ -30,16 +30,16 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los datos de un combo',
                 metodo: 'POST',
                 parametros: {
-                    combo:"Combo que se manda al detalle de factura. Obligatorio",
-                    precio:"Precio que se calcula en detalle de factura. Obligatorio",
+                    combo: "Combo que se manda al detalle de factura. Obligatorio",
+                    precio: "Precio que se calcula en detalle de factura. Obligatorio",
                 }
             },
-             {
+            {
                 ruta: '/api/combos/buscarCombo',
                 descripcion: 'Muestra un combo en específico según el numero ingresado',
                 metodo: 'GET',
                 parametros: {
-                    combo:"Necesario para poder realizar la busqueda del combo. Obligatorio"
+                    combo: "Necesario para poder realizar la busqueda del combo. Obligatorio"
                 }
             },
             {
@@ -52,9 +52,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/combos/editar',
                 descripcion: 'Modifica los datos de un combo',
                 metodo: 'PUT',
-                parametros:{
-                    combo:"Combo que se manda al detalle de factura. Obligatorio",
-                    precio:"Precio que se calcula en detalle de factura. Obligatorio",
+                parametros: {
+                    combo: "Combo que se manda al detalle de factura. Obligatorio",
+                    precio: "Precio que se calcula en detalle de factura. Obligatorio",
                 }
             },
             {

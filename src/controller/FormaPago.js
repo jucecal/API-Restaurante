@@ -57,7 +57,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFormaPago = await FormaPago.findAll({
         attributes: [
-            ['id', 'ID Formas de Pago'], 
+            ['id', 'ID Formas de Pago'],
             ['formaPago', 'Forma de Pago']
         ],
     });
@@ -77,7 +77,7 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarFormaPago = await FormaPago.findAll({
             attributes: [
-                ['id', 'ID Forma de Forma'], 
+                ['id', 'ID Forma de Forma'],
                 ['formaPago', 'Forma de Pago']
             ],
             where: {
@@ -94,24 +94,24 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else{
+    } else {
         console.log(req);
         const { formaPago } = req.body;
-    if (!formaPago) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await FormaPago.create({
-            formaPago
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
+        if (!formaPago) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            await FormaPago.create({
+                formaPago
+            }).then(data => {
+                res.json({ msj: 'Registro guardado' });
             })
-    }
+                .catch((er) => {
+                    res.json({ msj: 'Error al guardar el registro' });
+                })
+        }
 
     }
-  
+
 }
 
 exports.Editar = async (req, res) => {

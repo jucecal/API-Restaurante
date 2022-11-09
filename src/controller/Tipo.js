@@ -45,7 +45,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarTipo = await Tipo.findAll({
         attributes: [
-            ['id', 'ID Tipo'], 
+            ['id', 'ID Tipo'],
             ['tipo', 'Tipo']
         ]
     });

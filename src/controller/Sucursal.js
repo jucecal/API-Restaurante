@@ -19,9 +19,9 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los datos de una sucursal',
                 metodo: 'POST',
                 parametros: {
-                    nombre:"Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
-                    ubicacion:"Ubicacion de la sucursal. Obligatorio",
-                    telefono:"Teléfono de cada sucursal. Obligatorio"
+                    nombre: "Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
+                    ubicacion: "Ubicacion de la sucursal. Obligatorio",
+                    telefono: "Teléfono de cada sucursal. Obligatorio"
                 }
             },
             {
@@ -29,7 +29,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra un surcursal en específico según el id ingresado',
                 metodo: 'GET',
                 parametros: {
-                    id:"Buscar una sucursal específica por su id. Obligatorio"
+                    id: "Buscar una sucursal específica por su id. Obligatorio"
                 }
             },
 
@@ -38,7 +38,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra el o los sucursales que coincidan con el nombre ingresado',
                 metodo: 'GET',
                 parametros: {
-                    nombre:"Buscar una sucursal por el nombre de esta. Obligatorios"
+                    nombre: "Buscar una sucursal por el nombre de esta. Obligatorios"
                 }
             },
             {
@@ -46,9 +46,9 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modifica los datos de una sucursal',
                 metodo: 'PUT',
                 parametros: {
-                    nombre:"Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
-                    ubicacion:"Ubicacion de la sucursal. Obligatorio",
-                    telefono:"Teléfono de cada sucursal. Obligatorio"
+                    nombre: "Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
+                    ubicacion: "Ubicacion de la sucursal. Obligatorio",
+                    telefono: "Teléfono de cada sucursal. Obligatorio"
                 }
             },
             {
@@ -56,7 +56,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Elimina los datos de una sucursales',
                 metodo: 'DELETE',
                 parametros: {
-                    id:"Eliminar una sucursal específica por su id. Obligatorio"
+                    id: "Eliminar una sucursal específica por su id. Obligatorio"
                 }
             }
         ]

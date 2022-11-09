@@ -19,10 +19,10 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los usuarios',
                 metodo: 'POST',
                 parametros: {
-                    nombre:"Nombre de usuario para poder logearse al sistema. Obligatorio",
-                    correo:"Correo electrónico para crear cuenta en el sistema. obligatorio",
-                    password:"Contraseña para poder logearse en el sistema. Obligatorio",
-                    tipo:"Tipo de rol que tendrá la persona en el sistema. Obligatorio "
+                    nombre: "Nombre de usuario para poder logearse al sistema. Obligatorio",
+                    correo: "Correo electrónico para crear cuenta en el sistema. obligatorio",
+                    password: "Contraseña para poder logearse en el sistema. Obligatorio",
+                    tipo: "Tipo de rol que tendrá la persona en el sistema. Obligatorio "
                 }
             },
             {
@@ -30,10 +30,10 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modifica los usuarios',
                 metodo: 'PUT',
                 parametros: {
-                    nombre:"Nombre de usuario para poder logearse al sistema. Obligatorio",
-                    correo:"Correo electrónico para crear cuenta en el sistema. obligatorio",
-                    password:"Contraseña para poder logearse en el sistema. Obligatorio",
-                    tipo:"Tipo de rol que tendrá la persona en el sistema. Obligatorio "
+                    nombre: "Nombre de usuario para poder logearse al sistema. Obligatorio",
+                    correo: "Correo electrónico para crear cuenta en el sistema. obligatorio",
+                    password: "Contraseña para poder logearse en el sistema. Obligatorio",
+                    tipo: "Tipo de rol que tendrá la persona en el sistema. Obligatorio "
                 }
             },
             {
@@ -148,7 +148,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombre, correo, password, tipo, estado } = req.body;
-        if (!nombre || !correo || !password ) {
+        if (!nombre || !correo || !password) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Usuario.create({

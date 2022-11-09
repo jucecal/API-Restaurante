@@ -1,4 +1,4 @@
-const { validationResult, body} = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const { request } = require('express');
 const { Op } = require('sequelize');
 const Proveedor = require('../model/Proveedor');
@@ -121,24 +121,24 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         console.log(req);
-         const { proveedor, nombreContacto, telefono } = req.body;
-    if (!proveedor || !nombreContacto || !telefono) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        await Proveedor.create({
-            proveedor,
-            nombreContacto,
-            telefono
-        }).then(data => {
-            res.json({ msj: 'Registro guardado' });
-        })
-            .catch((er) => {
-                res.json({ msj: 'Error al guardar el registro' });
+        const { proveedor, nombreContacto, telefono } = req.body;
+        if (!proveedor || !nombreContacto || !telefono) {
+            res.json({ msj: 'Debe enviar los datos completos' });
+        } else {
+            await Proveedor.create({
+                proveedor,
+                nombreContacto,
+                telefono
+            }).then(data => {
+                res.json({ msj: 'Registro guardado' });
             })
-    }
+                .catch((er) => {
+                    res.json({ msj: 'Error al guardar el registro' });
+                })
+        }
 
     }
-    
+
 }
 
 exports.Editar = async (req, res) => {

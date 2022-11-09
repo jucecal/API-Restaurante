@@ -36,7 +36,10 @@ exports.Inicio = (req, res) => {
                     apellido: "Apellido del empleado. Obligatorio",
                     telefono: "Telefono del empleado. Obligatorio",
                     fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
-                    direccion: "Direccion del empleado"
+                    direccion: "Direccion del empleado",
+                    SucursalId: "Id de la sucursal donde pertenece. Obligatorio",
+                    CargoId: "Id del cargo del empleado",
+                    UsuarioId: "Id del usuario del empleado"
                 }
             },
             {
@@ -74,6 +77,9 @@ exports.Inicio = (req, res) => {
                     telefono: "Telefono del empleado. Obligatorio",
                     fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
                     direccion: "Direccion del empleado",
+                    SucursalId: "Id de la sucursal donde pertenece. Obligatorio",
+                    CargoId: "Id del cargo del empleado",
+                    UsuarioId: "Id del usuario del empleado"
                 }
             },
             {

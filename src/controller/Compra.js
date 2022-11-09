@@ -31,7 +31,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Muestra una compra con un Id específico',
                 metodo: 'GET',
                 parametros: {
-                    id:"Se necesita para poder buscar una compra. Obligatorio"
+                    id: "Se necesita para poder buscar una compra. Obligatorio"
                 }
             },
             {
@@ -59,7 +59,8 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Guardar los datos de una compra',
                 metodo: 'POST',
                 parametros: {
-                    fecha:"Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio"
+                    fecha: "Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio",
+                    SucursalId: "Id de la sucursal que realiza la compra. Obligatorio"
                 }
             },
             {
@@ -67,7 +68,8 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Modificar los datos de una compra',
                 metodo: 'PUT',
                 parametros: {
-                    fecha:"Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio"
+                    fecha: "Se manda a la tabla de detalle de compra para que especifique la venta. Obligatorio",
+                    SucursalId: "Id de la sucursal que realiza la compra. Obligatorio"
                 }
             },
             {
@@ -75,7 +77,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Eliminar los datos de una compra',
                 metodo: 'DELETE',
                 parametros: {
-                    id:"Se necesita el id de compras para poder eliminar una compra. Obligatorio"
+                    id: "Se necesita el id de compras para poder eliminar una compra. Obligatorio"
                 }
             }
         ]
@@ -92,12 +94,12 @@ exports.Listar = async (req, res) => {
             ['imagen', 'Imagen Comprobante']
         ],
         include: [
-        {
-            model: Sucursal,
-            attributes: [
-                ['nombre', 'Sucursal']
-            ]
-        },
+            {
+                model: Sucursal,
+                attributes: [
+                    ['nombre', 'Sucursal']
+                ]
+            },
         ]
     });
     res.json(listarCompras);
@@ -208,7 +210,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { SucursalId } = req.body;
-        if ( !SucursalId) {
+        if (!SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })
         }
         else {
@@ -242,7 +244,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { totalPagar, SucursalId } = req.body;
-    if ( !totalPagar || !SucursalId || !id) {
+    if (!totalPagar || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCompra = await Compra.findOne({ where: { id: id } });
