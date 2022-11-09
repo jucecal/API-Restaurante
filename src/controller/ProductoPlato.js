@@ -6,32 +6,40 @@ const { request } = require('express');
 
 exports.Inicio = (req, res) => {
     const moduloPxPlato = {
-        modulo: 'pxplatos',
+        modulo: 'prodplato',
         descripcion: 'Gestiona las operaciones con el modelo de platos',
         rutas: [
             {
-                ruta: '/api/pxplatos/listar',
+                ruta: '/api/prodplato/listar',
                 descripcion: 'Listar los Platps',
                 metodo: 'GET',
-                parametros: 'Se listan todos los productos que iran en el plato de comida'
+                parametros: 'ninguno'
             },
             {
-                ruta: '/api/pxplatos/guardar',
+                ruta: '/api/prodplato/guardar',
                 descripcion: 'Guardar los datos del plato',
                 metodo: 'POST',
-                parametros: 'Se guardan los productos que van a estar en el plato de comida'
+                parametros: {
+                    MenuId: "Id del producto del menu. Obligatorio",
+                    InsumoId: "Id del insumo. Obligatorio"
+                }
             },
             {
-                ruta: '/api/pxplatos/editar',
+                ruta: '/api/prodplato/editar',
                 descripcion: 'Modifica los datos de los platos',
                 metodo: 'PUT',
-                parametros: 'Se modifica si el cliente desea algo diferente a lo establecido'
+                parametros: {
+                    MenuId: "Id del producto del menu. Obligatorio",
+                    InsumoId: "Id del insumo. Obligatorio"
+                }
             },
             {
-                ruta: '/api/pxplatos/eliminar',
+                ruta: '/api/prodplato/eliminar',
                 descripcion: 'Elimina los datos de los platos',
                 metodo: 'DELETE',
-                parametros: 'Se eliminan los productos del plato'
+                parametros: {
+                    id: "Eliminar registro de los productos y platos"
+                }
             }
         ]
     }

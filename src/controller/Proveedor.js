@@ -18,25 +18,37 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/proveedor/guardar',
                 descripcion: 'Guardar los datos de un proveedor',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    proveedor: "Proveedor. Obligatorio",
+                    nombreContacto: "Nombre de Contacto del Proveedor. Obligatorio",
+                    telefono: "Telefono del Proveedor. Obligatorio"
+                }
             },
             {
                 ruta: '/api/proveedor/buscarId',
                 descripcion: 'Muestra un proveedor en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Buscar un proveedor por su id"
+                }
             },
             {
                 ruta: '/api/proveedor/editar',
                 descripcion: 'Modifica los datos de un proveedor',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    proveedor: "Proveedor. Obligatorio",
+                    nombreContacto: "Nombre de Contacto del Proveedor. Obligatorio",
+                    telefono: "Telefono del Proveedor. Obligatorio"
+                }
             },
             {
                 ruta: '/api/proveedor/eliminar',
                 descripcion: 'Elimina los datos de un proveedor',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Eliminar un proveedor por su id"
+                }
             }
         ]
     }
