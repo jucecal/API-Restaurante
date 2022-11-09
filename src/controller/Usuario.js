@@ -18,32 +18,48 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/usuarios/guardar',
                 descripcion: 'Guardar los usuarios',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Nombre de usuario para poder logearse al sistema. Obligatorio",
+                    correo:"Correo electrónico para crear cuenta en el sistema. obligatorio",
+                    password:"Contraseña para poder logearse en el sistema. Obligatorio",
+                    tipo:"Tipo de rol que tendrá la persona en el sistema. Obligatorio "
+                }
             },
             {
                 ruta: '/api/usuarios/editar',
                 descripcion: 'Modifica los usuarios',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Nombre de usuario para poder logearse al sistema. Obligatorio",
+                    correo:"Correo electrónico para crear cuenta en el sistema. obligatorio",
+                    password:"Contraseña para poder logearse en el sistema. Obligatorio",
+                    tipo:"Tipo de rol que tendrá la persona en el sistema. Obligatorio "
+                }
             },
             {
-                ruta: '/api/cargos/buscarId',
+                ruta: '/api/usuarios/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda por id de usuarios"
+                }
             },
 
             {
-                ruta: '/api/cargos/buscarNombre',
+                ruta: '/api/usuarios/buscarNombre',
                 descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Realizar una busqueda por nombre de usuario"
+                }
             },
             {
                 ruta: '/api/usuarios/eliminar',
                 descripcion: 'Elimina los usuarios',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Eliminar un usuario por id de usuario"
+                }
             }
         ]
     }
