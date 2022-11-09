@@ -25,25 +25,41 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/facturas/guardar',
                 descripcion: 'Guardar los datos de una factura',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    fecha:"Queda registrada la fecha de la factura. Obligatorio",
+                    ISV:"Calculable con el subtotal del detalle venta. Obligatorio",
+                    totalPagar:"Total del calculo en la tabla detalle venta. Obligatorio",
+                    efectivo:"Cantidad de pago. Obligatorio",
+                    cambio:"Cantidad sobrante del pago realizado. Obligatorio"
+                }
             },
             {
                 ruta: '/api/facturas/buscarId',
                 descripcion: 'Muestra un factura en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el id de la factura para poder determinar su venta. Obligatorio"
+                }
             },
             {
                 ruta: '/api/facturas/editar',
                 descripcion: 'Modifica los datos de una factura',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros:  {
+                    fecha:"Queda registrada la fecha de la factura. Obligatorio",
+                    ISV:"Calculable con el subtotal del detalle venta. Obligatorio",
+                    totalPagar:"Total del calculo en la tabla detalle venta. Obligatorio",
+                    efectivo:"Cantidad de pago. Obligatorio",
+                    cambio:"Cantidad sobrante del pago realizado. Obligatorio"
+                }
             },
             {
                 ruta: '/api/facturas/eliminar',
                 descripcion: 'Elimina los datos de una factura',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el id de la factura para poder eliminar su venta. Obligatorio"
+                }
             }
         ]
     }

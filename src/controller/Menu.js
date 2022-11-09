@@ -22,49 +22,68 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/menu/listar',
                 descripcion: 'Lista los productos del menu en el negocio',
                 metodo: 'GET',
-                parametros: 'Dato que se manda para poder listar un Menu'
+                parametros: 'Ninguno'
             },
             {
                 ruta: '/api/menu/buscarId',
                 descripcion: 'Muestra un producto en específico del menu según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Realizar una busqueda especifica en el Menu'
+                parametros: {
+                    id:"Necesario para realizar una busqueda por id, Obligatorio"
+                }
             },
             {
                 ruta: '/api/menu/buscarNombre',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Nombre del producto del menu para poder realizr su busqueda.'
+                parametros: {
+                    nombre:"Nombre del producto para poder realizar su busqueda. Obligatorio"
+                }
             },
             {
                 ruta: '/api/menu/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Se recibe la imagen del usuario'
+                parametros: 'Ninguno'
             },
             {
                 ruta: '/api/menu/buscarporCategoria',
                 descripcion: 'Muestra el o los productos del menu que coincidan con el nombre de categoria ingresado',
                 metodo: 'GET',
-                parametros: 'Productos del menu que esten mas relaciobados con alguna categoria'
+                parametros: {
+                    CategoriumId:"Campo necesario para poder realizar una busqueda de la categoria del producto. Obligatorio"
+                }
             },
             {
                 ruta: '/api/menu/guardar',
                 descripcion: 'Guarda los datos de un producto del menu',
                 metodo: 'POST',
-                parametros: 'Se enviara al Menu para saber su Id'
+                parametros: {
+                    nombre:"Necesario para ingresar en detalle factura. Obligatório",
+                    precio: "Se establece el precio requerido del prodcuto en el menú. Obligatorio",
+                    descripcion:"Descripción del plato que se sirve. Obligatorio ",
+                    CategoriumId:"Relación de la categoria con el menú. Obligatorio"
+                }
             },
             {
                 ruta: '/api/menu/editar',
                 descripcion: 'Modifica los datos de un producto del menu',
                 metodo: 'PUT',
-                parametros: 'ID para modificar producto del Menu'
+                parametros: {
+                    nombre:"Necesario para ingresar en detalle factura. Obligatório",
+                    precio: "Se establece el precio requerido del prodcuto en el menú. Obligatorio",
+                    descripcion:"Descripción del plato que se sirve. Obligatorio ",
+                    CategoriumId:"Relación de la categoria con el menú. Obligatorio"
+                }
+                
             },
             {
                 ruta: '/api/menu/eliminar',
                 descripcion: 'Elimina los datos de un producto del menu',
                 metodo: 'DELETE',
-                parametros: 'ID de para eliminar un producto de Menu'
+                parametros: {
+                    id:" 'ID de para eliminar un producto de Menu'"
+                }
             }
         ]
     }
