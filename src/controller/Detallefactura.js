@@ -43,7 +43,7 @@ exports.Listar = async (req, res) => {
     const listarDetallefactura = await DetalleFactura.findAll({
         attributes: [
             ['cantidad', 'Cantidad'],
-            ['subtotal', 'Sub-Total']
+            ['subTotal', 'Sub-Total']
         ],
         include: [
             {
@@ -106,6 +106,16 @@ exports.GuardarCombo = async (req, res) => {
                             })
                             res.json({ errores });
                         })
+
+                    let buscarFacturaTotal = await Factura.findOne({ where: { id: FacturaId } });
+                    if (!buscarFacturaTotal) {
+                        console.log('No existe factura');
+                    } else {
+                        buscarFacturaTotal.totalPagar += buscarCombo.precio * cantidad,
+                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
+                        await buscarFacturaTotal.save()
+                    }
                 }
             }
         }
@@ -146,6 +156,15 @@ exports.GuardarMenu = async (req, res) => {
                             })
                             res.json({ errores });
                         })
+                    var buscarFacturaTotal = await Factura.findOne({ where: { id: FacturaId } });
+                    if (!buscarFacturaTotal) {
+                        console.log('No existe factura');
+                    } else {
+                        buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
+                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15,
+                            await buscarFacturaTotal.save()
+                    }
                 }
             }
         }

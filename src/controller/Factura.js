@@ -10,8 +10,6 @@ const { request } = require('express');
 const { Op, Model } = require('sequelize');
 const { now } = require('moment');
 
-
-
 exports.Inicio = (req, res) => {
     const moduloFactura = {
         modulo: 'facturas',
@@ -159,10 +157,10 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else{
+    } else {
         console.log(req);
-        const { ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-        if ( !ISV || !totalPagar || !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
+        const {ISV, totalPagar, efectivo, EmpleadoId, ClienteId, FormaPagoId, ReservacioneId, MesaId } = req.body;
+        if ( !efectivo || !EmpleadoId || !ClienteId || !FormaPagoId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });
@@ -188,7 +186,7 @@ exports.Guardar = async (req, res) => {
                                 await Factura.create({
                                     fecha: now(),
                                     ISV,
-                                    totalPagar,
+                                    totalPagar: 0,
                                     efectivo,
                                     cambio: (efectivo - totalPagar),
                                     EmpleadoId,

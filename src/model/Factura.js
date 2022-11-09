@@ -15,12 +15,12 @@ const Factura = db.define(
 
         ISV: {
             type: DataTypes.DOUBLE,
-            allowNull: false
+            allowNull: true
         },
 
         totalPagar: {
             type: DataTypes.DOUBLE,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isFloat: true,
                 notEmpty: true
