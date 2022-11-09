@@ -20,33 +20,47 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/insumos/guardar',
                 descripcion: 'Guardar los datos de un insumo',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Nombre del producto. Obligatorio",
+                    marca: "Marca del producto. Obligatorio",
+                    fechaVencimiento: "Fecha de vencimiento",
+                    precioUnitario: "Precio Unitario. Obligatorio"
+                }
             },
             {
                 ruta: '/api/insumos/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda especifica de un producto por su id"
+                }
             },
             {
                 ruta: '/api/cargos/buscarNombre',
                 descripcion: 'Muestra el o los nombres que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Realizar una busqueda especifica de un producto por su id"
+                }
             },
-
-
             {
                 ruta: '/api/insumos/editar',
                 descripcion: 'Modifica los datos de un insumo',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Nombre del producto. Obligatorio",
+                    marca: "Marca del producto. Obligatorio",
+                    fechaVencimiento: "Fecha de vencimiento",
+                    precioUnitario: "Precio Unitario. Obligatorio"
+                }
             },
             {
                 ruta: '/api/insumos/eliminar',
                 descripcion: 'Elimina los datos de un insumo',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda especifica de un producto por su id"
+                }
             }
         ]
     }

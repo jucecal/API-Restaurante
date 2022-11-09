@@ -20,19 +20,27 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/detallecompra/guardar',
                 descripcion: 'Guardar los detalles de compras',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    cantidad: "Cantidad de productos a comprar. Obligatorio",
+                    observaciones: "Comentarios hacer de la compra"
+                }
             },
             {
                 ruta: '/api/detallecompra/editar',
                 descripcion: 'Modifica los detalles de compras',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    cantidad: "Cantidad de productos a comprar. Obligatorio",
+                    observaciones: "Comentarios hacer de la compra"
+                }
             },
             {
                 ruta: '/api/detallecompra/eliminar',
                 descripcion: 'Elimina los detalles de compras',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el ID del detalle para poder eliminarlo. Obligatorio"
+                }
             }
         ]
     }

@@ -18,13 +18,17 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/formaspago/guardar',
                 descripcion: 'Guardar los datos de una formas de pago',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    formaPago: "nombre de forma de pago. Obligatorio"
+                }
             },
-               {
+            {
                 ruta: '/api/formaspago/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda especifica de una forma de pago por su id"
+                }
             },
 
 
@@ -32,13 +36,18 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/formaspago/editar',
                 descripcion: 'Modifica los datos de una formas de pago',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Identificar una forma de pago por su id",
+                    formaPago: "nombre de forma de pago. Obligatorio"
+                }
             },
             {
                 ruta: '/api/formaspago/eliminar',
                 descripcion: 'Elimina los datos de una formas de pago',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda especifica de una forma de pago por su id"
+                }
             }
         ]
     }

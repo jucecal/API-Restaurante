@@ -51,7 +51,7 @@ exports.Inicio = (req, res) => {
                 descripcion: 'Elimina los datos de un cargo',
                 metodo: 'DELETE',
                 parametros: {
-                    id: "ID de para eliminar un cargo."
+                    id: "ID para eliminar un cargo."
                 }
             }
         ]

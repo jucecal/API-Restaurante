@@ -20,19 +20,25 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/detallefacturas/guardar',
                 descripcion: 'Guardar los detalles de factura',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio"
+                }
             },
             {
                 ruta: '/api/detallefacturas/editar',
                 descripcion: 'Modifica los detalles de factura',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    cantidad: "Cantidad de productos/combos a facturas. Obligatorio"
+                }
             },
             {
                 ruta: '/api/detallefacturas/eliminar',
                 descripcion: 'Elimina los detalles de factura',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el ID del detalle para poder eliminarlo. Obligatorio"
+                }
             }
         ]
     }

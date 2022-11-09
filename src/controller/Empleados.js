@@ -31,37 +31,58 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/empleados/guardar',
                 descripcion: 'Guardar los datos de un empleado',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Nombre del empleado. Obligatorio",
+                    apellido: "Apellido del empleado. Obligatorio",
+                    telefono: "Telefono del empleado. Obligatorio",
+                    fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
+                    direccion: "Direccion del empleado"
+                }
             },
             {
                 ruta: '/api/empleados/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Dato que se manda para poder listar el cargo por Id."
+                }
             },
             {
                 ruta: '/api/empleado/buscarNombre',
                 descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre: "Dato que se manda para poder listar el cargo por nombre."
+                }
             },
             {
                 ruta: '/api/empleado/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    img: "Fotografia del empleado"
+                }
             },
             {
                 ruta: '/api/empleados/editar',
                 descripcion: 'Modifica los datos de un empleado',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Dato que se manda para poder identificar al empleado.",
+                    nombre: "Nombre del empleado. Obligatorio",
+                    apellido: "Apellido del empleado. Obligatorio",
+                    telefono: "Telefono del empleado. Obligatorio",
+                    fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
+                    direccion: "Direccion del empleado",
+                }
             },
             {
                 ruta: '/api/empleados/eliminar',
                 descripcion: 'Elimina los datos de un empleado',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "ID para eliminar un empleado."
+                }
             }
         ]
     }
