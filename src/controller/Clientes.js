@@ -29,7 +29,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/cliente/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    img: "Fotografía del cliente"
+                }
             },
             {
                 ruta: '/api/clientes/buscarId',

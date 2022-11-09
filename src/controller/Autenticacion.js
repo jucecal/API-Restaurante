@@ -202,7 +202,7 @@ exports.InicioSesion = async (req, res) => {
         try {
             const { usuario, contrasena } = req.body;
             var buscarUsuario = await Usuario.findOne({
-                attributes: ['id', 'nombre', 'correo', 'password'],                
+                attributes: ['id', 'nombre', 'correo', 'password'],
                 where: {
                     [Op.or]: {
                         nombre: usuario,
@@ -223,11 +223,11 @@ exports.InicioSesion = async (req, res) => {
             }
             else {
                 var buscarCliente = await Cliente.findOne({
-                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],                
+                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],
                     where: {
                         UsuarioId: buscarUsuario.id
                     }
-    
+
                 });
                 console.log(buscarUsuario);
                 if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {

@@ -3,9 +3,11 @@ const controladorSucursal = require('../controller/Sucursal');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorSucursal.Inicio);
+ruta.get('/',
+    controladorSucursal.Inicio);
 
-ruta.get('/listar', controladorSucursal.Listar);
+ruta.get('/listar',
+    controladorSucursal.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),

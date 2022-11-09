@@ -20,6 +20,15 @@ const Combo = db.define(
                 min: 1
             }
         },
+        
+        descripcion: {
+            type: DataTypes.STRING(250),
+            allowNull: true,
+            validate: {
+                len: [3, 250],
+                notEmpty: true
+            }
+        },
 
         imagen: {
             type: DataTypes.STRING(250),

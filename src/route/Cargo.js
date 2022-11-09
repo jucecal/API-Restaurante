@@ -3,10 +3,10 @@ const controladorCargos = require('../controller/Cargo')
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', 
+ruta.get('/',
     controladorCargos.Inicio);
 
-ruta.get('/listar', 
+ruta.get('/listar',
     controladorCargos.Listar);
 
 ruta.get('/buscarId',

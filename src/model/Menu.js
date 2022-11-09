@@ -25,7 +25,7 @@ const Menu = db.define(
 
         descripcion: {
             type: DataTypes.STRING(250),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 len: [3, 250],
                 notEmpty: true

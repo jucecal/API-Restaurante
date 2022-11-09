@@ -19,10 +19,10 @@ const uploadCompras = multer({ storage: storageCompras });
 
 const ruta = Router();
 
-ruta.get('/', 
+ruta.get('/',
     controladorCompra.Inicio);
 
-ruta.get('/listar', 
+ruta.get('/listar',
     controladorCompra.Listar);
 
 ruta.get('/buscarId',

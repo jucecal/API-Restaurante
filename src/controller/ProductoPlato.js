@@ -50,22 +50,20 @@ exports.Listar = async (req, res) => {
     const listarPxPlato = await ProductoPlato.findAll({
         attributes: [
             ['cantidad', 'Cantidad'],
-            ['MenuId', 'ID Plato'],
-            ['InsumoId', 'ID Insumo']
         ],
         include: [
-            {
-                model: Menu,
-                attributes: [
-                    ['nombre', 'Plato']
-                ]
-            },
             {
                 model: Insumo,
                 attributes: [
                     ['nombre', 'Producto']
                 ]
             },
+            {
+                model: Menu,
+                attributes: [
+                    ['nombre', 'Plato']
+                ]
+            }
         ]
     });
     res.json(listarPxPlato);

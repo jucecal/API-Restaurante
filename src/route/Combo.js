@@ -17,9 +17,11 @@ const uploadCombo = multer({ storage: storageCombo });
 
 const ruta = Router();
 
-ruta.get('/', controladorCombo.Inicio);
+ruta.get('/',
+    controladorCombo.Inicio);
 
-ruta.get('/listar', controladorCombo.Listar);
+ruta.get('/listar',
+    controladorCombo.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
@@ -44,5 +46,5 @@ ruta.delete('/eliminar',
 ruta.post('/imagen',
     uploadCombo.single('img'),
     controladorCombo.RecibirImagen);
-    
+
 module.exports = ruta;

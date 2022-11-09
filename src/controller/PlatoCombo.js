@@ -50,9 +50,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarPxCombo = await PlatoCombo.findAll({
         attributes: [
-            ['id', 'ID Platos y Combos'],
-            ['ComboId', 'ID Combo'],
-            ['MenuId', 'Cantidad']
+            ['id', 'ID Platos y Combos']
         ],
         include: [
             {
@@ -77,35 +75,35 @@ exports.Guardar = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else{
+    } else {
         console.log(req);
         const { ComboId, MenuId } = req.body;
-    if (!ComboId || !MenuId) {
-        res.json({ msj: 'Debe enviar los datos completos' });
-    } else {
-        var buscarCombo = await Combo.findOne({ where: { id: ComboId } });
-        if (!buscarCombo) {
-            res.send('El id del combo no existe');
+        if (!ComboId || !MenuId) {
+            res.json({ msj: 'Debe enviar los datos completos' });
         } else {
-            var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
-            if (!buscarMenu) {
-                res.send('El id del menu no existe');
+            var buscarCombo = await Combo.findOne({ where: { id: ComboId } });
+            if (!buscarCombo) {
+                res.send('El id del combo no existe');
             } else {
-                await PlatoCombo.create({
-                    ComboId,
-                    MenuId
-                }).then(data => {
-                    res.json({ msj: 'Registro guardado' });
-                })
-                    .catch((er) => {
-                        res.json({ msj: 'Error al guardar el registro' });
+                var buscarMenu = await Menu.findOne({ where: { id: MenuId } });
+                if (!buscarMenu) {
+                    res.send('El id del menu no existe');
+                } else {
+                    await PlatoCombo.create({
+                        ComboId,
+                        MenuId
+                    }).then(data => {
+                        res.json({ msj: 'Registro guardado' });
                     })
+                        .catch((er) => {
+                            res.json({ msj: 'Error al guardar el registro' });
+                        })
+                }
             }
         }
-    }
 
     }
-    
+
 }
 
 exports.Editar = async (req, res) => {

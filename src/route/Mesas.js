@@ -3,11 +3,13 @@ const controladorMesas = require('../controller/Mesas');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorMesas.Inicio);
+ruta.get('/',
+    controladorMesas.Inicio);
 
-ruta.get('/listar', controladorMesas.Listar);
+ruta.get('/listar',
+    controladorMesas.Listar);
 
-ruta.get('/buscarId', 
+ruta.get('/buscarId',
     controladorMesas.BuscarId);
 
 ruta.post('/guardar',

@@ -3,9 +3,11 @@ const controladorInsumo = require('../controller/Insumo');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorInsumo.Inicio);
+ruta.get('/',
+    controladorInsumo.Inicio);
 
-ruta.get('/listar', controladorInsumo.Listar);
+ruta.get('/listar',
+    controladorInsumo.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
@@ -26,5 +28,5 @@ ruta.put('/editar',
 ruta.delete('/eliminar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorInsumo.Eliminar);
-    
+
 module.exports = ruta;

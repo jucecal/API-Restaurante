@@ -6,7 +6,6 @@ const Tipo = db.define(
         tipo: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            allowNull: false,
             validate: {
                 len: [4, 50],
                 notEmpty: true

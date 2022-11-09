@@ -32,6 +32,7 @@ exports.Inicio = (req, res) => {
                 parametros: {
                     combo: "Combo que se manda al detalle de factura. Obligatorio",
                     precio: "Precio que se calcula en detalle de factura. Obligatorio",
+                    descripcion: "Descripción del combo "
                 }
             },
             {
@@ -46,7 +47,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/combos/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    img: "Imagen del combo"
+                }
             },
             {
                 ruta: '/api/combos/editar',
@@ -55,6 +58,7 @@ exports.Inicio = (req, res) => {
                 parametros: {
                     combo: "Combo que se manda al detalle de factura. Obligatorio",
                     precio: "Precio que se calcula en detalle de factura. Obligatorio",
+                    descripcion: "Descripción del combo "
                 }
             },
             {
@@ -75,7 +79,8 @@ exports.Listar = async (req, res) => {
         attributes: [
             ['id', 'ID Combo'],
             ['combo', 'Nombre'],
-            ['precio', 'Precio']
+            ['precio', 'Precio'],
+            ['descripcion', 'Descripción']
         ]
     });
     res.json(listarCombo);
@@ -92,7 +97,8 @@ exports.buscarId = async (req, res) => {
             attributes: [
                 ['id', 'ID Combo'],
                 ['combo', 'Nombre'],
-                ['precio', 'Precio']
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripción']
             ],
             where: {
                 id
@@ -113,7 +119,8 @@ exports.BuscarCombo = async (req, res) => {
             attributes: [
                 ['id', 'ID Combo'],
                 ['combo', 'Nombre'],
-                ['precio', 'Precio']
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripción']
             ],
             where: {
                 combo: {
@@ -135,13 +142,14 @@ exports.Guardar = async (req, res) => {
     else {
 
         console.log(req);
-        const { combo, precio } = req.body;
+        const { combo, precio, descripcion } = req.body;
         if (!combo || !precio) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             await Combo.create({
                 combo,
-                precio
+                precio,
+                descripcion
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
             })
@@ -155,7 +163,7 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { combo, precio } = req.body;
+    const { combo, precio, descripcion } = req.body;
     if (!combo || !precio || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
@@ -165,6 +173,7 @@ exports.Editar = async (req, res) => {
         } else {
             buscarCombo.combo = combo;
             buscarCombo.precio = precio;
+            buscarCombo.descripcion = descripcion;
             await buscarCombo.save()
                 .then((data) => {
                     console.log(data);

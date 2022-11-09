@@ -3,9 +3,11 @@ const controladorPxCombo = require('../controller/PlatoCombo');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorPxCombo.Inicio);
+ruta.get('/',
+    controladorPxCombo.Inicio);
 
-ruta.get('/listar', controladorPxCombo.Listar);
+ruta.get('/listar',
+    controladorPxCombo.Listar);
 
 ruta.post('/guardar',
     query('ComboId').isInt().withMessage('Solo se aceptan valores enteros para el id'),

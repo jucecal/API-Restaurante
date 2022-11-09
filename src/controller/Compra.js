@@ -52,7 +52,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/compras/recibirImagen',
                 descripcion: 'almacena la imagen ingresada por el usuario',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    img: "Comprabante de la orden de compra"
+                }
             },
             {
                 ruta: '/api/compras/guardar',

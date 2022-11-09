@@ -96,14 +96,13 @@ exports.Listar = async (req, res) => {
             ['id', 'ID Producto'],
             ['nombre', 'Nombre'],
             ['precio', 'Precio'],
-            ['descripcion', 'Descripción Producto'],
-            ['imagen', 'Imagen Producto'],
-            ['CategoriumId', 'ID Categoría']
+            ['descripcion', 'Descripción'],
+            ['imagen', 'Imagen']
         ],
         include: [{
             model: Categoria,
             attributes: [
-                ['categoria', 'Categoría Producto']
+                ['categoria', 'Categoría']
             ]
         }]
     });
@@ -122,9 +121,8 @@ exports.BuscarId = async (req, res) => {
                 ['id', 'ID Producto'],
                 ['nombre', 'Nombre'],
                 ['precio', 'Precio'],
-                ['descripcion', 'Descripción Producto'],
-                ['imagen', 'Imagen Producto'],
-                ['CategoriumId', 'ID Categoría']
+                ['descripcion', 'Descripción'],
+                ['imagen', 'Imagen']
             ],
             where: {
                 id: id
@@ -132,7 +130,7 @@ exports.BuscarId = async (req, res) => {
             include: [{
                 model: Categoria,
                 attributes: [
-                    ['categoria', 'Categoría Producto']
+                    ['categoria', 'Categoría']
                 ]
             }]
         });
@@ -153,9 +151,8 @@ exports.BuscarNombre = async (req, res) => {
                 ['id', 'ID Producto'],
                 ['nombre', 'Nombre'],
                 ['precio', 'Precio'],
-                ['descripcion', 'Descripción Producto'],
-                ['imagen', 'Imagen Producto'],
-                ['CategoriumId', 'ID Categoría']
+                ['descripcion', 'Descripción'],
+                ['imagen', 'Imagen']
             ],
             where: {
                 nombre: {
@@ -165,7 +162,7 @@ exports.BuscarNombre = async (req, res) => {
             include: [{
                 model: Categoria,
                 attributes: [
-                    ['categoria', 'Categoría Producto']
+                    ['categoria', 'Categoría']
                 ]
             }]
         });

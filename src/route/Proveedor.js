@@ -3,9 +3,10 @@ const controladorProveedor = require('../controller/Proveedor');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorProveedor.Inicio);
+ruta.get('/',
+    controladorProveedor.Inicio);
 
-ruta.get('/listar', 
+ruta.get('/listar',
     controladorProveedor.Listar);
 
 ruta.get('/buscarId',

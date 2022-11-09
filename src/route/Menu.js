@@ -17,9 +17,11 @@ const uploadMenu = multer({ storage: storageMenu });
 
 const ruta = Router();
 
-ruta.get('/', controladorMenu.Inicio);
+ruta.get('/',
+    controladorMenu.Inicio);
 
-ruta.get('/listar', controladorMenu.Listar);
+ruta.get('/listar',
+    controladorMenu.Listar);
 
 ruta.get('/buscarId',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),

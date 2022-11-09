@@ -18,15 +18,15 @@ const uploadCliente = multer({ storage: storageCliente });
 
 const ruta = Router();
 
-ruta.get('/', 
+ruta.get('/',
     controladorClientes.Inicio);
 
-ruta.get('/listar', 
-    ValidarAutenticado, 
+ruta.get('/listar',
+    ValidarAutenticado,
     controladorClientes.Listar);
 
 ruta.get('/buscarId',
-    query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'), 
+    query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     ValidarAutenticado,
     controladorClientes.BuscarId);
 
@@ -57,5 +57,5 @@ ruta.delete('/eliminar',
 ruta.post('/imagen',
     uploadCliente.single('img'),
     controladorClientes.RecibirImagen);
-    
+
 module.exports = ruta;

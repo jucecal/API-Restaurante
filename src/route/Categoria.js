@@ -4,10 +4,10 @@ const { body, query } = require('express-validator');
 const ruta = Router();
 
 
-ruta.get('/', 
+ruta.get('/',
     controladorCategoria.Inicio);
 
-ruta.get('/listar', 
+ruta.get('/listar',
     controladorCategoria.Listar);
 
 ruta.get('/buscarId',
@@ -29,5 +29,5 @@ ruta.put('/editar',
 ruta.delete('/eliminar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorCategoria.Eliminar);
-    
+
 module.exports = ruta;

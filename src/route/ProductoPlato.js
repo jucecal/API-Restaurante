@@ -3,9 +3,11 @@ const controladorPxPlato = require('../controller/ProductoPlato');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorPxPlato.Inicio);
+ruta.get('/',
+    controladorPxPlato.Inicio);
 
-ruta.get('/listar', controladorPxPlato.Listar);
+ruta.get('/listar',
+    controladorPxPlato.Listar);
 
 ruta.post('/guardar',
     body('cantidad').isLength({ min: 3, max: 50 }).withMessage('Debe escribir cantidad de platos con una longitud de 3 - 50 caracteres'),

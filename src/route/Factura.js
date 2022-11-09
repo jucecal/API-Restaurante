@@ -6,8 +6,8 @@ const ruta = Router();
 
 ruta.get('/', controladorFactura.Inicio);
 
-ruta.get('/listar', 
-    ValidarAutenticado, 
+ruta.get('/listar',
+    ValidarAutenticado,
     controladorFactura.Listar);
 
 ruta.get('/buscarId',

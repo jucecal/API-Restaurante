@@ -3,9 +3,11 @@ const controladorIxSucursal = require('../controller/Inventario');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
-ruta.get('/', controladorIxSucursal.Inicio);
+ruta.get('/',
+    controladorIxSucursal.Inicio);
 
-ruta.get('/listar', controladorIxSucursal.Listar);
+ruta.get('/listar',
+    controladorIxSucursal.Listar);
 
 ruta.post('/guardar',
     body('stock').isInt().withMessage('Solo se aceptan valores enteros para el stock'),

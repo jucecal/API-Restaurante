@@ -9,11 +9,11 @@ ruta.get('/', controladorDetallefactura.Inicio);
 
 ruta.get('/listar', controladorDetallefactura.Listar);
 
-ruta.post('/guardarcombo', 
+ruta.post('/guardarcombo',
     body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetallefactura.GuardarCombo);
 
-ruta.post('/guardarmenu', 
+ruta.post('/guardarmenu',
     body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetallefactura.GuardarMenu);
 
