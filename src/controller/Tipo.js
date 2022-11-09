@@ -17,19 +17,25 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/tipos/guardar',
                 descripcion: 'Guardar los tipos',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    tipo: "Nombre del Tipo de Producto. Obligatorio"
+                }
             },
             {
                 ruta: '/api/tipos/editar',
                 descripcion: 'Modifica los tipos',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    tipo: "Nombre del Tipo de Producto. Obligatorio"
+                }
             },
             {
                 ruta: '/api/tipos/eliminar',
                 descripcion: 'Elimina los tipos',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Eliminar un tipo de producto por su id"
+                }
             }
         ]
     }
