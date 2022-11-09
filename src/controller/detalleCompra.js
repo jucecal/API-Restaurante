@@ -94,28 +94,36 @@ exports.Guardar = async (req, res) => {
                             res.json({ errores });
                         })
 
-                        const buscarCompra = await Compra.findOne({                            
-                            attributes: ['SucursalId'],
-                            where:{
-                                id:CompraId
-                            }
-                        });
-                        var buscarInventario = await Inventario.findOne({ where: { InsumoId: InsumoId, SucursalId: buscarCompra.SucursalId } });
-                        if (!buscarInventario) {
-                            console.log('No existe en inventario');
-                        } else {
-                            buscarInventario.stock += cantidad
-                            await buscarInventario.save()
-                                .then((data) => {
-                                    console.log(data);
-                                    console.log('Error en inventario');
-                                })
-                                .catch((er) => {
-                                    console.log(er);
-                                    console.log('Error en inventario');
-                                });
+                    const buscarCompra = await Compra.findOne({
+                        attributes: ['SucursalId'],
+                        where: {
+                            id: CompraId
                         }
-                        
+                    });
+                    var buscarInventario = await Inventario.findOne({ where: { InsumoId: InsumoId, SucursalId: buscarCompra.SucursalId } });
+                    if (!buscarInventario) {
+                        console.log('No existe en inventario');
+                    } else {
+                        buscarInventario.stock += cantidad
+                        await buscarInventario.save()
+                            .then((data) => {
+                                console.log(data);
+                                console.log('Error en inventario');
+                            })
+                            .catch((er) => {
+                                console.log(er);
+                                console.log('Error en inventario');
+                            });
+                    }
+
+                    let buscarCompraTotal = await Compra.findOne({ where: { id: CompraId } });
+                    if (!buscarCompraTotal) {
+                        console.log('No existe Orden de Compra');
+                    } else {
+                        buscarCompraTotal.totalPagar += buscarInsumo.precioUnitario * cantidad,
+                            await buscarCompraTotal.save()
+                    }
+
                 }
             }
         }

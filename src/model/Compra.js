@@ -16,10 +16,6 @@ const Compra = db.define(
         totalPagar: {
             type: DataTypes.DOUBLE,
             allowNull: false,
-            validate: {
-                isDecimal: true,
-                min: 1
-            }
         },
 
         imagen: {

@@ -162,8 +162,8 @@ exports.GuardarMenu = async (req, res) => {
                     } else {
                         buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
                             buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
-                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15,
-                            await buscarFacturaTotal.save()
+                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
+                        await buscarFacturaTotal.save()
                     }
                 }
             }
