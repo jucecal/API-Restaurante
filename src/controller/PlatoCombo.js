@@ -14,25 +14,33 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/pxcombos/listar',
                 descripcion: 'Listar los combos',
                 metodo: 'GET',
-                parametros: 'Dato que se manda para poder listar los combos'
+                parametros: 'ninguno'
             },
             {
                 ruta: '/api/pxcombos/guardar',
                 descripcion: 'Guardar los datos de un combo',
                 metodo: 'POST',
-                parametros: 'Se guardan los datos de un combo'
+                parametros: {
+                    ComboId: "Id del combo. Obligatorio",
+                    MenuId: "Id del producto del menu. Obligatorio"
+                }
             },
             {
                 ruta: '/api/pxcombos/editar',
                 descripcion: 'Modifica los datos de un combo',
                 metodo: 'PUT',
-                parametros: 'Se editan los combos ya establecidos'
+                parametros: {
+                    ComboId: "Id del combo. Obligatorio",
+                    MenuId: "Id del producto del menu. Obligatorio"
+                }
             },
             {
                 ruta: '/api/pxcombos/eliminar',
                 descripcion: 'Elimina los datos de un combo',
                 metodo: 'DELETE',
-                parametros: 'Se elimina algun combo ya guardado'
+                parametros: {
+                    id: "Eliminar registro de los platos y combos"
+                }
             }
         ]
     }

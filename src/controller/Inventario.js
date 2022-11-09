@@ -13,25 +13,35 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/inventario/listar',
                 descripcion: 'Listar el inventario',
                 metodo: 'GET',
-                parametros: 'Lista todo lo que hay en las sucursales'
+                parametros: 'ninguno'
             },
             {
                 ruta: '/api/inventario/guardar',
                 descripcion: 'Guardar producto en inventario',
                 metodo: 'POST',
-                parametros: 'Guarda los productos o insumos que vienen a la sucursal'
+                parametros: {
+                    SucursalId: "Id de Sucursal. Obligatorio",
+                    stock: "Stock de Producto. Obligatorio",
+                    InsumoId: "Id de Producto. Obligatorio"
+                }
             },
             {
                 ruta: '/api/inventario/editar',
                 descripcion: 'Modifica producto en inventario',
                 metodo: 'PUT',
-                parametros: 'Se edita el inventario en general si hay menos si hay mas productos o insumos'
+                parametros: {
+                    SucursalId: "Id de Sucursal. Obligatorio",
+                    stock: "Stock de Producto. Obligatorio",
+                    InsumoId: "Id de Producto. Obligatorio"
+                }
             },
             {
                 ruta: '/api/inventario/eliminar',
                 descripcion: 'Elimina producto en inventario',
                 metodo: 'DELETE',
-                parametros: 'Se elimina un producto ya sea que este vencido o ya no se ocupe'
+                parametros: {
+                    id: "Eliminar registro de inventario. Obligatorio"
+                }
             }
         ]
     }
