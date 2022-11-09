@@ -18,32 +18,46 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/sucursales/guardar',
                 descripcion: 'Guardar los datos de una sucursal',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
+                    ubicacion:"Ubicacion de la sucursal. Obligatorio",
+                    telefono:"Teléfono de cada sucursal. Obligatorio"
+                }
             },
             {
                 ruta: '/api/sucursales/buscarId',
                 descripcion: 'Muestra un surcursal en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id:"Buscar una sucursal específica por su id. Obligatorio"
+                }
             },
 
             {
                 ruta: '/api/surcursales/buscarNombre',
                 descripcion: 'Muestra el o los sucursales que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Buscar una sucursal por el nombre de esta. Obligatorios"
+                }
             },
             {
                 ruta: '/api/sucursales/editar',
                 descripcion: 'Modifica los datos de una sucursal',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Necesario para poder identificar una sucursal asignada a empleado e inventario. Obligatorio",
+                    ubicacion:"Ubicacion de la sucursal. Obligatorio",
+                    telefono:"Teléfono de cada sucursal. Obligatorio"
+                }
             },
             {
                 ruta: '/api/sucursales/eliminar',
                 descripcion: 'Elimina los datos de una sucursales',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id:"Eliminar una sucursal específica por su id. Obligatorio"
+                }
             }
         ]
     }
