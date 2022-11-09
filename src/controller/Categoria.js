@@ -12,9 +12,7 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/categorias/listar',
                 descripcion: 'Listar las categorias',
                 metodo: 'GET',
-                parametros: {
-                    id: "Dato que se manda para listar las categorias."
-                }
+                parametros: 'Ninguno'
             },
             {
                 ruta: '/api/categoria/buscarId',
@@ -52,7 +50,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/categorias/eliminar',
                 descripcion: 'Elimina los datos de una categoria',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "ID de para eliminar una categoría."
+                }
             }
         ]
     }

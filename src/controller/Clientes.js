@@ -35,7 +35,9 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/clientes/buscarId',
                 descripcion: 'Muestra un cliente en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el ID de Clientes para poder buscarlo. Obligatorio"
+                }
             },
             {
                 ruta: '/api/clientes/buscarNombre',
@@ -47,19 +49,35 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/clientes/guardar',
                 descripcion: 'Guardar los Clientes',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    apellido:"Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    telefono:"Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
+                    fechaNacimiento:"Fecha enviado al cliente. Obligatorio",
+                    correo:"Correo electrónico del cliente, va junto con el usuario. Obligatorio",
+                    direccion:"Dato de identificación del cliente. Obligatorio"
+                }
             },
             {
                 ruta: '/api/clientes/editar',
                 descripcion: 'Modifica los Clientes',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    nombre:"Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    apellido:"Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
+                    telefono:"Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
+                    fechaNacimiento:"Fecha enviado al cliente. Obligatorio",
+                    correo:"Correo electrónico del cliente, va junto con el usuario. Obligatorio",
+                    direccion:"Dato de identificación del cliente. Obligatorio"
+                }
             },
             {
                 ruta: '/api/clientes/eliminar',
                 descripcion: 'Elimina los Clientes',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Se necesita el ID de Clientes para poder eliminarlo. Obligatorio"
+                }
             }
         ]
     }
