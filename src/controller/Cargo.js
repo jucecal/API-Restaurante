@@ -10,37 +10,49 @@ exports.Inicio = (req, res) => {
                 ruta: '/api/cargos/listar',
                 descripcion: 'Lista los cargos en el negocio',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Dato que se manda para poder listar los cargos."
+                }
             },
             {
                 ruta: '/api/cargos/buscarId',
                 descripcion: 'Muestra un cargo en específico según el id ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "Realizar una busqueda especifica de un cargo"
+                }
             },
             {
                 ruta: '/api/cargos/buscarNombre',
                 descripcion: 'Muestra el o los cargos que coincidan con el nombre ingresado',
                 metodo: 'GET',
-                parametros: 'Ninguno'
+                parametros: {
+                    cargo: "Nombre del cargo para poder realizr su busqueda."
+                }
             },
             {
                 ruta: '/api/cargos/guardar',
                 descripcion: 'Guarda los datos de un cargo',
                 metodo: 'POST',
-                parametros: 'Ninguno'
+                parametros: {
+                    cargo: "Se le enviará al empleado para saber su rol."
+                }
             },
             {
                 ruta: '/api/cargos/editar',
                 descripcion: 'Modifica los datos de un cargo',
                 metodo: 'PUT',
-                parametros: 'Ninguno'
+                parametros: {
+                    cargo: "Cargo del empleado modificable. Ocacional"
+                }
             },
             {
                 ruta: '/api/cargos/eliminar',
                 descripcion: 'Elimina los datos de un cargo',
                 metodo: 'DELETE',
-                parametros: 'Ninguno'
+                parametros: {
+                    id: "ID de para eliminar un cargo"
+                }
             }
         ]
     }
