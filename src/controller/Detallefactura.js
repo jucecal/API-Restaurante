@@ -127,7 +127,7 @@ exports.GuardarCombo = async (req, res) => {
                         console.log('No existe factura');
                     } else {
                         buscarFacturaTotal.totalPagar += buscarCombo.precio * cantidad,
-                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                            //buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
                             buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
                         await buscarFacturaTotal.save()
                             .then((data) => {
@@ -197,7 +197,7 @@ exports.GuardarMenu = async (req, res) => {
                             console.log('No existe factura');
                         } else {
                             buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
-                                buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                                //buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
                                 buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
                             await buscarFacturaTotal.save()
                         }
