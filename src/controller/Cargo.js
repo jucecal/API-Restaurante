@@ -1,6 +1,7 @@
 const Cargo = require('../model/Cargo');
 const { validationResult, body } = require('express-validator');
 const { Op } = require('sequelize');
+
 exports.Inicio = (req, res) => {
     const moduloCargo = {
         modulo: 'cargos',
@@ -74,7 +75,7 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarCargos = await Cargo.findAll({
+        const listarCargos = await Cargo.findOne({
             attributes: [
                 ['id', 'Id'],
                 ['nombre', 'Cargo']
@@ -94,7 +95,7 @@ exports.BuscarNombre = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombre } = req.query;
-        const listarCargos = await Cargo.findAll({
+        const listarCargos = await Cargo.findOne({
             attributes: [
                 ['id', 'Id'],
                 ['nombre', 'Cargo']

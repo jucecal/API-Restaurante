@@ -27,7 +27,7 @@ const Proveedor = db.define(
             allowNull: false,
             unique: {
                 arg: true, 
-                msg: 'El telefono ya se encuentra asignado'
+                msg: 'El teléfono ya se encuentra asignado'
             },
             validate:{
                 len:[8],

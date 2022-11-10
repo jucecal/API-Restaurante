@@ -23,9 +23,14 @@ const Sucursal = db.define(
         telefono: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            validate: {
-                notEmpty: true,
-                isInt: true
+            unique: {
+                arg: true, 
+                msg: 'El teléfono ya se encuentra asignado'
+            },
+            validate:{
+                len:[8],
+                isNumeric: true,
+                notEmpty: true
             }
         }
     },

@@ -43,8 +43,6 @@ const Insumos = db.define(
                 min: 1
             }
         },
-
-
     },
     {
         tableName: 'Insumos',
