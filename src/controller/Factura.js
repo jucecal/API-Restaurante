@@ -177,7 +177,7 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         console.log(req);
-        const { ISV, totalPagar, EmpleadoId, ClienteId, SucursalId, FormaPagoId, MesaId } = req.body;
+        const { ISV, totalPagar, EmpleadoId, ClienteId, SucursalId, FormaPagoId, MesaId, hora } = req.body;
         if (!EmpleadoId || !ClienteId || !SucursalId || !FormaPagoId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {

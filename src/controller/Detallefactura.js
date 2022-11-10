@@ -1,6 +1,8 @@
 const DetalleFactura = require('../model/DetalleFactura');
 const Combo = require('../model/Combo');
 const Factura = require('../model/Factura');
+const Inventario = require('../model/Inventario');
+const ProductoxPlato = require('../model/ProductoPlato');
 const Menu = require('../model/Menu');
 const { validationResult } = require('express-validator');
 const { request } = require('express');
@@ -54,6 +56,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarDetallefactura = await DetalleFactura.findAll({
         attributes: [
+            'id',
             ['cantidad', 'Cantidad'],
             ['subTotal', 'Sub-Total']
         ],
@@ -128,6 +131,9 @@ exports.GuardarCombo = async (req, res) => {
                         buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
                         await buscarFacturaTotal.save()
                     }
+
+                    
+
                 }
             }
         }
@@ -152,31 +158,44 @@ exports.GuardarMenu = async (req, res) => {
                 if (!buscarMenu) {
                     res.send('El id del menu no existe');
                 } else {
-                    await DetalleFactura.create({
-                        cantidad,
-                        subTotal: (buscarMenu.precio * cantidad),
-                        FacturaId,
-                        MenuId
-                    }).then(data => {
-                        res.json({ msj: 'Registro guardado' });
-                    })
-                        .catch((er) => {
-                            var errores = '';
-                            er.errors.forEach(element => {
-                                console.log(element.message);
-                                errores += element.message + '. ';
-                            })
-                            res.json({ errores });
+                    const buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: MenuId } });                    
+                    const buscarInventario = await Inventario.findOne({ where: { SucursalId: buscarFactura.SucursalId, InsumoId: buscarProductoPlato.InsumoId } });
+                    
+                    if(buscarInventario.stock < (buscarProductoPlato.cantidad*cantidad)){
+                        res.send('No se cuenta con la cantidad de insumos suficientes para la orden')
+                    }else{
+                        await DetalleFactura.create({
+                            cantidad,
+                            subTotal: (buscarMenu.precio * cantidad),
+                            FacturaId,
+                            MenuId
+                        }).then(data => {
+                            res.json({ msj: 'Registro guardado' });
                         })
-                    var buscarFacturaTotal = await Factura.findOne({ where: { id: FacturaId } });
-                    if (!buscarFacturaTotal) {
-                        console.log('No existe factura');
-                    } else {
-                        buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
-                        buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
-                        buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
-                        await buscarFacturaTotal.save()
+                            .catch((er) => {
+                                var errores = '';
+                                er.errors.forEach(element => {
+                                    console.log(element.message);
+                                    errores += element.message + '. ';
+                                })
+                                res.json({ errores });
+                            })
+                        var buscarFacturaTotal = await Factura.findOne({ where: { id: FacturaId } });
+                        if (!buscarFacturaTotal) {
+                            console.log('No existe factura');
+                        } else {
+                            buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
+                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
+                            await buscarFacturaTotal.save()
+                        }
+                        buscarInventario.stock -= buscarProductoPlato.cantidad * cantidad;
+                        await buscarInventario.save()
                     }
+
+
+
+                    
                 }
             }
         }
@@ -230,7 +249,16 @@ exports.Eliminar = async (req, res) => {
     const { id } = req.query;
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
-    } else {
+    } else {        
+        let buscarDetalleFactura = await DetalleFactura.findOne({ where: { id: id } });
+        if(buscarDetalleFactura.MenuId){
+            let buscarFactura = await Factura.findOne({ where: { id: buscarDetalleFactura.FacturaId } });
+            let buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: buscarDetalleFactura.MenuId } });
+            let buscarInventario = await Inventario.findOne({ where: { SucursalId: buscarFactura.SucursalId, InsumoId: buscarProductoPlato.InsumoId } });
+            buscarInventario.stock += (buscarProductoPlato.cantidad*buscarDetalleFactura.cantidad);
+            await buscarInventario.save()
+        }
+                    
         await DetalleFactura.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
@@ -243,5 +271,7 @@ exports.Eliminar = async (req, res) => {
                 console.log(er);
                 res.send('Error al eliminar');
             })
+        
     }
 }
+

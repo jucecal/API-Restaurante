@@ -214,7 +214,7 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { SucursalId } = req.body;
+        const { SucursalId, hora } = req.body;
         if (!SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' })
         }
