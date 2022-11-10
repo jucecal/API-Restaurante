@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 const moment = require('moment');
-var today = moment();
+var hora = moment();
 const Reservaciones = db.define(
     'Reservaciones',
     {

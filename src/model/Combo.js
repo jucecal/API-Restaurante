@@ -16,7 +16,7 @@ const Combo = db.define(
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isDecimal: true,
+                isFloat: true,
                 min: 1
             }
         },

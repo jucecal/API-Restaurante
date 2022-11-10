@@ -203,7 +203,7 @@ exports.Guardar = async (req, res) => {
                             } else {
                                 await Factura.create({
                                     fecha: now(),
-                                    hora: now(),
+                                    hora,
                                     ISV,
                                     totalPagar: 0,
                                     //efectivo,

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 const moment = require('moment');
-var today = moment();
+var hora = moment();
 const Compra = db.define(
     'Compra',
     {
@@ -19,7 +19,8 @@ const Compra = db.define(
             allowNull: false,
             validate: {
                 notEmpty: true
-            }
+            },
+            defaultValue: hora.format('h:mm:ss')
         },
 
         totalPagar: {

@@ -225,7 +225,7 @@ exports.Guardar = async (req, res) => {
             } else {
                 await Compra.create({
                     fecha: now(),
-                    hora: now(),
+                    hora,
                     totalPagar: 0,
                     SucursalId
                 }).then((data) => {
