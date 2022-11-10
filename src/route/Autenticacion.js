@@ -3,7 +3,7 @@ const { body, query } = require('express-validator');
 const controladorAutenticacion = require('../controller/Autenticacion');
 const rutas = Router();
 rutas.get('/', controladorAutenticacion.Inicio);
-//rutas.get('/listar', controladorCargos.Listar);
+
 
 rutas.post('/pin',
     body('correo')
@@ -25,11 +25,17 @@ rutas.put('/recuperarcontrasena',
         .isLength({ min: 6, max: 12 }).withMessage('Debe escribir una contraseña de 6 - 12 caracteres'),
     controladorAutenticacion.Recuperar);
 
-rutas.post('/iniciosesion',
+rutas.post('/iniciosesionclientes',
     body('usuario').notEmpty().withMessage('Debe escribir el usuario'),
     body('contrasena').notEmpty().withMessage('Debe escribir la contraseña'),
-    controladorAutenticacion.InicioSesion);
+    controladorAutenticacion.InicioSesionCliente);
 
+rutas.post('/iniciosesionempleados',
+    body('usuario').notEmpty().withMessage('Debe escribir el usuario'),
+    body('contrasena').notEmpty().withMessage('Debe escribir la contraseña'),
+    controladorAutenticacion.InicioSesionEmpleado);
+
+    
 rutas.get('/error', controladorAutenticacion.Error);
 
 module.exports = rutas;
