@@ -70,28 +70,33 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarMesas = await Mesas.findAll({
-            attributes: [
-                ['id', 'Mesa'],
-                ['capacidad', 'Capacidad'],
-            ],
-            where: {
-                id: id
-            },
-            include: [{
-                model: Sucursal,
+        var buscarMesa = await Mesas.findOne({ where: { id: id } });
+        if (!buscarMesa) {
+            res.send('El id de la mesa no existe');
+        } else {
+            const listarMesas = await Mesas.findAll({
                 attributes: [
-                    ['nombre', 'Sucursal']
-                ]
-            }]
-        });
-        res.json(listarMesas);
+                    ['id', 'Mesa'],
+                    ['capacidad', 'Capacidad'],
+                ],
+                where: {
+                    id: id
+                },
+                include: [{
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ]
+                }]
+            });
+            res.json(listarMesas);
+        }
     }
 }
 

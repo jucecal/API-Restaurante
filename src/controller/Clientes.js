@@ -113,67 +113,77 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarClientes = await Clientes.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['apellido', 'Apellido'],
-                ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección']
-            ],
-            where: {
-                id: id
-            },
-            include: [{
-                model: Usuario,
+        var buscarClientes = await Clientes.findOne({ where: { id: id } });
+        if (!buscarClientes) {
+            res.send('El id del cliente no existe');
+        } else {
+            const listarClientes = await Clientes.findOne({
                 attributes: [
-                    ['nombre', 'Nombre de Usuario'],
-                    ['estado', 'Estado']
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['apellido', 'Apellido'],
+                    ['telefono', 'Telefono'],
+                    ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['direccion', 'Dirección']
+                ],
+                where: {
+                    id: id
+                },
+                include: [{
+                    model: Usuario,
+                    attributes: [
+                        ['nombre', 'Nombre de Usuario'],
+                        ['estado', 'Estado']
+                    ]
+                }
                 ]
-            }
-            ]
-        });
-        res.json(listarClientes);
+            });
+            res.json(listarClientes);
+        }
     }
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
-        const listarClientes = await Clientes.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['apellido', 'Apellido'],
-                ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
-            },
-            include: [{
-                model: Usuario,
+        var buscarClientes = await Clientes.findOne({ where: { nombre: nombre } });
+        if (!buscarClientes) {
+            res.send('El nombre del cliente no existe');
+        } else {
+            const listarClientes = await Clientes.findAll({
                 attributes: [
-                    ['nombre', 'Nombre de Usuario'],
-                    ['estado', 'Estado']
-                ]
-            }]
-        });
-        res.json(listarClientes);
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['apellido', 'Apellido'],
+                    ['telefono', 'Telefono'],
+                    ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['direccion', 'Dirección']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
+                },
+                include: [{
+                    model: Usuario,
+                    attributes: [
+                        ['nombre', 'Nombre de Usuario'],
+                        ['estado', 'Estado']
+                    ]
+                }]
+            });
+            res.json(listarClientes);
+        }
     }
 }
 

@@ -98,77 +98,86 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarInsumo = await Insumo.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['marca', 'Marca'],
-                ['fechaVencimiento', 'Fecha de Vencimiento'],
-                ['precioUnitario', 'Precio'],
-            ],
-
-            where: {
-                id
-            },
-            include: [{
-                model: Proveedor,
+        var buscarInsumo = await Insumo.findOne({ where: { id: id } });
+        if (!buscarInsumo) {
+            res.send('El id del insumo no existe');
+        } else {
+            const listarInsumo = await Insumo.findAll({
                 attributes: [
-                    ['proveedor', 'Proveedor']
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['marca', 'Marca'],
+                    ['fechaVencimiento', 'Fecha de Vencimiento'],
+                    ['precioUnitario', 'Precio'],
+                ],
+                where: {
+                    id
+                },
+                include: [{
+                    model: Proveedor,
+                    attributes: [
+                        ['proveedor', 'Proveedor']
+                    ]
+                },
+                {
+                    model: Tipo,
+                    attributes: [
+                        ['tipo', 'Tipo Producto']
+                    ]
+                }
                 ]
-            },
-            {
-                model: Tipo,
-                attributes: [
-                    ['tipo', 'Tipo Producto']
-                ]
-            }
-            ]
-        });
-        res.json(listarInsumo);
+            });
+            res.json(listarInsumo);
+        }
     }
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
-        const listarInsumo = await Insumo.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['marca', 'Marca'],
-                ['fechaVencimiento', 'Fecha de Vencimiento'],
-                ['precioUnitario', 'Precio'],
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
+        var buscarInsumo = await Insumo.findOne({ where: { nombre: nombre } });
+        if (!buscarInsumo) {
+            res.send('El insumo no existe');
+        } else {
+            const listarInsumo = await Insumo.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['marca', 'Marca'],
+                    ['fechaVencimiento', 'Fecha de Vencimiento'],
+                    ['precioUnitario', 'Precio'],
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
+                },
+                include: [{
+                    model: Proveedor,
+                    attributes: [
+                        ['proveedor', 'Proveedor']
+                    ]
+                },
+                {
+                    model: Tipo,
+                    attributes: [
+                        ['tipo', 'Tipo Producto']
+                    ]
                 }
-            },
-            include: [{
-                model: Proveedor,
-                attributes: [
-                    ['proveedor', 'Proveedor']
                 ]
-            },
-            {
-                model: Tipo,
-                attributes: [
-                    ['tipo', 'Tipo Producto']
-                ]
-            }
-            ]
-        });
-        res.json(listarInsumo);
+            });
+            res.json(listarInsumo);
+        }
     }
 }
 

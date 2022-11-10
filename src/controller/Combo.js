@@ -87,48 +87,58 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarCombo = await Combo.findOne({
-            attributes: [
-                ['id', 'Combo'],
-                ['combo', 'Nombre'],
-                ['precio', 'Precio'],
-                ['descripcion', 'Descripción']
-            ],
-            where: {
-                id
-            }
-        });
-        res.json(listarCombo);
+        var buscarCombo = await Combo.findOne({ where: { id: id } });
+        if (!buscarCombo) {
+            res.send('El id del combo no existe');
+        } else {
+            const listarCombo = await Combo.findOne({
+                attributes: [
+                    ['id', 'Combo'],
+                    ['combo', 'Nombre'],
+                    ['precio', 'Precio'],
+                    ['descripcion', 'Descripción']
+                ],
+                where: {
+                    id
+                }
+            });
+            res.json(listarCombo);
+        }
     }
 }
 
 exports.BuscarCombo = async (req, res) => {
+    const { combo } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { combo } = req.query;
-        const listarCombo = await Combo.findOne({
-            attributes: [
-                ['id', 'Combo'],
-                ['combo', 'Nombre'],
-                ['precio', 'Precio'],
-                ['descripcion', 'Descripción']
-            ],
-            where: {
-                combo: {
-                    [Op.like]: combo
-                }
-            },
-        });
-        res.json(listarCombo);
+        var buscarCombo = await Combo.findOne({ where: { id: id } });
+        if (!buscarCombo) {
+            res.send('El combo no existe');
+        } else {
+            const listarCombo = await Combo.findOne({
+                attributes: [
+                    ['id', 'Combo'],
+                    ['combo', 'Nombre'],
+                    ['precio', 'Precio'],
+                    ['descripcion', 'Descripción']
+                ],
+                where: {
+                    combo: {
+                        [Op.like]: combo
+                    }
+                },
+            });
+            res.json(listarCombo);
+        }
     }
 }
 

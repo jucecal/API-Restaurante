@@ -141,7 +141,6 @@ exports.BuscarId = async (req, res) => {
             res.json(listarMenu);
         }
     }
-
 }
 
 exports.BuscarNombre = async (req, res) => {
@@ -151,35 +150,33 @@ exports.BuscarNombre = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        
         var buscarMenu = await Menu.findOne({ where: { nombre: nombre } });
         if (!buscarMenu) {
             res.send('El nombre del menú no existe');
         } else {
-        const listarMenu = await Menu.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['precio', 'Precio'],
-                ['descripcion', 'Descripción'],
-                ['imagen', 'Imagen']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
-            },
-            include: [{
-                model: Categoria,
+            const listarMenu = await Menu.findOne({
                 attributes: [
-                    ['categoria', 'Categoría']
-                ]
-            }]
-        });
-        res.json(listarMenu);
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['precio', 'Precio'],
+                    ['descripcion', 'Descripción'],
+                    ['imagen', 'Imagen']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
+                },
+                include: [{
+                    model: Categoria,
+                    attributes: [
+                        ['categoria', 'Categoría']
+                    ]
+                }]
+            });
+            res.json(listarMenu);
+        }
     }
-    }
-
 }
 
 exports.BuscarPorCategoria = async (req, res) => {
@@ -211,7 +208,6 @@ exports.BuscarPorCategoria = async (req, res) => {
         });
         res.json(listarMenu);
     }
-
 }
 
 exports.Guardar = async (req, res) => {

@@ -118,27 +118,26 @@ exports.buscarId = async (req, res) => {
         if (!buscarCompra) {
             res.send('El id de la compra no existe');
         } else {
-        const { id } = req.query;
-        const listarCompra = await Compra.findOne({
-            attributes: [
-                ['id', 'Orden de Compra'],
-                ['fecha', 'Fecha'],
-                ['hora', 'Hora'],
-                ['totalPagar', 'Total a Pagar'],
-                ['imagen', 'Imagen Comprobante']
-            ],
-            where: {
-                id: id
-            },
-            include: [{
-                model: Sucursal,
+            const listarCompra = await Compra.findOne({
                 attributes: [
-                    ['nombre', 'Sucursal']
-                ]
-            }]
-        });
-        res.json(listarCompra);
-    }
+                    ['id', 'Orden de Compra'],
+                    ['fecha', 'Fecha'],
+                    ['hora', 'Hora'],
+                    ['totalPagar', 'Total a Pagar'],
+                    ['imagen', 'Imagen Comprobante']
+                ],
+                where: {
+                    id: id
+                },
+                include: [{
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ]
+                }]
+            });
+            res.json(listarCompra);
+        }
     }
 }
 
@@ -184,38 +183,33 @@ exports.BuscarPorSucursal = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } if (!validacion.isEmpty()) {
-        console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
+    } else {
         var buscarporSucursal = await Sucursal.findOne({ where: { nombre: nombre } });
         if (!buscarporSucursal) {
             res.send('El id de la compra no existe');
         } else {
-
-        const listarCompra = await Compra.findAll({
-            attributes: [
-                ['id', 'Orden de Compra'],
-                ['fecha', 'Fecha'],
-                ['hora', 'Hora'],
-                ['totalPagar', 'Pago Total'],
-                ['imagen', 'Imagen Comprobante']
-            ],
-            include: [{
-                model: Sucursal,
+            const listarCompra = await Compra.findAll({
                 attributes: [
-                    ['nombre', 'Sucursal']
+                    ['id', 'Orden de Compra'],
+                    ['fecha', 'Fecha'],
+                    ['hora', 'Hora'],
+                    ['totalPagar', 'Pago Total'],
+                    ['imagen', 'Imagen Comprobante']
                 ],
-                where: {
-                    nombre: {
-                        [Op.like]: nombre
+                include: [{
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ],
+                    where: {
+                        nombre: {
+                            [Op.like]: nombre
+                        }
                     }
-                }
-            }]
-        });
-        res.json(listarCompra);
-    }
+                }]
+            });
+            res.json(listarCompra);
+        }
     }
 }
 
@@ -258,7 +252,7 @@ exports.Guardar = async (req, res) => {
 exports.Editar = async (req, res) => {
     const { id } = req.query;
     const { SucursalId } = req.body;
-    if ( !SucursalId || !id) {
+    if (!SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCompra = await Compra.findOne({ where: { id: id } });

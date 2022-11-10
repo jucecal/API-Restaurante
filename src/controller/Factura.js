@@ -116,57 +116,62 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarSucursal = await Factura.findAll({
-            attributes: [
-                ['id', 'Factura'],
-                ['fecha', 'Fecha'],
-                ['hora', 'Hora'],
-                ['ISV', 'ISV'],
-                ['totalPagar', 'Total a Pagar']
-            ],
-            where: {
-                id
-            },
-            include: [
-                {
-                    model: Empleado,
-                    attributes: [
-                        ['nombre', 'Empleado'],
-                    ]
+        var buscarFactura = await Factura.findOne({ where: { id: id } });
+        if (!buscarFactura) {
+            res.send('El id de la factura no existe');
+        } else {
+            const listarFactura = await Factura.findAll({
+                attributes: [
+                    ['id', 'Factura'],
+                    ['fecha', 'Fecha'],
+                    ['hora', 'Hora'],
+                    ['ISV', 'ISV'],
+                    ['totalPagar', 'Total a Pagar']
+                ],
+                where: {
+                    id
                 },
-                {
-                    model: Cliente,
-                    attributes: [
-                        ['nombre', 'Cliente'],
-                    ]
-                },
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal'],
-                    ]
-                },
-                {
-                    model: Mesa,
-                    attributes: [
-                        ['id', 'Mesa'],
-                    ]
-                },
-                {
-                    model: FormaPago,
-                    attributes: [
-                        ['formaPago', 'Forma de Pago'],
-                    ]
-                },
-            ]
-        });
-        res.json(listarFactura);
+                include: [
+                    {
+                        model: Empleado,
+                        attributes: [
+                            ['nombre', 'Empleado'],
+                        ]
+                    },
+                    {
+                        model: Cliente,
+                        attributes: [
+                            ['nombre', 'Cliente'],
+                        ]
+                    },
+                    {
+                        model: Sucursal,
+                        attributes: [
+                            ['nombre', 'Sucursal'],
+                        ]
+                    },
+                    {
+                        model: Mesa,
+                        attributes: [
+                            ['id', 'Mesa'],
+                        ]
+                    },
+                    {
+                        model: FormaPago,
+                        attributes: [
+                            ['formaPago', 'Forma de Pago'],
+                        ]
+                    },
+                ]
+            });
+            res.json(listarFactura);
+        }
     }
 }
 

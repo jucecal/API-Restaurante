@@ -75,25 +75,22 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-            var buscarFormaPago = await FormaPago.findOne({ where: { id: id } });
-            if (!buscarFormaPago) {
-                res.send('El id de la forma de pago no existe');
-            } else {
-
-        
-        const listarFormaPago = await FormaPago.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['formaPago', 'Forma de Pago']
-            ],
-            where: {
-                id: id
-            }
-        });
-        res.json(listarFormaPago);
+        var buscarFormaPago = await FormaPago.findOne({ where: { id: id } });
+        if (!buscarFormaPago) {
+            res.send('El id de la forma de pago no existe');
+        } else {
+            const listarFormaPago = await FormaPago.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['formaPago', 'Forma de Pago']
+                ],
+                where: {
+                    id: id
+                }
+            });
+            res.json(listarFormaPago);
+        }
     }
-    }
-
 }
 
 exports.Guardar = async (req, res) => {

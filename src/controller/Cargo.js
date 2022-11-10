@@ -69,44 +69,54 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarCargos = await Cargo.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Cargo']
-            ],
-            where: {
-                id: id
-            }
-        });
-        res.json(listarCargos);
+        var buscarCargo = await Cargo.findOne({ where: { id: id } });
+        if (!buscarCargo) {
+            res.send('El id del cargo no existe');
+        } else {
+            const listarCargos = await Cargo.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Cargo']
+                ],
+                where: {
+                    id: id
+                }
+            });
+            res.json(listarCargos);
+        }
     }
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
-        const listarCargos = await Cargo.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Cargo']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
+        var buscarCargo = await Cargo.findOne({ where: { id: id } });
+        if (!buscarCargo) {
+            res.send('El cargo no existe');
+        } else {
+            const listarCargos = await Cargo.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Cargo']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
                 }
-            }
-        });
-        res.json(listarCargos);
+            });
+            res.json(listarCargos);
+        }
     }
 }
 

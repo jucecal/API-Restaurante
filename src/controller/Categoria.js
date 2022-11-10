@@ -70,45 +70,54 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarCategoria = await Categoria.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['categoria', 'Categoría']
-            ],
-            where: {
-                id: id
-            }
-        });
-        res.json(listarCategoria);
+        var buscarCategoria = await Categoria.findOne({ where: { id: id } });
+        if (!buscarCategoria) {
+            res.send('El id de la categoria no existe');
+        } else {
+            const listarCategoria = await Categoria.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['categoria', 'Categoría']
+                ],
+                where: {
+                    id: id
+                }
+            });
+            res.json(listarCategoria);
+        }
     }
 }
 
 exports.BuscarCategoria = async (req, res) => {
+    const { categoria } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'errores en los datos enviados' })
-    }
-    else {
-        const { categoria } = req.query;
-        const listarCategoria = await Categoria.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['categoria', 'Categoría']
-            ],
-            where: {
-                categoria: {
-                    [Op.like]: categoria,
-                }
-            },
-        });
-        res.json(listarCategoria);
+        res.json({ msj: 'errores en los datos enviados' });
+    } else {
+        var buscarCategoria = await Categoria.findOne({ where: { categoria: categoria } });
+        if (!buscarCategoria) {
+            res.send('La categoria no existe');
+        } else {
+            const listarCategoria = await Categoria.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['categoria', 'Categoría']
+                ],
+                where: {
+                    categoria: {
+                        [Op.like]: categoria,
+                    }
+                },
+            });
+            res.json(listarCategoria);
+        }
     }
 }
 
@@ -168,7 +177,6 @@ exports.Editar = async (req, res) => {
         }
     }
 }
-
 
 exports.Eliminar = async (req, res) => {
     const { id } = req.query;

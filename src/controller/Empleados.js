@@ -186,7 +186,7 @@ exports.BuscarNombre = async (req, res) => {
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { nombre: nombre } });
         if (!buscarEmpleado) {
-            res.send('El nombre del empleado no existe');
+            res.send('El empleado no existe');
         } else {
             const listarEmpleado = await Empleado.findAll({
                 attributes: [

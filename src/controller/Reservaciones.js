@@ -94,89 +94,99 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarReservaciones = await Reservaciones.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['fecha', 'Fecha'],
-                ['hora', 'Hora']
-            ],
-            where: {
-                id: id
-            },
-            include: [
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal']
-                    ]
+        var buscarReservacion = await Reservaciones.findOne({ where: { id: id } });
+        if (!buscarReservacion) {
+            res.send('El id de la reservación no existe');
+        } else {
+            const listarReservaciones = await Reservaciones.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['fecha', 'Fecha'],
+                    ['hora', 'Hora']
+                ],
+                where: {
+                    id: id
                 },
-                {
-                    model: Mesas,
-                    attributes: [
-                        ['id', 'Mesa']
-                    ]
-                },
-                {
-                    model: Clientes,
-                    attributes: [
-                        ['nombre', 'Cliente'],
-                        ['apellido', 'Apellido'],
-                        ['telefono', 'Teléfono']
-                    ]
-                }
-            ]
-        });
-        res.json(listarReservaciones);
+                include: [
+                    {
+                        model: Sucursal,
+                        attributes: [
+                            ['nombre', 'Sucursal']
+                        ]
+                    },
+                    {
+                        model: Mesas,
+                        attributes: [
+                            ['id', 'Mesa']
+                        ]
+                    },
+                    {
+                        model: Clientes,
+                        attributes: [
+                            ['nombre', 'Cliente'],
+                            ['apellido', 'Apellido'],
+                            ['telefono', 'Teléfono']
+                        ]
+                    }
+                ]
+            });
+            res.json(listarReservaciones);
+        }
     }
 }
 
 exports.BuscarPorCliente = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        const { nombre } = req.query;
-        const listarReservaciones = await Reservaciones.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['fecha', 'Fecha'],
-                ['hora', 'Hora']
-            ],
-            include: [
-                {
-                    model: Sucursal,
-                    attributes: [
-                        ['nombre', 'Sucursal']
-                    ]
-                },
-                {
-                    model: Mesas,
-                    attributes: [
-                        ['id', 'Mesa']
-                    ]
-                },
-                {
-                    model: Clientes,
-                    attributes: [
-                        ['nombre', 'Cliente']
-                    ],
-                    where: {
-                        nombre: {
-                            [Op.like]: nombre
+        var buscarCliente = await Clientes.findOne({ where: { nombre: nombre } });
+        if (!buscarCliente) {
+            res.send('No existe reservación de este cliente');
+        } else {
+            const listarReservaciones = await Reservaciones.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['fecha', 'Fecha'],
+                    ['hora', 'Hora']
+                ],
+                include: [
+                    {
+                        model: Sucursal,
+                        attributes: [
+                            ['nombre', 'Sucursal']
+                        ]
+                    },
+                    {
+                        model: Mesas,
+                        attributes: [
+                            ['id', 'Mesa']
+                        ]
+                    },
+                    {
+                        model: Clientes,
+                        attributes: [
+                            ['nombre', 'Cliente']
+                        ],
+                        where: {
+                            nombre: {
+                                [Op.like]: nombre
+                            }
                         }
                     }
-                }
-            ]
-        });
-        res.json(listarReservaciones);
+                ]
+            });
+            res.json(listarReservaciones);
+        }
     }
 }
 

@@ -68,49 +68,58 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarProveedor = await Proveedor.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['proveedor', 'Proveedor'],
-                ['nombreContacto', 'Contacto'],
-                ['telefono', 'Teléfono']
-            ],
-
-            where: {
-                id
-            }
-        });
-        res.json(listarProveedor);
+        var buscarProveedor = await Proveedor.findOne({ where: { id: id } });
+        if (!buscarProveedor) {
+            res.send('El id del proveedor no existe');
+        } else {
+            const listarProveedor = await Proveedor.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['proveedor', 'Proveedor'],
+                    ['nombreContacto', 'Contacto'],
+                    ['telefono', 'Teléfono']
+                ],
+                where: {
+                    id
+                }
+            });
+            res.json(listarProveedor);
+        }
     }
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { proveedor } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { proveedor } = req.query;
-        const listarProveedor = await Proveedor.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['proveedor', 'Proveedor'],
-                ['nombreContacto', 'Contacto'],
-                ['telefono', 'Teléfono']
-            ],
-            where: {
-                proveedor: {
-                    [Op.like]: proveedor
-                }
-            },
-        });
-        res.json(listarProveedor);
+        var buscarProveedor = await Proveedor.findOne({ where: { proveedor: proveedor } });
+        if (!buscarProveedor) {
+            res.send('El proveedor no existe');
+        } else {
+            const listarProveedor = await Proveedor.findOne({
+                attributes: [
+                    ['id', 'Id'],
+                    ['proveedor', 'Proveedor'],
+                    ['nombreContacto', 'Contacto'],
+                    ['telefono', 'Teléfono']
+                ],
+                where: {
+                    proveedor: {
+                        [Op.like]: proveedor
+                    }
+                },
+            });
+            res.json(listarProveedor);
+        }
     }
 }
 

@@ -83,28 +83,33 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarUsuario = await Usuario.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['correo', 'Correo'],
-                ['password', 'Contraseña'],
-                ['tipo', 'Tipo'],
-                ['estado', 'Estado'],
-                ['codigo', 'Codigo'],
-                ['fallido', 'Fallido']
-            ],
-            where: {
-                id: id
-            },
-        });
-        res.json(listarUsuario);
+        var buscarUsuario = await Usuario.findOne({ where: { id: id } });
+        if (!buscarUsuario) {
+            res.send('El id del usuario no existe');
+        } else {
+            const listarUsuario = await Usuario.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['correo', 'Correo'],
+                    ['password', 'Contraseña'],
+                    ['tipo', 'Tipo'],
+                    ['estado', 'Estado'],
+                    ['codigo', 'Codigo'],
+                    ['fallido', 'Fallido']
+                ],
+                where: {
+                    id: id
+                },
+            });
+            res.json(listarUsuario);
+        }
     }
 }
 
@@ -117,7 +122,7 @@ exports.BuscarNombre = async (req, res) => {
     } else {
         var buscarUsuario = await Usuario.findOne({ where: { nombre: nombre } });
         if (!buscarUsuario) {
-            res.send('El nombre del usuario no existe');
+            res.send('El usuario no existe');
         } else {
             const listarUsuario = await Usuario.findAll({
                 attributes: [

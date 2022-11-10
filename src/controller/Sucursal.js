@@ -77,49 +77,59 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarSucursal = await Sucursal.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Sucursal'],
-                ['ubicacion', 'Ubicación'],
-                ['telefono', 'Teléfono']
-            ],
-            where: {
-                id
-            }
-        });
-        res.json(listarSucursal);
+        var buscarSucursal = await Sucursal.findOne({ where: { id: id } });
+        if (!buscarSucursal) {
+            res.send('El id de la sucursal no existe');
+        } else {
+            const listarSucursal = await Sucursal.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Sucursal'],
+                    ['ubicacion', 'Ubicación'],
+                    ['telefono', 'Teléfono']
+                ],
+                where: {
+                    id
+                }
+            });
+            res.json(listarSucursal);
+        }
     }
 }
 
 exports.buscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
-        const listarSucursal = await Sucursal.findAll({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Sucursal'],
-                ['ubicacion', 'Ubicación'],
-                ['telefono', 'Teléfono']
-            ],
-            where: {
-                nombre: {
-                    [Op.like]: nombre
-                }
+        var buscarSucursal = await Sucursal.findOne({ where: { nombre: nombre } });
+        if (!buscarSucursal) {
+            res.send('La sucursal no existe');
+        } else {
+            const listarSucursal = await Sucursal.findAll({
+                attributes: [
+                    ['id', 'Id'],
+                    ['nombre', 'Sucursal'],
+                    ['ubicacion', 'Ubicación'],
+                    ['telefono', 'Teléfono']
+                ],
+                where: {
+                    nombre: {
+                        [Op.like]: nombre
+                    }
 
-            }
-        });
-        res.json(listarSucursal);
+                }
+            });
+            res.json(listarSucursal);
+        }
     }
 }
 
