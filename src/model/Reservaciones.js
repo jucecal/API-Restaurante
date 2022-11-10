@@ -5,13 +5,21 @@ var today = moment();
 const Reservaciones = db.define(
     'Reservaciones',
     {
-        fechaHora: {
-            type: DataTypes.DATE,
+        fecha: {
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
                 isDate: true,
                 notEmpty: true,
                 isAfter: today.format('YYYY-MM-DD')
+            }
+        },
+        
+        hora: {
+            type: DataTypes.TIME,
+            allowNull: false,
+            validate: {
+                notEmpty: true
             }
         }
     },

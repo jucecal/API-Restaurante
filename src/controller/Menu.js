@@ -93,7 +93,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarMenu = await Menu.findAll({
         attributes: [
-            ['id', 'ID Producto'],
+            ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['precio', 'Precio'],
             ['descripcion', 'Descripción'],
@@ -116,9 +116,9 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarMenu = await Menu.findAll({
+        const listarMenu = await Menu.findOne({
             attributes: [
-                ['id', 'ID Producto'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['precio', 'Precio'],
                 ['descripcion', 'Descripción'],
@@ -146,9 +146,9 @@ exports.BuscarNombre = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { nombre } = req.query;
-        const listarMenu = await Menu.findAll({
+        const listarMenu = await Menu.findOne({
             attributes: [
-                ['id', 'ID Producto'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['precio', 'Precio'],
                 ['descripcion', 'Descripción'],
@@ -180,17 +180,16 @@ exports.BuscarPorCategoria = async (req, res) => {
         const { nombre } = req.query;
         const listarMenu = await Menu.findAll({
             attributes: [
-                ['id', 'ID Producto'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['precio', 'Precio'],
-                ['descripcion', 'Descripción Producto'],
-                ['imagen', 'Imagen Producto'],
-                ['CategoriumId', 'ID Categoría']
+                ['descripcion', 'Descripción'],
+                ['imagen', 'Imagen']
             ],
             include: [{
                 model: Categoria,
                 attributes: [
-                    ['categoria', 'Categoría Producto']
+                    ['categoria', 'Categoría']
                 ],
                 where: {
                     Categoria: {

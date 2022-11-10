@@ -54,10 +54,10 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarDetalleCompra = await DetalleCompra.findAll({
         attributes: [
+            ['CompraId', 'Orden de Compra'],
             ['cantidad', 'Cantidad'],
             ['subTotal', 'SubTotal'],
-            ['observaciones', 'Observaciones'],
-            ['CompraId', 'Orden de Compra']
+            ['observaciones', 'Observaciones']
         ],
         include: [{
             model: Insumo,

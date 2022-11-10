@@ -7,13 +7,17 @@ const ruta = Router();
 
 ruta.get('/', controladorDetallefactura.Inicio);
 
-ruta.get('/listar', controladorDetallefactura.Listar);
+ruta.get('/listar', 
+    ValidarAutenticado,
+    controladorDetallefactura.Listar);
 
 ruta.post('/guardarcombo',
+    ValidarAutenticado, 
     body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetallefactura.GuardarCombo);
 
 ruta.post('/guardarmenu',
+    ValidarAutenticado,
     body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetallefactura.GuardarMenu);
 

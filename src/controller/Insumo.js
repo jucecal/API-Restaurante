@@ -74,11 +74,11 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarInsumo = await Insumo.findAll({
         attributes: [
-            ['id', 'ID Insumos'],
+            ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['marca', 'Marca'],
             ['fechaVencimiento', 'Fecha de Vencimiento'],
-            ['precioUnitario', 'Precio Unitario']
+            ['precioUnitario', 'Precio']
         ],
         include: [{
             model: Proveedor,
@@ -106,11 +106,11 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarInsumo = await Insumo.findAll({
             attributes: [
-                ['id', 'ID Insumos'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
-                ['precioUnitario', 'Precio Unitario'],
+                ['precioUnitario', 'Precio'],
             ],
 
             where: {
@@ -143,11 +143,11 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarInsumo = await Insumo.findAll({
             attributes: [
-                ['id', 'ID Insumo'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['marca', 'Marca'],
                 ['fechaVencimiento', 'Fecha de Vencimiento'],
-                ['precioUnitario', 'Precio Unitario'],
+                ['precioUnitario', 'Precio'],
             ],
             where: {
                 nombre: {

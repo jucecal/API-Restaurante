@@ -63,8 +63,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarCategoria = await Categoria.findAll({
         attributes: [
-            ['id', 'ID Categoria'],
-            ['categoria', 'Categoria']
+            ['id', 'Id'],
+            ['categoria', 'Categoría']
         ]
     });
     res.json(listarCategoria);
@@ -77,10 +77,10 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarCategoria = await Categoria.findAll({
+        const listarCategoria = await Categoria.findOne({
             attributes: [
-                ['id', 'ID Categoria'],
-                ['categoria', 'Categoria']
+                ['id', 'Id'],
+                ['categoria', 'Categoría']
             ],
             where: {
                 id: id
@@ -98,14 +98,14 @@ exports.BuscarCategoria = async (req, res) => {
     }
     else {
         const { categoria } = req.query;
-        const listarCategoria = await Categoria.findAll({
+        const listarCategoria = await Categoria.findOne({
             attributes: [
-                ['id', 'ID Categoria'],
-                ['categoria', 'Categoria']
+                ['id', 'Id'],
+                ['categoria', 'Categoría']
             ],
             where: {
                 categoria: {
-                    [Op.like]: categoria
+                    [Op.like]: categoria,
                 }
             },
         });

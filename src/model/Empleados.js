@@ -28,6 +28,10 @@ const Empleado = db.define(
         telefono: {
             type: DataTypes.INTEGER(20),
             allowNull: false,
+            unique: {
+                arg: true, 
+                msg: 'El telefono ya se encuentra asignado'
+            },
             validate:{
                 len:[8],
                 isNumeric: true

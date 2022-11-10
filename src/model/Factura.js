@@ -1,21 +1,35 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db');
 const moment = require('moment');
-var today = moment();
+var hora = moment();
 const Factura = db.define(
     'Factura',
     {
         fecha: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
+                isDate: true,
                 notEmpty: true
             }
         },
 
+        hora: {
+            type: DataTypes.TIME,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            },
+            defaultValue: hora.format('h:mm:ss')
+        },
+
         ISV: {
             type: DataTypes.DOUBLE,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isFloat: true,
+                notEmpty: true
+            }
         },
 
         totalPagar: {
@@ -27,11 +41,11 @@ const Factura = db.define(
             }
         },
 
+        /*
         efectivo: {
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isFloat: true,
                 notEmpty: true
             }
         },
@@ -40,6 +54,7 @@ const Factura = db.define(
             type: DataTypes.DOUBLE,
             allowNull: true
         }
+        */
     },
     {
         tableName: 'factura',

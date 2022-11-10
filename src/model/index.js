@@ -67,16 +67,13 @@ exports.CrearModelos = () => {
     Mesas.hasMany(Reservaciones);
     Reservaciones.belongsTo(Mesas);
 
-
     //RELACION ENTRE SUCURSAL Y EMPLEADO
     Sucursal.hasMany(Empleado)
     Empleado.belongsTo(Sucursal)
 
-
     //RELACIÓN TABLA SUCURSAL Y RESERVACIONES
     Sucursal.hasMany(Reservaciones)
     Reservaciones.belongsTo(Sucursal)
-
 
     //RELACION ENTRE CARGO Y EMPLEADO
     Cargo.hasMany(Empleado)
@@ -119,10 +116,6 @@ exports.CrearModelos = () => {
     //RELACION DE MESAS CON FACTURAS
     Mesas.hasMany(Factura)
     Factura.belongsTo(Mesas)
-
-    //RELACION DE RESERVACIONES CON FACTURAS
-    Reservaciones.hasMany(Factura)
-    Factura.belongsTo(Reservaciones)
 
     //RELACION DE CLIENTES CON FACTURAS
     Clientes.hasMany(Factura)

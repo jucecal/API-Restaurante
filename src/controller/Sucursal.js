@@ -67,8 +67,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarSucursal = await Sucursal.findAll({
         attributes: [
-            ['id', 'ID Sucursal'],
-            ['nombre', 'Nombre'],
+            ['id', 'Id'],
+            ['nombre', 'Sucursal'],
             ['ubicacion', 'Ubicación'],
             ['telefono', 'Teléfono']
         ]
@@ -85,8 +85,8 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarSucursal = await Sucursal.findAll({
             attributes: [
-                ['id', 'ID Sucursal'],
-                ['nombre', 'Nombre'],
+                ['id', 'Id'],
+                ['nombre', 'Sucursal'],
                 ['ubicacion', 'Ubicación'],
                 ['telefono', 'Teléfono']
             ],
@@ -107,8 +107,8 @@ exports.buscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarSucursal = await Sucursal.findAll({
             attributes: [
-                ['id', 'ID Sucursal'],
-                ['nombre', 'Nombre'],
+                ['id', 'Id'],
+                ['nombre', 'Sucursal'],
                 ['ubicacion', 'Ubicación'],
                 ['telefono', 'Teléfono']
             ],

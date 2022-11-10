@@ -98,7 +98,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarEmpleado = await Empleado.findAll({
         attributes: [
-            ['id', 'ID Empleado'],
+            ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
@@ -142,7 +142,7 @@ exports.buscarId = async (req, res) => {
         } else {
             const listarEmpleado = await Empleado.findAll({
                 attributes: [
-                    ['id', 'ID Empleado'],
+                    ['id', 'Id'],
                     ['nombre', 'Nombre'],
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],
@@ -191,7 +191,7 @@ exports.BuscarNombre = async (req, res) => {
         } else {
             const listarEmpleado = await Empleado.findAll({
                 attributes: [
-                    ['id', 'ID Empleado'],
+                    ['id', 'Id'],
                     ['nombre', 'Nombre'],
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],

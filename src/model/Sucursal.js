@@ -13,7 +13,7 @@ const Sucursal = db.define(
         },
 
         ubicacion: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(100),
             allowNull: false,validate: {
                 len: [4, 50],
                 notEmpty: true

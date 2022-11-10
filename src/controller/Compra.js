@@ -92,7 +92,8 @@ exports.Listar = async (req, res) => {
         attributes: [
             ['id', 'Orden de Compra'],
             ['fecha', 'Fecha'],
-            ['totalPagar', 'Pago Total'],
+            ['hora', 'Hora'],
+            ['totalPagar', 'Total a Pagar'],
             ['imagen', 'Imagen Comprobante']
         ],
         include: [
@@ -116,9 +117,10 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarCompra = await Compra.findAll({
             attributes: [
-                ['id', 'Código Compra'],
+                ['id', 'Orden de Compra'],
                 ['fecha', 'Fecha'],
-                ['totalPagar', 'Pago Total'],
+                ['hora', 'Hora'],
+                ['totalPagar', 'Total a Pagar'],
                 ['imagen', 'Imagen Comprobante']
             ],
             where: {
@@ -144,9 +146,10 @@ exports.buscarFecha = async (req, res) => {
         const { fecha1, fecha2 } = req.query;
         const listarCompra = await Compra.findAll({
             attributes: [
-                ['id', 'Código Compra'],
+                ['id', 'Orden de Compra'],
                 ['fecha', 'Fecha'],
-                ['totalPagar', 'Pago Total'],
+                ['hora', 'Hora'],
+                ['totalPagar', 'Total a Pagar'],
                 ['imagen', 'Imagen Comprobante']
             ],
             where: {
@@ -183,8 +186,9 @@ exports.BuscarPorSucursal = async (req, res) => {
         const { nombre } = req.query;
         const listarCompra = await Compra.findAll({
             attributes: [
-                ['id', 'Código Compra'],
+                ['id', 'Orden de Compra'],
                 ['fecha', 'Fecha'],
+                ['hora', 'Hora'],
                 ['totalPagar', 'Pago Total'],
                 ['imagen', 'Imagen Comprobante']
             ],
@@ -202,7 +206,6 @@ exports.BuscarPorSucursal = async (req, res) => {
         });
         res.json(listarCompra);
     }
-
 }
 
 exports.Guardar = async (req, res) => {
@@ -222,6 +225,7 @@ exports.Guardar = async (req, res) => {
             } else {
                 await Compra.create({
                     fecha: now(),
+                    hora: now(),
                     totalPagar: 0,
                     SucursalId
                 }).then((data) => {
@@ -245,8 +249,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { totalPagar, SucursalId } = req.body;
-    if (!totalPagar || !SucursalId || !id) {
+    const { SucursalId } = req.body;
+    if ( !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCompra = await Compra.findOne({ where: { id: id } });
@@ -257,7 +261,6 @@ exports.Editar = async (req, res) => {
             if (!buscarSucursal) {
                 res.send('El id de la sucursal no existe');
             } else {
-                buscarCompra.totalPagar = totalPagar;
                 buscarCompra.SucursalId = SucursalId;
                 await buscarCompra.save()
                     .then((data) => {

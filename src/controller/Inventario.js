@@ -2,6 +2,7 @@ const Inventario = require('../model/Inventario');
 const Sucursal = require('../model/Sucursal');
 const Insumo = require('../model/Insumo');
 const { validationResult } = require('express-validator');
+const { Op } = require('sequelize');
 const { request } = require('express');
 
 exports.Inicio = (req, res) => {
@@ -47,6 +48,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloInventario);
 }
+
 exports.Listar = async (req, res) => {
     const listarInventario = await Inventario.findAll({
         attributes: [
@@ -68,6 +70,42 @@ exports.Listar = async (req, res) => {
         ]
     });
     res.json(listarInventario);
+}
+
+exports.BuscarPorSucursal = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombre } = req.query;
+        const listarInventario = await Inventario.findAll({
+            attributes: [
+                ['stock', 'Stock']
+            ],
+            include: [
+                {
+                    model: Insumo,
+                    attributes: [
+                        ['nombre', 'Producto']
+                    ]
+                },
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ],
+                    where: {
+                        nombre: {
+                            [Op.like]: nombre
+                        }
+                    }
+                }
+            ],
+        });
+        res.json(listarInventario);
+    }
 }
 
 exports.Guardar = async (req, res) => {

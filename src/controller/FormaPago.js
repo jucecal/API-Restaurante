@@ -57,7 +57,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFormaPago = await FormaPago.findAll({
         attributes: [
-            ['id', 'ID Formas de Pago'],
+            ['id', 'Id'],
             ['formaPago', 'Forma de Pago']
         ],
     });
@@ -75,9 +75,9 @@ exports.BuscarId = async (req, res) => {
     }
     else {
         const { id } = req.query;
-        const listarFormaPago = await FormaPago.findAll({
+        const listarFormaPago = await FormaPago.findOne({
             attributes: [
-                ['id', 'ID Forma de Forma'],
+                ['id', 'Id'],
                 ['formaPago', 'Forma de Pago']
             ],
             where: {

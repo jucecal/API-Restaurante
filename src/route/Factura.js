@@ -16,11 +16,9 @@ ruta.get('/buscarId',
     controladorFactura.buscarId);
 
 ruta.post('/guardar',
-    body('efectivo').isFloat().withMessage('Solo se aceptan valores numericos para el efectivo'),
     controladorFactura.Guardar);
 
 ruta.put('/editar',
-    body('efectivo').isFloat().withMessage('Solo se aceptan valores numericos para el efectivo'),
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
     controladorFactura.Editar);
 

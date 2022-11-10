@@ -69,7 +69,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarUsuario = await Usuario.findAll({
         attributes: [
-            ['id', 'ID Usuario'],
+            ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['correo', 'Correo'],
             ['password', 'Contraseña'],
@@ -91,7 +91,7 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarUsuario = await Usuario.findAll({
             attributes: [
-                ['id', 'ID Usuario'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['correo', 'Correo'],
                 ['password', 'Contraseña'],
@@ -121,7 +121,7 @@ exports.BuscarNombre = async (req, res) => {
         } else {
             const listarUsuario = await Usuario.findAll({
                 attributes: [
-                    ['id', 'ID Usuario'],
+                    ['id', 'Id'],
                     ['nombre', 'Nombre'],
                     ['correo', 'Correo'],
                     ['password', 'Contraseña'],

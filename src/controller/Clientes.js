@@ -92,14 +92,13 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarClientes = await Clientes.findAll({
         attributes: [
-            ['id', 'ID Cliente'],
+            ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
             ['fechaNacimiento', 'Fecha de Nacimiento'],
             ['imagen', 'Foto'],
-            ['direccion', 'Dirección'],
-            'UsuarioId'
+            ['direccion', 'Dirección']
         ],
         include: [{
             model: Usuario,
@@ -121,13 +120,12 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarClientes = await Clientes.findAll({
             attributes: [
-                ['id', 'ID Cliente'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
                 ['telefono', 'Telefono'],
                 ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección'],
-                'UsuarioId'
+                ['direccion', 'Dirección']
             ],
             where: {
                 id: id
@@ -154,13 +152,12 @@ exports.BuscarNombre = async (req, res) => {
         const { nombre } = req.query;
         const listarClientes = await Clientes.findAll({
             attributes: [
-                ['id', 'ID Cliente'],
+                ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
                 ['telefono', 'Telefono'],
                 ['fechaNacimiento', 'Fecha de Nacimiento'],
-                ['direccion', 'Dirección'],
-                'UsuarioId'
+                ['direccion', 'Dirección']
             ],
             where: {
                 nombre: {

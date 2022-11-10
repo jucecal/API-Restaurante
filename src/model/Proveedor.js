@@ -23,8 +23,12 @@ const Proveedor = db.define(
         },
 
         telefono: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.INTEGER,
             allowNull: false,
+            unique: {
+                arg: true, 
+                msg: 'El telefono ya se encuentra asignado'
+            },
             validate:{
                 len:[8],
                 isNumeric: true

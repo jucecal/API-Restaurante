@@ -63,8 +63,9 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarReservaciones = await Reservaciones.findAll({
         attributes: [
-            ['id', 'ID Reservacion'],
-            ['fechaHora', 'Fecha']
+            ['id', 'Id'],
+            ['fecha', 'Fecha'],
+            ['hora', 'Hora']
         ],
         include: [
             {
@@ -74,17 +75,19 @@ exports.Listar = async (req, res) => {
                 ]
             },
             {
-                model: Clientes,
-                attributes: [
-                    ['nombre', 'Cliente']
-                ]
-            },
-            {
                 model: Mesas,
                 attributes: [
                     ['id', 'Mesa']
                 ]
             },
+            {
+                model: Clientes,
+                attributes: [
+                    ['nombre', 'Cliente'],
+                    ['apellido', 'Apellido'],
+                    ['telefono', 'Teléfono']
+                ]
+            } 
         ]
     });
     res.json(listarReservaciones);
@@ -99,8 +102,9 @@ exports.BuscarId = async (req, res) => {
         const { id } = req.query;
         const listarReservaciones = await Reservaciones.findAll({
             attributes: [
-                ['id', 'ID Sucursal'],
-                ['fechaHora', 'Fecha']
+                ['id', 'Id'],
+                ['fecha', 'Fecha'],
+                ['hora', 'Hora']
             ],
             where: {
                 id: id
@@ -113,9 +117,44 @@ exports.BuscarId = async (req, res) => {
                     ]
                 },
                 {
+                    model: Mesas,
+                    attributes: [
+                        ['id', 'Mesa']
+                    ]
+                },
+                {
                     model: Clientes,
                     attributes: [
-                        ['nombre', 'Cliente']
+                        ['nombre', 'Cliente'],
+                        ['apellido', 'Apellido'],
+                        ['telefono', 'Teléfono']
+                    ]
+                }
+            ]
+        });
+        res.json(listarReservaciones);
+    }
+}
+
+exports.BuscarPorCliente = async (req, res) => {
+    const validacion = validationResult(req);
+    if (!validacion.isEmpty()) {
+        console.log(validacion.errors);
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombre } = req.query;
+        const listarReservaciones = await Reservaciones.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['fecha', 'Fecha'],
+                ['hora', 'Hora']
+            ],
+            include: [
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
                     ]
                 },
                 {
@@ -124,6 +163,17 @@ exports.BuscarId = async (req, res) => {
                         ['id', 'Mesa']
                     ]
                 },
+                {
+                    model: Clientes,
+                    attributes: [
+                        ['nombre', 'Cliente']
+                    ],
+                    where: {
+                        nombre: {
+                            [Op.like]: nombre
+                        }
+                    }
+                }
             ]
         });
         res.json(listarReservaciones);
@@ -136,8 +186,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { fechaHora, ClienteId, MesaId, SucursalId } = req.body;
-        if (!fechaHora || !ClienteId || !MesaId || !SucursalId) {
+        const { fecha, hora, ClienteId, MesaId, SucursalId } = req.body;
+        if (!fecha || !hora || !ClienteId || !MesaId || !SucursalId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarCliente = await Clientes.findOne({ where: { id: ClienteId } });
@@ -153,7 +203,8 @@ exports.Guardar = async (req, res) => {
                         res.send('El id de la sucursal no existe');
                     } else {
                         await Reservaciones.create({
-                            fechaHora,
+                            fecha,
+                            hora,
                             ClienteId,
                             MesaId,
                             SucursalId
@@ -177,8 +228,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { fechaHora, ClienteId, MesaId, SucursalId } = req.body;
-    if (!fechaHora || !ClienteId || !MesaId || !SucursalId || !id) {
+    const { fecha, hora, ClienteId, MesaId, SucursalId } = req.body;
+    if (!fecha || !hora || !ClienteId || !MesaId || !SucursalId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarReservacion = await Reservaciones.findOne({ where: { id: id } });
@@ -197,7 +248,8 @@ exports.Editar = async (req, res) => {
                     if (!buscarSucursal) {
                         res.send('El id de la sucursal no existe');
                     } else {
-                        buscarReservacion.fechaHora = fechaHora;
+                        buscarReservacion.fecha = fecha;
+                        buscarReservacion.hora = hora;
                         buscarReservacion.ClienteId = ClienteId;
                         buscarReservacion.MesaId = MesaId;
                         buscarReservacion.SucursalId = SucursalId;

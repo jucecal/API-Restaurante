@@ -1,13 +1,17 @@
 const { Router } = require('express');
 const controladorDetalleCompra = require('../controller/DetalleCompra');
+const { ValidarAutenticado } = require('../config/passport');
 const { body, query } = require('express-validator');
 const ruta = Router();
 
 ruta.get('/', controladorDetalleCompra.Inicio);
 
-ruta.get('/listar', controladorDetalleCompra.Listar);
+ruta.get('/listar', 
+    ValidarAutenticado,
+    controladorDetalleCompra.Listar);
 
 ruta.post('/guardar',
+    ValidarAutenticado,
     body('cantidad').isInt().withMessage('Solo se aceptan valores enteros para la cantidad'),
     controladorDetalleCompra.Guardar);
 

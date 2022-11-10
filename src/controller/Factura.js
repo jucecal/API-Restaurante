@@ -1,7 +1,6 @@
 const Factura = require('../model/Factura');
 const DetalleFactura = require('../model/DetalleFactura');
 const Mesa = require('../model/Mesas');
-const Reservacion = require('../model/Reservaciones');
 const Sucursal = require('../model/Sucursal');
 const Cliente = require('../model/Clientes');
 const FormaPago = require('../model/FormaPago');
@@ -35,7 +34,6 @@ exports.Inicio = (req, res) => {
                     EmpleadoId: "Id del empleado que realiza la factura. Obligatorio",
                     ClienteId: "Id del cliente. Obligatorio",
                     MesaId: "Id de la mesa",
-                    ReservacioneId: "Id de la reservación",
                     FormaPagoId: "Id de la forma de pago. Obligatorio",
                     SucusalId: "Id de la sucursal. Obligatorio"
                 }
@@ -61,7 +59,6 @@ exports.Inicio = (req, res) => {
                     EmpleadoId: "Id del empleado que realiza la factura. Obligatorio",
                     ClienteId: "Id del cliente. Obligatorio",
                     MesaId: "Id de la mesa",
-                    ReservacioneId: "Id de la reservación",
                     FormaPagoId: "Id de la forma de pago. Obligatorio",
                     SucusalId: "Id de la sucursal. Obligatorio"
                 }
@@ -82,12 +79,11 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarFactura = await Factura.findAll({
         attributes: [
-            ['id', 'ID Factura'],
+            ['id', 'Factura'],
             ['fecha', 'Fecha'],
+            ['hora', 'Hora'],
             ['ISV', 'ISV'],
-            ['totalPagar', 'Total a Pagar'],
-            ['efectivo', 'Efectivo'],
-            ['cambio', 'Cambio']
+            ['totalPagar', 'Total a Pagar']
         ],
         include: [
             {
@@ -106,12 +102,6 @@ exports.Listar = async (req, res) => {
                 model: Mesa,
                 attributes: [
                     ['id', 'Mesa'],
-                ]
-            },
-            {
-                model: Reservacion,
-                attributes: [
-                    ['id', 'Reservación'],
                 ]
             },
             {
@@ -134,12 +124,11 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarSucursal = await Factura.findAll({
             attributes: [
-                ['id', 'ID Factura'],
-                ['fecha', 'Fecha de Factura'],
+                ['id', 'Factura'],
+                ['fecha', 'Fecha'],
+                ['hora', 'Hora'],
                 ['ISV', 'ISV'],
-                ['totalPagar', 'Total a Pagar'],
-                ['efectivo', 'Efectivo'],
-                ['cambio', 'Cambio'],
+                ['totalPagar', 'Total a Pagar']
             ],
             where: {
                 id
@@ -170,12 +159,6 @@ exports.buscarId = async (req, res) => {
                     ]
                 },
                 {
-                    model: Reservacion,
-                    attributes: [
-                        ['id', 'Reservación'],
-                    ]
-                },
-                {
                     model: FormaPago,
                     attributes: [
                         ['formaPago', 'Forma de Pago'],
@@ -194,8 +177,8 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         console.log(req);
-        const { ISV, totalPagar, efectivo, EmpleadoId, ClienteId, SucusalId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-        if (!efectivo || !EmpleadoId || !ClienteId || !SucusalId || !FormaPagoId || !MesaId) {
+        const { ISV, totalPagar, EmpleadoId, ClienteId, SucursalId, FormaPagoId, MesaId } = req.body;
+        if (!EmpleadoId || !ClienteId || !SucursalId || !FormaPagoId || !MesaId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarEmpleado = await Empleado.findOne({ where: { id: EmpleadoId } });
@@ -206,7 +189,7 @@ exports.Guardar = async (req, res) => {
                 if (!buscarCliente) {
                     res.send('El id del cliente no existe');
                 } else {
-                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucusalId } });
+                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
                     if (!buscarSucursal) {
                         res.send('El id de la forma de pago no existe');
                     } else {
@@ -218,29 +201,24 @@ exports.Guardar = async (req, res) => {
                             if (!buscarMesa) {
                                 res.send('El id de la mesa no existe');
                             } else {
-                                var buscarReservacion = await Reservacion.findOne({ where: { id: ReservacioneId } });
-                                if (!buscarReservacion) {
-                                    res.send('El id de la reservacion no existe');
-                                } else {
-                                    await Factura.create({
-                                        fecha: now(),
-                                        ISV,
-                                        totalPagar: 0,
-                                        efectivo,
-                                        cambio: (efectivo - totalPagar),
-                                        EmpleadoId,
-                                        ClienteId,
-                                        SucursalId,
-                                        FormaPagoId,
-                                        MesaId,
-                                        ReservacioneId
-                                    }).then(data => {
-                                        res.json({ msj: 'Registro guardado' });
+                                await Factura.create({
+                                    fecha: now(),
+                                    hora: now(),
+                                    ISV,
+                                    totalPagar: 0,
+                                    //efectivo,
+                                    //cambio: (efectivo - totalPagar),
+                                    EmpleadoId,
+                                    ClienteId,
+                                    SucursalId,
+                                    FormaPagoId,
+                                    MesaId
+                                }).then(data => {
+                                    res.json({ msj: 'Registro guardado' });
+                                })
+                                    .catch((er) => {
+                                        res.json({ msj: 'Error al guardar el registro' });
                                     })
-                                        .catch((er) => {
-                                            res.json({ msj: 'Error al guardar el registro' });
-                                        })
-                                }
                             }
                         }
                     }
@@ -253,8 +231,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { efectivo, EmpleadoId, ClienteId, SucursalId, FormaPagoId, ReservacioneId, MesaId } = req.body;
-    if (!efectivo || !EmpleadoId || !ClienteId || !SucursalId || !FormaPagoId || !MesaId || !id) {
+    const { EmpleadoId, ClienteId, SucursalId, FormaPagoId, MesaId } = req.body;
+    if (!EmpleadoId || !ClienteId || !SucursalId || !FormaPagoId || !MesaId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarFactura = await Factura.findOne({ where: { id: id } });
@@ -269,7 +247,7 @@ exports.Editar = async (req, res) => {
                 if (!buscarCliente) {
                     res.send('El id del cliente no existe');
                 } else {
-                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucusalId } });
+                    var buscarSucursal = await Sucursal.findOne({ where: { id: SucursalId } });
                     if (!buscarSucursal) {
                         res.send('El id de la forma de pago no existe');
                     } else {
@@ -281,28 +259,22 @@ exports.Editar = async (req, res) => {
                             if (!buscarMesa) {
                                 res.send('El id de la mesa no existe');
                             } else {
-                                var buscarReservacion = await Reservacion.findOne({ where: { id: ReservacioneId } });
-                                if (!buscarReservacion) {
-                                    res.send('El id de la reservacion no existe');
-                                } else {
-                                    buscarFactura.efectivo = efectivo;
-                                    buscarFactura.cambio = (efectivo - totalPagar);
-                                    buscarFactura.EmpleadoId = EmpleadoId;
-                                    buscarFactura.ClienteId = ClienteId;
-                                    buscarFactura.SucursalId = SucursalId;
-                                    buscarFactura.FormaPagoId = FormaPagoId;
-                                    buscarFactura.MesaId = MesaId;
-                                    buscarFactura.ReservacioneId = ReservacioneId;
-                                    await buscarFactura.save()
-                                        .then((data) => {
-                                            console.log(data);
-                                            res.send('Actualizado correctamente');
-                                        })
-                                        .catch((er) => {
-                                            console.log(er);
-                                            res.send('Error al actualizar');
-                                        });
-                                }
+                                //buscarFactura.efectivo = efectivo;
+                                //buscarFactura.cambio = (efectivo - totalPagar);
+                                buscarFactura.EmpleadoId = EmpleadoId;
+                                buscarFactura.ClienteId = ClienteId;
+                                buscarFactura.SucursalId = SucursalId;
+                                buscarFactura.FormaPagoId = FormaPagoId;
+                                buscarFactura.MesaId = MesaId;
+                                await buscarFactura.save()
+                                    .then((data) => {
+                                        console.log(data);
+                                        res.send('Actualizado correctamente');
+                                    })
+                                    .catch((er) => {
+                                        console.log(er);
+                                        res.send('Error al actualizar');
+                                    });
                             }
                         }
                     }

@@ -58,7 +58,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarProveedor = await Proveedor.findAll({
         attributes: [
-            ['id', 'ID Proveedor'],
+            ['id', 'Id'],
             ['proveedor', 'Proveedor'],
             ['nombreContacto', 'Contacto'],
             ['telefono', 'Teléfono']
@@ -76,7 +76,7 @@ exports.buscarId = async (req, res) => {
         const { id } = req.query;
         const listarProveedor = await Proveedor.findAll({
             attributes: [
-                ['id', 'ID Proveedor'],
+                ['id', 'Id'],
                 ['proveedor', 'Proveedor'],
                 ['nombreContacto', 'Contacto'],
                 ['telefono', 'Teléfono']
@@ -99,7 +99,7 @@ exports.BuscarNombre = async (req, res) => {
         const { proveedor } = req.query;
         const listarProveedor = await Proveedor.findAll({
             attributes: [
-                ['id', 'ID Proveedor'],
+                ['id', 'Id'],
                 ['proveedor', 'Proveedor'],
                 ['nombreContacto', 'Contacto'],
                 ['telefono', 'Teléfono']

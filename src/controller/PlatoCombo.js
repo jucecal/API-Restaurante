@@ -50,7 +50,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarPxCombo = await PlatoCombo.findAll({
         attributes: [
-            ['id', 'ID Platos y Combos']
+            ['id', 'Id']
         ],
         include: [
             {

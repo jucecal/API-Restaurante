@@ -16,11 +16,11 @@ const Combo = db.define(
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isFloat: true,
+                isDecimal: true,
                 min: 1
             }
         },
-        
+
         descripcion: {
             type: DataTypes.STRING(250),
             allowNull: true,
@@ -33,7 +33,7 @@ const Combo = db.define(
         imagen: {
             type: DataTypes.STRING(250),
             allowNull: true
-        }        
+        }
     },
     {
         tableName: 'Combos',

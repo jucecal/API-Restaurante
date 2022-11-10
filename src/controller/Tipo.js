@@ -45,8 +45,8 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarTipo = await Tipo.findAll({
         attributes: [
-            ['id', 'ID Tipo'],
-            ['tipo', 'Tipo']
+            ['id', 'Id'],
+            ['tipo', 'Tipo de Producto']
         ]
     });
     res.json(listarTipo);
@@ -65,7 +65,6 @@ exports.Guardar = async (req, res) => {
         } else {
             await Tipo.create({
                 tipo: tipo
-
             }).then(data => {
                 res.json({ msj: 'Registro guardado' });
             })

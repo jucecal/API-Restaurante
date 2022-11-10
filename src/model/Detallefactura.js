@@ -16,7 +16,7 @@ const DetalleFactura = db.define(
             type: DataTypes.DOUBLE,
             allowNull: false,
             validate: {
-                isFloat: true, 
+                isFloat: true,
                 min: 1
             }
         },

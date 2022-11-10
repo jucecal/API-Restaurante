@@ -25,7 +25,11 @@ const Clientes = db.define(
 
         telefono: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                arg: true, 
+                msg: 'El telefono ya se encuentra asignado'
+            },
         },
 
         //TIPO DE FECHA
