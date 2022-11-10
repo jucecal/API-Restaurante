@@ -143,9 +143,6 @@ exports.GuardarCombo = async (req, res) => {
                                 res.json({ errores });
                             });
                     }
-
-
-
                 }
             }
         }
@@ -172,7 +169,6 @@ exports.GuardarMenu = async (req, res) => {
                 } else {
                     const buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: MenuId } });
                     const buscarInventario = await Inventario.findOne({ where: { SucursalId: buscarFactura.SucursalId, InsumoId: buscarProductoPlato.InsumoId } });
-
                     if (buscarInventario.stock < (buscarProductoPlato.cantidad * cantidad)) {
                         res.send('No se cuenta con la cantidad de insumos suficientes para la orden')
                     } else {
@@ -216,10 +212,6 @@ exports.GuardarMenu = async (req, res) => {
                                 res.json({ errores });
                             });
                     }
-
-
-
-
                 }
             }
         }
