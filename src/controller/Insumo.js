@@ -108,7 +108,7 @@ exports.buscarId = async (req, res) => {
         if (!buscarInsumo) {
             res.send('El id del insumo no existe');
         } else {
-            const listarInsumo = await Insumo.findAll({
+            const listarInsumo = await Insumo.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],
@@ -149,7 +149,7 @@ exports.BuscarNombre = async (req, res) => {
         if (!buscarInsumo) {
             res.send('El insumo no existe');
         } else {
-            const listarInsumo = await Insumo.findAll({
+            const listarInsumo = await Insumo.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],

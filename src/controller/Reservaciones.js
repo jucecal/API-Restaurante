@@ -104,7 +104,7 @@ exports.BuscarId = async (req, res) => {
         if (!buscarReservacion) {
             res.send('El id de la reservación no existe');
         } else {
-            const listarReservaciones = await Reservaciones.findAll({
+            const listarReservaciones = await Reservaciones.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['fecha', 'Fecha'],

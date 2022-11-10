@@ -93,7 +93,7 @@ exports.BuscarId = async (req, res) => {
         if (!buscarUsuario) {
             res.send('El id del usuario no existe');
         } else {
-            const listarUsuario = await Usuario.findAll({
+            const listarUsuario = await Usuario.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],
@@ -124,7 +124,7 @@ exports.BuscarNombre = async (req, res) => {
         if (!buscarUsuario) {
             res.send('El usuario no existe');
         } else {
-            const listarUsuario = await Usuario.findAll({
+            const listarUsuario = await Usuario.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],

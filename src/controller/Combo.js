@@ -120,7 +120,7 @@ exports.BuscarCombo = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        var buscarCombo = await Combo.findOne({ where: { id: id } });
+        var buscarCombo = await Combo.findOne({ where: { combo: combo } });
         if (!buscarCombo) {
             res.send('El combo no existe');
         } else {

@@ -108,7 +108,8 @@ exports.Listar = async (req, res) => {
             {
                 model: Usuario,
                 attributes: [
-                    ['nombre', 'Nombre de Usuario']
+                    ['nombre', 'Nombre de Usuario'],
+                    ['estado', 'Estado']
                 ]
             },
             {
@@ -155,7 +156,8 @@ exports.buscarId = async (req, res) => {
                     {
                         model: Usuario,
                         attributes: [
-                            ['nombre', 'Nombre de Usuario']
+                            ['nombre', 'Nombre de Usuario'],
+                            ['estado', 'Estado']
                         ]
                     },
                     {
@@ -206,7 +208,8 @@ exports.BuscarNombre = async (req, res) => {
                     {
                         model: Usuario,
                         attributes: [
-                            ['nombre', 'Nombre de Usuario']
+                            ['nombre', 'Nombre de Usuario'],
+                            ['estado', 'Estado']
                         ]
                     },
                     {
