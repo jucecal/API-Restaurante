@@ -14,7 +14,10 @@ const detalleCompra = db.define(
 
         observaciones: {
             type: DataTypes.STRING(50),
-            allowNull: true
+            allowNull: true,
+            validate: {
+                len: [3, 50]
+            }
         },
 
         subTotal:

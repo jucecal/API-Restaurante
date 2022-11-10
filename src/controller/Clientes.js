@@ -89,6 +89,7 @@ exports.Inicio = (req, res) => {
     }
     res.json(moduloClientes);
 }
+
 exports.Listar = async (req, res) => {
     const listarClientes = await Clientes.findAll({
         attributes: [
@@ -118,7 +119,7 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarClientes = await Clientes.findAll({
+        const listarClientes = await Clientes.findOne({
             attributes: [
                 ['id', 'Id'],
                 ['nombre', 'Nombre'],

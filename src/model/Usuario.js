@@ -58,6 +58,9 @@ const Usuario = db.define(
         estado: { 
             type: DataTypes.ENUM('AC', 'IN', 'BL'), 
             allowNull: true, 
+            validate: {
+                isIn: [['AC', 'IN', 'BL']]
+            },
             defaultValue: 'AC' 
         },
     },

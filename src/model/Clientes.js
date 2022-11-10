@@ -28,8 +28,13 @@ const Clientes = db.define(
             allowNull: false,
             unique: {
                 arg: true, 
-                msg: 'El telefono ya se encuentra asignado'
+                msg: 'El teléfono ya se encuentra asignado'
             },
+            validate:{
+                len:[8],
+                isNumeric: true,
+                notEmpty: true
+            }
         },
 
         //TIPO DE FECHA
@@ -46,7 +51,10 @@ const Clientes = db.define(
 
         direccion: {
             type: DataTypes.STRING(250),
-            allowNull: false
+            allowNull: true,
+            validate: {
+                len: [4, 250]
+            }
         },
 
         imagen: {

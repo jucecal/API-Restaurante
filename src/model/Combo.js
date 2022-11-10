@@ -25,8 +25,7 @@ const Combo = db.define(
             type: DataTypes.STRING(250),
             allowNull: true,
             validate: {
-                len: [3, 250],
-                notEmpty: true
+                len: [3, 250]
             }
         },
 

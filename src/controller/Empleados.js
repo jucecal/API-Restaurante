@@ -15,7 +15,6 @@ var error = {
     parametro: ''
 };
 
-
 exports.Inicio = (req, res) => {
     const moduloEmpleado = {
         modulo: 'Empleados',
@@ -341,7 +340,6 @@ exports.Eliminar = async (req, res) => {
             })
     }
 }
-
 
 exports.RecibirImagen = async (req, res) => {
     const { filename } = req.file;

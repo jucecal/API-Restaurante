@@ -4,7 +4,6 @@ const { validationResult } = require('express-validator');
 const { request } = require('express');
 const MSJ = require('../components/mensaje');
 const { Op } = require('sequelize');
-
 const fs = require('fs');
 const path = require('path');
 const { now } = require('moment');
@@ -115,7 +114,7 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarCompra = await Compra.findAll({
+        const listarCompra = await Compra.findOne({
             attributes: [
                 ['id', 'Orden de Compra'],
                 ['fecha', 'Fecha'],
