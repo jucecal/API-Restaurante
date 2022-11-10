@@ -10,12 +10,12 @@ ruta.get('/listar',
     controladorPxPlato.Listar);
 
 ruta.post('/guardar',
-    body('cantidad').isLength({ min: 3, max: 50 }).withMessage('Debe escribir cantidad de platos con una longitud de 3 - 50 caracteres'),
+    body('cantidad').isInt().withMessage('Debe escribir cantidad de platos con una longitud de 3 - 50 caracteres'),
     controladorPxPlato.Guardar);
 
 ruta.put('/editar',
     query('id').isInt().withMessage('Solo se aceptan valores enteros para el id'),
-    body('cantidad').isLength({ min: 3, max: 50 }).withMessage('Debe escribir cantidad de platos con una longitud de 3 - 50 caracteres'),
+    body('cantidad').isInt({ min: 3, max: 50 }).withMessage('Debe escribir cantidad de platos con una longitud de 3 - 50 caracteres'),
     controladorPxPlato.Editar);
 
 ruta.delete('/eliminar',

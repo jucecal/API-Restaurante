@@ -156,7 +156,7 @@ exports.Guardar = async (req, res) => {
                             fechaHora,
                             ClienteId,
                             MesaId,
-                            SucursalId,
+                            SucursalId
                         }).then(data => {
                             res.json({ msj: 'Registro guardado' });
                         })
