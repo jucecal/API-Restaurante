@@ -87,7 +87,7 @@ exports.buscarId = async (req, res) => {
         if (!buscarSucursal) {
             res.send('El id de la sucursal no existe');
         } else {
-            const listarSucursal = await Sucursal.findAll({
+            const listarSucursal = await Sucursal.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Sucursal'],
@@ -114,7 +114,7 @@ exports.buscarNombre = async (req, res) => {
         if (!buscarSucursal) {
             res.send('La sucursal no existe');
         } else {
-            const listarSucursal = await Sucursal.findAll({
+            const listarSucursal = await Sucursal.findOne({
                 attributes: [
                     ['id', 'Id'],
                     ['nombre', 'Sucursal'],

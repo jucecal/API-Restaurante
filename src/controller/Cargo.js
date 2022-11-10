@@ -99,8 +99,8 @@ exports.BuscarNombre = async (req, res) => {
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        var buscarCargo = await Cargo.findOne({ where: { id: id } });
+    } else { 
+        var buscarCargo = await Cargo.findOne({ where: { nombre: nombre } });
         if (!buscarCargo) {
             res.send('El cargo no existe');
         } else {
