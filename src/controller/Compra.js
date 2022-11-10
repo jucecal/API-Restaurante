@@ -108,11 +108,16 @@ exports.Listar = async (req, res) => {
 }
 
 exports.buscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
+        var buscarCompra = await Compra.findOne({ where: { id: id } });
+        if (!buscarCompra) {
+            res.send('El id de la compra no existe');
+        } else {
         const { id } = req.query;
         const listarCompra = await Compra.findOne({
             attributes: [
@@ -133,6 +138,7 @@ exports.buscarId = async (req, res) => {
             }]
         });
         res.json(listarCompra);
+    }
     }
 }
 
@@ -173,6 +179,7 @@ exports.buscarFecha = async (req, res) => {
 }
 
 exports.BuscarPorSucursal = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
@@ -182,7 +189,11 @@ exports.BuscarPorSucursal = async (req, res) => {
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        const { nombre } = req.query;
+        var buscarporSucursal = await Sucursal.findOne({ where: { nombre: nombre } });
+        if (!buscarporSucursal) {
+            res.send('El id de la compra no existe');
+        } else {
+
         const listarCompra = await Compra.findAll({
             attributes: [
                 ['id', 'Orden de Compra'],
@@ -204,6 +215,7 @@ exports.BuscarPorSucursal = async (req, res) => {
             }]
         });
         res.json(listarCompra);
+    }
     }
 }
 

@@ -110,42 +110,52 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { id } = req.query;
-        const listarMenu = await Menu.findOne({
-            attributes: [
-                ['id', 'Id'],
-                ['nombre', 'Nombre'],
-                ['precio', 'Precio'],
-                ['descripcion', 'Descripción'],
-                ['imagen', 'Imagen']
-            ],
-            where: {
-                id: id
-            },
-            include: [{
-                model: Categoria,
+        var buscarMenu = await Menu.findOne({ where: { id: id } });
+        if (!buscarMenu) {
+            res.send('El id del menú no existe');
+        } else {
+            const listarMenu = await Menu.findOne({
                 attributes: [
-                    ['categoria', 'Categoría']
-                ]
-            }]
-        });
-        res.json(listarMenu);
+                    ['id', 'Id'],
+                    ['nombre', 'Nombre'],
+                    ['precio', 'Precio'],
+                    ['descripcion', 'Descripción'],
+                    ['imagen', 'Imagen']
+                ],
+                where: {
+                    id: id
+                },
+                include: [{
+                    model: Categoria,
+                    attributes: [
+                        ['categoria', 'Categoría']
+                    ]
+                }]
+            });
+            res.json(listarMenu);
+        }
     }
 
 }
 
 exports.BuscarNombre = async (req, res) => {
+    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre } = req.query;
+        
+        var buscarMenu = await Menu.findOne({ where: { nombre: nombre } });
+        if (!buscarMenu) {
+            res.send('El nombre del menú no existe');
+        } else {
         const listarMenu = await Menu.findOne({
             attributes: [
                 ['id', 'Id'],
@@ -167,6 +177,7 @@ exports.BuscarNombre = async (req, res) => {
             }]
         });
         res.json(listarMenu);
+    }
     }
 
 }

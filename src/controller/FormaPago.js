@@ -65,6 +65,7 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarId = async (req, res) => {
+    const { id } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
@@ -74,7 +75,12 @@ exports.BuscarId = async (req, res) => {
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        const { id } = req.query;
+            var buscarFormaPago = await FormaPago.findOne({ where: { id: id } });
+            if (!buscarFormaPago) {
+                res.send('El id de la forma de pago no existe');
+            } else {
+
+        
         const listarFormaPago = await FormaPago.findOne({
             attributes: [
                 ['id', 'Id'],
@@ -85,6 +91,7 @@ exports.BuscarId = async (req, res) => {
             }
         });
         res.json(listarFormaPago);
+    }
     }
 
 }
