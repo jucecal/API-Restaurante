@@ -106,7 +106,11 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Registro guardado' });
             })
                 .catch((er) => {
-                    res.json({ msj: 'Error al guardar el registro' });
+                    er.errors.forEach(element => {
+                        console.log(element.message);
+                        errores += element.message + '.';
+                    })
+                    res.json({ errores });
                 })
         }
 
@@ -131,8 +135,11 @@ exports.Editar = async (req, res) => {
                     res.send('Actualizado correctamente');
                 })
                 .catch((er) => {
-                    console.log(er);
-                    res.send('Error al actualizar');
+                    er.errors.forEach(element => {
+                        console.log(element.message);
+                        errores += element.message + '.';
+                    })
+                    res.json({ errores });
                 });
         }
     }

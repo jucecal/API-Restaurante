@@ -235,10 +235,7 @@ exports.Guardar = async (req, res) => {
                         res.json({ errores });
 
                     });
-
             }
-
-
         }
     }
 
@@ -271,13 +268,14 @@ exports.Editar = async (req, res) => {
                         res.send('Se modificó correctamente')
                     })
                     .catch((er) => {
-                        console.log(er);
-                        res.send('Error al guardar los cambios');
+                        er.errors.forEach(element => {
+                            console.log(element.message);
+                            errores += element.message + '.';
+                        })
+                        res.json({ errores });
                     });
             }
-
         }
-
     }
 }
 
@@ -296,13 +294,11 @@ exports.Eliminar = async (req, res) => {
                 else {
                     res.send('Registros eliminados ' + data)
                 }
-
             })
             .catch((er) => {
                 res.send('Error al eliminar el registro');
             })
     }
-
 }
 
 exports.RecibirImagen = async (req, res) => {

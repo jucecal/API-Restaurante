@@ -74,7 +74,7 @@ exports.buscarId = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { id } = req.query;
-        const listarProveedor = await Proveedor.findAll({
+        const listarProveedor = await Proveedor.findOne({
             attributes: [
                 ['id', 'Id'],
                 ['proveedor', 'Proveedor'],
@@ -97,7 +97,7 @@ exports.BuscarNombre = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         const { proveedor } = req.query;
-        const listarProveedor = await Proveedor.findAll({
+        const listarProveedor = await Proveedor.findOne({
             attributes: [
                 ['id', 'Id'],
                 ['proveedor', 'Proveedor'],
@@ -133,7 +133,11 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Registro guardado' });
             })
                 .catch((er) => {
-                    res.json({ msj: 'Error al guardar el registro' });
+                    er.errors.forEach(element => {
+                        console.log(element.message);
+                        errores += element.message + '.';
+                    })
+                    res.json({ errores });
                 })
         }
 

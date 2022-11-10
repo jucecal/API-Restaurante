@@ -134,6 +134,14 @@ exports.Guardar = async (req, res) => {
                     } else {
                         buscarCompraTotal.totalPagar += buscarInsumo.precioUnitario * cantidad,
                             await buscarCompraTotal.save()
+                                .then((data) => {
+                                    console.log(data);
+                                    console.log('Error en inventario');
+                                })
+                                .catch((er) => {
+                                    console.log(er);
+                                    console.log('Error en inventario');
+                                });
                     }
 
                 }

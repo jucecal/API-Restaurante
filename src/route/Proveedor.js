@@ -17,6 +17,7 @@ ruta.get('/buscarNombre',
     controladorProveedor.BuscarNombre);
 
 ruta.post('/guardar',
+    body('telefono').isLength(8).withMessage('Debe agregar un numero de teléfono valido (8 Caracteres)'),
     body('proveedor').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cargo'),
     controladorProveedor.Guardar);
 

@@ -127,12 +127,24 @@ exports.GuardarCombo = async (req, res) => {
                         console.log('No existe factura');
                     } else {
                         buscarFacturaTotal.totalPagar += buscarCombo.precio * cantidad,
-                        buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
-                        buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
+                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
                         await buscarFacturaTotal.save()
+                            .then((data) => {
+                                console.log(data);
+                                console.log('Error en detalle');
+                            })
+                            .catch((er) => {
+                                var errores = '';
+                                er.errors.forEach(element => {
+                                    console.log(element.message);
+                                    errores += element.message + '. ';
+                                })
+                                res.json({ errores });
+                            });
                     }
 
-                    
+
 
                 }
             }
@@ -158,12 +170,12 @@ exports.GuardarMenu = async (req, res) => {
                 if (!buscarMenu) {
                     res.send('El id del menu no existe');
                 } else {
-                    const buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: MenuId } });                    
+                    const buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: MenuId } });
                     const buscarInventario = await Inventario.findOne({ where: { SucursalId: buscarFactura.SucursalId, InsumoId: buscarProductoPlato.InsumoId } });
-                    
-                    if(buscarInventario.stock < (buscarProductoPlato.cantidad*cantidad)){
+
+                    if (buscarInventario.stock < (buscarProductoPlato.cantidad * cantidad)) {
                         res.send('No se cuenta con la cantidad de insumos suficientes para la orden')
-                    }else{
+                    } else {
                         await DetalleFactura.create({
                             cantidad,
                             subTotal: (buscarMenu.precio * cantidad),
@@ -185,17 +197,29 @@ exports.GuardarMenu = async (req, res) => {
                             console.log('No existe factura');
                         } else {
                             buscarFacturaTotal.totalPagar += buscarMenu.precio * cantidad,
-                            buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
-                            buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
+                                buscarFacturaTotal.cambio = buscarFacturaTotal.efectivo - buscarFacturaTotal.totalPagar,
+                                buscarFacturaTotal.ISV = buscarFacturaTotal.totalPagar * 0.15
                             await buscarFacturaTotal.save()
                         }
                         buscarInventario.stock -= buscarProductoPlato.cantidad * cantidad;
                         await buscarInventario.save()
+                            .then((data) => {
+                                console.log(data);
+                                console.log('Error en detalle');
+                            })
+                            .catch((er) => {
+                                var errores = '';
+                                er.errors.forEach(element => {
+                                    console.log(element.message);
+                                    errores += element.message + '. ';
+                                })
+                                res.json({ errores });
+                            });
                     }
 
 
 
-                    
+
                 }
             }
         }
@@ -249,16 +273,16 @@ exports.Eliminar = async (req, res) => {
     const { id } = req.query;
     if (!id) {
         res.json({ msj: 'Debe enviar el id' });
-    } else {        
+    } else {
         let buscarDetalleFactura = await DetalleFactura.findOne({ where: { id: id } });
-        if(buscarDetalleFactura.MenuId){
+        if (buscarDetalleFactura.MenuId) {
             let buscarFactura = await Factura.findOne({ where: { id: buscarDetalleFactura.FacturaId } });
             let buscarProductoPlato = await ProductoxPlato.findOne({ where: { MenuId: buscarDetalleFactura.MenuId } });
             let buscarInventario = await Inventario.findOne({ where: { SucursalId: buscarFactura.SucursalId, InsumoId: buscarProductoPlato.InsumoId } });
-            buscarInventario.stock += (buscarProductoPlato.cantidad*buscarDetalleFactura.cantidad);
+            buscarInventario.stock += (buscarProductoPlato.cantidad * buscarDetalleFactura.cantidad);
             await buscarInventario.save()
         }
-                    
+
         await DetalleFactura.destroy({ where: { id: id } })
             .then((data) => {
                 if (data == 0) {
@@ -271,7 +295,7 @@ exports.Eliminar = async (req, res) => {
                 console.log(er);
                 res.send('Error al eliminar');
             })
-        
+
     }
 }
 

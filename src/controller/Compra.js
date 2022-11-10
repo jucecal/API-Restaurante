@@ -267,8 +267,11 @@ exports.Editar = async (req, res) => {
                         res.send('Actualizado correctamente');
                     })
                     .catch((er) => {
-                        console.log(er);
-                        res.send('Error al actualizar');
+                        er.errors.forEach(element => {
+                            console.log(element.message);
+                            errores += element.message + '.';
+                        })
+                        res.json({ errores });
                     });
             }
 

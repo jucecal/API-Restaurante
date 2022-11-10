@@ -161,8 +161,11 @@ exports.Editar = async (req, res) => {
                     res.send('Se modificó correctamente')
                 })
                 .catch((er) => {
-                    console.log(er);
-                    res.send('Error al guardar los cambios');
+                    er.errors.forEach(element => {
+                        console.log(element.message);
+                        errores += element.message + '.';
+                    })
+                    res.json({ errores });
                 });
         }
 
