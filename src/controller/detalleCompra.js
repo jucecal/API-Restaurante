@@ -123,8 +123,12 @@ exports.Guardar = async (req, res) => {
                                 console.log('Error en inventario');
                             })
                             .catch((er) => {
-                                console.log(er);
-                                console.log('Error en inventario');
+                                var errores = '';
+                                er.errors.forEach(element => {
+                                    console.log(element.message)
+                                    errores += element.message + '. ';
+                                });
+                                res.json({ errores });
                             });
                     }
 
@@ -139,11 +143,14 @@ exports.Guardar = async (req, res) => {
                                     console.log('Error en inventario');
                                 })
                                 .catch((er) => {
-                                    console.log(er);
-                                    console.log('Error en inventario');
+                                    var errores = '';
+                                    er.errors.forEach(element => {
+                                        console.log(element.message)
+                                        errores += element.message + '. ';
+                                    });
+                                    res.json({ errores });
                                 });
                     }
-
                 }
             }
         }
@@ -179,8 +186,12 @@ exports.Editar = async (req, res) => {
                             res.send('Actualizado correctamente');
                         })
                         .catch((er) => {
-                            console.log(er);
-                            res.send('Error al actualizar');
+                            var errores = '';
+                            er.errors.forEach(element => {
+                                console.log(element.message)
+                                errores += element.message + '. ';
+                            });
+                            res.json({ errores });
                         });
                 }
             }

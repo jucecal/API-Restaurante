@@ -233,12 +233,10 @@ exports.Guardar = async (req, res) => {
                             errores += element.message + '. ';
                         });
                         res.json({ errores });
-
                     });
             }
         }
     }
-
 }
 
 exports.Editar = async (req, res) => {
@@ -268,10 +266,11 @@ exports.Editar = async (req, res) => {
                         res.send('Se modificó correctamente')
                     })
                     .catch((er) => {
+                        var errores = '';
                         er.errors.forEach(element => {
-                            console.log(element.message);
-                            errores += element.message + '.';
-                        })
+                            console.log(element.message)
+                            errores += element.message + '. ';
+                        });
                         res.json({ errores });
                     });
             }

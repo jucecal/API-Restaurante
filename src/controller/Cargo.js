@@ -161,6 +161,7 @@ exports.Editar = async (req, res) => {
                     res.send('Se modificó correctamente')
                 })
                 .catch((er) => {
+                    var errores = '';
                     er.errors.forEach(element => {
                         console.log(element.message);
                         errores += element.message + '.';

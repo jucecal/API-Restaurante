@@ -87,7 +87,7 @@ exports.Listar = async (req, res) => {
                     ['apellido', 'Apellido'],
                     ['telefono', 'Teléfono']
                 ]
-            } 
+            }
         ]
     });
     res.json(listarReservaciones);
@@ -259,10 +259,11 @@ exports.Editar = async (req, res) => {
                                 res.send('Actualizado correctamente');
                             })
                             .catch((er) => {
+                                var errores = '';
                                 er.errors.forEach(element => {
-                                    console.log(element.message);
-                                    errores += element.message + '.';
-                                })
+                                    console.log(element.message)
+                                    errores += element.message + '. ';
+                                });
                                 res.json({ errores });
                             });
                     }

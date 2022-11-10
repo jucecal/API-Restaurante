@@ -106,16 +106,15 @@ exports.Guardar = async (req, res) => {
                 res.json({ msj: 'Registro guardado' });
             })
                 .catch((er) => {
+                    var errores = '';
                     er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '.';
-                    })
+                        console.log(element.message)
+                        errores += element.message + '. ';
+                    });
                     res.json({ errores });
                 })
         }
-
     }
-
 }
 
 exports.Editar = async (req, res) => {
@@ -135,10 +134,11 @@ exports.Editar = async (req, res) => {
                     res.send('Actualizado correctamente');
                 })
                 .catch((er) => {
+                    var errores = '';
                     er.errors.forEach(element => {
-                        console.log(element.message);
-                        errores += element.message + '.';
-                    })
+                        console.log(element.message)
+                        errores += element.message + '. ';
+                    });
                     res.json({ errores });
                 });
         }
