@@ -42,6 +42,7 @@ ruta.get('/buscarporSucursal',
     controladorCompra.BuscarPorSucursal);
 
 ruta.post('/guardar',
+    ValidarAutenticado,
     body('SucursalId').isInt().withMessage('Solo se aceptan valores enteros para el id de sucursal'),
     controladorCompra.Guardar);
 
