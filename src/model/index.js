@@ -79,11 +79,9 @@ exports.CrearModelos = () => {
     Cargo.hasMany(Empleado)
     Empleado.belongsTo(Cargo)
 
-
     //RELACION ENTRE USUARIO Y EMPLEADO
     Usuario.hasMany(Empleado)
     Empleado.belongsTo(Usuario)
-
 
     // relacion entre sucursal y inventario por sucursal
     Sucursal.hasMany(Inventario);
@@ -144,7 +142,6 @@ exports.CrearModelos = () => {
     //RELACION DE MENU CON DETALLE DE FACTURA
     Menu.hasMany(DetalleFactura)
     DetalleFactura.belongsTo(Menu)
-
 
     //######################################################
     //======================================================
