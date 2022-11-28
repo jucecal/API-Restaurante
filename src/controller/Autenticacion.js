@@ -194,7 +194,7 @@ exports.Error = async (req, res) => {
     msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
 };
 
-exports.InicioSesionCliente = async (req, res) => {
+exports.InicioSesion = async (req, res) => {
     var msj = validacion(req);
     if (msj.length > 0) {
         msjRes("Peticion ejecutada correctamente", 200, [], msj, res);
@@ -203,7 +203,7 @@ exports.InicioSesionCliente = async (req, res) => {
         try {
             const { usuario, contrasena } = req.body;
             var buscarUsuario = await Usuario.findOne({
-                attributes: ['id', 'nombre', 'correo', 'password'],
+                attributes: ['id', 'nombre', 'correo', 'password','tipo'],
                 where: {
                     [Op.or]: {
                         nombre: usuario,
@@ -230,120 +230,87 @@ exports.InicioSesionCliente = async (req, res) => {
                     }
 
                 });
-                console.log(buscarUsuario);
-                if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
-                    const token = passport.getToken({ id: buscarUsuario.id });
-                    const data = {
-                        token: token,
-                        usuario: {
-                            usuario: buscarUsuario.nombre,
-                            correo: buscarUsuario.correo,
-                            nombre: buscarCliente.nombre,
-                            apellido: buscarCliente.apellido,
-                            imagen: buscarCliente.imagen,
-                            telefono: buscarCliente.telefono,
-                            direccion: buscarCliente.direcion,
+
+                if (!buscarCliente) {
+                    var buscarEmpleado = await Empleado.findOne({
+                        attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],
+                        where: {
+                            UsuarioId: buscarUsuario.id
                         }
-                    };
-                    msjRes("Peticion ejecutada correctamente", 200, data, [], res);
-                }
-                else {
-                    var errores = [
-                        {
-                            mensaje: "El usuario no existe o la contraseña es incorrecta",
-                            parametro: "contrasena"
-                        },
-                    ];
-                    buscarUsuario.fallidos = buscarUsuario.fallidos + 1;
-                    await buscarUsuario.save()
-                        .then((data) => {
-                            console.log(data);
-                        }).catch((er) => {
-                            console.log(er);
-                            errores = er;
-                        });
-                    msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
-                }
-            }
-        } catch (error) {
-            console.log(error);
-            errores = "Error al conectar con la base de datos";
-            msjRes("Error al Ejecutar la Peticion", 500, [], errores, res);
-        }
 
-    }
-};
-
-
-exports.InicioSesionEmpleado = async (req, res) => {
-    var msj = validacion(req);
-    if (msj.length > 0) {
-        msjRes("Peticion ejecutada correctamente", 200, [], msj, res);
-    }
-    else {
-        try {
-            const { usuario, contrasena } = req.body;
-            var buscarUsuario = await Usuario.findOne({
-                attributes: ['id', 'nombre', 'correo', 'password'],
-                where: {
-                    [Op.or]: {
-                        nombre: usuario,
-                        correo: usuario
-                    },
-                    estado: 'AC',
-                }
-
-            });
-            if (!buscarUsuario) {
-                var errores = [
-                    {
-                        mensaje: "El usuario no existe o se encuentra bloqueado",
-                        parametro: "usuario"
-                    },
-                ];
-                msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
-            }
-            else {
-                var buscarEmpleado = await Empleado.findOne({
-                    attributes: ['nombre', 'apellido', 'imagen', 'telefono', 'direccion'],
-                    where: {
-                        UsuarioId: buscarUsuario.id
+                    });
+                    console.log(buscarUsuario);
+                    if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
+                        const token = passport.getToken({ id: buscarUsuario.id });
+                        const data = {
+                            token: token,
+                            usuario: {
+                                usuario: buscarUsuario.nombre,
+                                correo: buscarUsuario.correo,
+                                tipo: buscarUsuario.tipo,
+                                nombre: buscarEmpleado.nombre,
+                                apellido: buscarEmpleado.apellido,
+                                imagen: buscarEmpleado.imagen,
+                                telefono: buscarEmpleado.telefono,
+                                direccion: buscarEmpleado.direccion,
+                            }
+                        };
+                        msjRes("Peticion ejecutada correctamente", 200, data, [], res);
+                    }
+                    else {
+                        var errores = [
+                            {
+                                mensaje: "El usuario no existe o la contraseña es incorrecta",
+                                parametro: "contrasena"
+                            },
+                        ];
+                        buscarUsuario.fallidos = buscarUsuario.fallidos + 1;
+                        await buscarUsuario.save()
+                            .then((data) => {
+                                console.log(data);
+                            }).catch((er) => {
+                                console.log(er);
+                                errores = er;
+                            });
+                        msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
                     }
 
-                });
-                console.log(buscarUsuario);
-                if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
-                    const token = passport.getToken({ id: buscarUsuario.id });
-                    const data = {
-                        token: token,
-                        usuario: {
-                            usuario: buscarUsuario.nombre,
-                            correo: buscarUsuario.correo,
-                            nombre: buscarEmpleado.nombre,
-                            apellido: buscarEmpleado.apellido,
-                            imagen: buscarEmpleado.imagen,
-                            telefono: buscarEmpleado.telefono,
-                            direccion: buscarEmpleado.direcion,
-                        }
-                    };
-                    msjRes("Peticion ejecutada correctamente", 200, data, [], res);
-                }
-                else {
-                    var errores = [
-                        {
-                            mensaje: "El usuario no existe o la contraseña es incorrecta",
-                            parametro: "contrasena"
-                        },
-                    ];
-                    buscarUsuario.fallidos = buscarUsuario.fallidos + 1;
-                    await buscarUsuario.save()
-                        .then((data) => {
-                            console.log(data);
-                        }).catch((er) => {
-                            console.log(er);
-                            errores = er;
-                        });
-                    msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
+                } else {
+                    console.log(buscarUsuario);
+                    if (buscarUsuario.VerificarContrasena(contrasena, buscarUsuario.password)) {
+                        const token = passport.getToken({ id: buscarUsuario.id });
+                        const data = {
+                            token: token,
+                            usuario: {
+                                usuario: buscarUsuario.nombre,
+                                correo: buscarUsuario.correo,
+                                tipo: buscarUsuario.tipo,
+                                nombre: buscarCliente.nombre,
+                                apellido: buscarCliente.apellido,
+                                imagen: buscarCliente.imagen,
+                                telefono: buscarCliente.telefono,
+                                direccion: buscarCliente.direccion,
+                            }
+                        };
+                        msjRes("Peticion ejecutada correctamente", 200, data, [], res);
+                    }
+                    else {
+                        var errores = [
+                            {
+                                mensaje: "El usuario no existe o la contraseña es incorrecta",
+                                parametro: "contrasena"
+                            },
+                        ];
+                        buscarUsuario.fallidos = buscarUsuario.fallidos + 1;
+                        await buscarUsuario.save()
+                            .then((data) => {
+                                console.log(data);
+                            }).catch((er) => {
+                                console.log(er);
+                                errores = er;
+                            });
+                        msjRes("Peticion ejecutada correctamente", 200, [], errores, res);
+                    }
                 }
             }
         } catch (error) {
@@ -354,3 +321,5 @@ exports.InicioSesionEmpleado = async (req, res) => {
 
     }
 };
+
+

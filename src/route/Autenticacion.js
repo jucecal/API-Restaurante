@@ -25,15 +25,12 @@ rutas.put('/recuperarcontrasena',
         .isLength({ min: 6, max: 12 }).withMessage('Debe escribir una contraseña de 6 - 12 caracteres'),
     controladorAutenticacion.Recuperar);
 
-rutas.post('/iniciosesionclientes',
+rutas.post('/iniciosesion',
     body('usuario').notEmpty().withMessage('Debe escribir el usuario'),
     body('contrasena').notEmpty().withMessage('Debe escribir la contraseña'),
-    controladorAutenticacion.InicioSesionCliente);
+    controladorAutenticacion.InicioSesion);
 
-rutas.post('/iniciosesionempleados',
-    body('usuario').notEmpty().withMessage('Debe escribir el usuario'),
-    body('contrasena').notEmpty().withMessage('Debe escribir la contraseña'),
-    controladorAutenticacion.InicioSesionEmpleado);
+
 
     
 rutas.get('/error', controladorAutenticacion.Error);
