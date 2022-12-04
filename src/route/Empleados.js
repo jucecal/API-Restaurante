@@ -29,6 +29,7 @@ ruta.get('/buscarId',
 
 ruta.get('/buscarNombre',
     ValidarAutenticado,
+    query('nombre'),
     controladorEmpleado.BuscarNombre);
 
 ruta.post('/guardar',

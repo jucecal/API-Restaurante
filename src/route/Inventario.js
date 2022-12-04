@@ -10,7 +10,7 @@ ruta.get('/listar',
     controladorIxSucursal.Listar);
 
 ruta.get('/buscarporsucursal',
-    query('nombre').isLength({ min: 1, max: 50 }).withMessage('Debe escribir el nombre de la sucursal con una longitud de 3 - 50 caracteres'),
+    query('nombre'),
     controladorIxSucursal.BuscarPorSucursal);
 
 ruta.post('/guardar',

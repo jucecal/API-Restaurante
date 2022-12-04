@@ -181,54 +181,49 @@ exports.buscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
-    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' });
     } else {
-        var buscarEmpleado = await Empleado.findOne({ where: { nombre: nombre } });
-        if (!buscarEmpleado) {
-            res.send('El empleado no existe');
-        } else {
-            const listarEmpleado = await Empleado.findAll({
-                attributes: [
-                    ['id', 'Id'],
-                    ['nombre', 'Nombre'],
-                    ['apellido', 'Apellido'],
-                    ['telefono', 'Telefono'],
-                    ['fechaNacimiento', 'Fecha de Nacimiento'],
-                    ['direccion', 'Dirección']
-                ],
-                where: {
-                    nombre: {
-                        [Op.like]: nombre
-                    }
+        const { nombre } = req.query;
+        const listarEmpleado = await Empleado.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['nombre', 'Nombre'],
+                ['apellido', 'Apellido'],
+                ['telefono', 'Telefono'],
+                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['direccion', 'Dirección']
+            ],
+            where: {
+                nombre: {
+                    [Op.like]: nombre
+                }
+            },
+            include: [
+                {
+                    model: Usuario,
+                    attributes: [
+                        ['nombre', 'Nombre'],
+                        ['estado', 'Estado']
+                    ]
                 },
-                include: [
-                    {
-                        model: Usuario,
-                        attributes: [
-                            ['nombre', 'Nombre de Usuario'],
-                            ['estado', 'Estado']
-                        ]
-                    },
-                    {
-                        model: Sucursal,
-                        attributes: [
-                            ['nombre', 'Sucursal']
-                        ]
-                    },
-                    {
-                        model: Cargo,
-                        attributes: [
-                            ['nombre', 'Cargo']
-                        ]
-                    }
-                ]
-            });
-            res.json(listarEmpleado);
-        }
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ]
+                },
+                {
+                    model: Cargo,
+                    attributes: [
+                        ['nombre', 'Cargo']
+                    ]
+                }
+            ]
+        });
+        res.json(listarEmpleado);
     }
 }
 
