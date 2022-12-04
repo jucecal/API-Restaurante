@@ -130,6 +130,7 @@ exports.BuscarId = async (req, res) => {
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],
                     ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['imagen', 'Foto'],
                     ['direccion', 'Dirección']
                 ],
                 where: {
@@ -162,6 +163,7 @@ exports.BuscarNombre = async (req, res) => {
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
                 ['telefono', 'Telefono'],
+                ['imagen', 'Foto'],
                 ['fechaNacimiento', 'Fecha de Nacimiento'],
                 ['direccion', 'Direccion']
             ],
