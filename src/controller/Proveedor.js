@@ -61,7 +61,7 @@ exports.Listar = async (req, res) => {
             ['id', 'Id'],
             ['proveedor', 'Proveedor'],
             ['nombreContacto', 'Contacto'],
-            ['telefono', 'Teléfono']
+            ['telefono', 'Telefono']
         ]
     });
     res.json(listarProveedor);
@@ -83,7 +83,7 @@ exports.buscarId = async (req, res) => {
                     ['id', 'Id'],
                     ['proveedor', 'Proveedor'],
                     ['nombreContacto', 'Contacto'],
-                    ['telefono', 'Teléfono']
+                    ['telefono', 'Telefono']
                 ],
                 where: {
                     id
