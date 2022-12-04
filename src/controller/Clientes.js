@@ -150,40 +150,35 @@ exports.BuscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
-    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
+        res.json({ msj: 'Errores en los datos enviados' })
     } else {
-        var buscarClientes = await Clientes.findOne({ where: { nombre: nombre } });
-        if (!buscarClientes) {
-            res.send('El nombre del cliente no existe');
-        } else {
-            const listarClientes = await Clientes.findAll({
+        const { nombre } = req.query;
+        const listarClientes = await Clientes.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['nombre', 'Nombre'],
+                ['apellido', 'Apellido'],
+                ['telefono', 'Telefono'],
+                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['direccion', 'Direccion']
+            ],
+            where: {
+                nombre: {
+                    [Op.like]: nombre
+                }
+            },
+            include: [{
+                model: Usuario,
                 attributes: [
-                    ['id', 'Id'],
                     ['nombre', 'Nombre'],
-                    ['apellido', 'Apellido'],
-                    ['telefono', 'Telefono'],
-                    ['fechaNacimiento', 'Fecha de Nacimiento'],
-                    ['direccion', 'Dirección']
-                ],
-                where: {
-                    nombre: {
-                        [Op.like]: nombre
-                    }
-                },
-                include: [{
-                    model: Usuario,
-                    attributes: [
-                        ['nombre', 'Nombre de Usuario'],
-                        ['estado', 'Estado']
-                    ]
-                }]
-            });
-            res.json(listarClientes);
-        }
+                    ['estado', 'Estado']
+                ]
+            }]
+        });
+        res.json(listarClientes);
     }
 }
 
