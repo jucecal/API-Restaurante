@@ -52,7 +52,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarInventario = await Inventario.findAll({
         attributes: [
-            ['stock', 'Stock']
+            ['stock', 'Stock'],
         ],
         include: [
             {

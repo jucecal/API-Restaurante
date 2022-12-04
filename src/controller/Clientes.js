@@ -99,12 +99,12 @@ exports.Listar = async (req, res) => {
             ['telefono', 'Telefono'],
             ['fechaNacimiento', 'Fecha de Nacimiento'],
             ['imagen', 'Foto'],
-            ['direccion', 'Dirección']
+            ['direccion', 'Direccion']
         ],
         include: [{
             model: Usuario,
             attributes: [
-                ['nombre', 'Nombre de Usuario'],
+                ['nombre', 'Nombre'],
                 ['estado', 'Estado']
             ]
         }]
