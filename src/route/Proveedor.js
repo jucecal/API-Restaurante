@@ -14,6 +14,7 @@ ruta.get('/buscarId',
     controladorProveedor.buscarId);
 
 ruta.get('/buscarNombre',
+    query('proveedor'),
     controladorProveedor.BuscarNombre);
 
 ruta.post('/guardar',
