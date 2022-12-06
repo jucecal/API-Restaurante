@@ -19,7 +19,7 @@ rutas.put('/recuperarcontrasena',
     body('pin')
         .notEmpty().withMessage('Debe escribir el pin')
         .isLength({ min: 4, max: 4 }).withMessage('Debe escribir un pin de 4 caracteres'),
-        
+
     body('contrasena')
         .notEmpty().withMessage('Debe escribir la contraseña de usuario')
         .isLength({ min: 6, max: 12 }).withMessage('Debe escribir una contraseña de 6 - 12 caracteres'),
@@ -30,9 +30,11 @@ rutas.post('/iniciosesion',
     body('contrasena').notEmpty().withMessage('Debe escribir la contraseña'),
     controladorAutenticacion.InicioSesion);
 
+rutas.post('/iniciosesion2',
+    body('usuario').notEmpty().withMessage('Debe escribir el usuario'),    
+    controladorAutenticacion.InicioSesion2);
 
 
-    
 rutas.get('/error', controladorAutenticacion.Error);
 
 module.exports = rutas;
