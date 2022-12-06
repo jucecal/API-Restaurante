@@ -28,7 +28,7 @@ ruta.get('/buscarId',
     controladorMenu.BuscarId);
 
 ruta.get('/buscarNombre',
-    query('nombre').isLength({ min: 1, max: 50 }).withMessage('Debe escribir el nombre del producto con una longitud de 3 - 50 caracteres'),
+    query('nombre'),
     controladorMenu.BuscarNombre);
 
 ruta.get('/buscarporCategoria',

@@ -39,16 +39,6 @@ const Empleado = db.define(
             }
         },
 
-        fechaNacimiento: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-            validate: {
-                isDate: true,
-                notEmpty: true,
-                isBefore: today.format('YYYY-MM-DD')
-            }
-        },
-
         direccion: {
             type: DataTypes.STRING(50),
             allowNull: false,

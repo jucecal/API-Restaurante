@@ -34,7 +34,6 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre del empleado. Obligatorio",
                     apellido: "Apellido del empleado. Obligatorio",
                     telefono: "Telefono del empleado. Obligatorio",
-                    fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
                     direccion: "Direccion del empleado",
                     SucursalId: "Id de la sucursal donde pertenece. Obligatorio",
                     CargoId: "Id del cargo del empleado",
@@ -74,7 +73,6 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre del empleado. Obligatorio",
                     apellido: "Apellido del empleado. Obligatorio",
                     telefono: "Telefono del empleado. Obligatorio",
-                    fechaNacimiento: "Fecha de nacimiento del empleado. Obligatorio",
                     direccion: "Direccion del empleado",
                     SucursalId: "Id de la sucursal donde pertenece. Obligatorio",
                     CargoId: "Id del cargo del empleado",
@@ -102,7 +100,6 @@ exports.Listar = async (req, res) => {
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
             ['imagen', 'Foto'],
-            ['fechaNacimiento', 'Fecha de Nacimiento'],
             ['direccion', 'Direccion']
         ],
         include: [
@@ -147,7 +144,6 @@ exports.buscarId = async (req, res) => {
                     ['nombre', 'Nombre'],
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],
-                    ['fechaNacimiento', 'Fecha de Nacimiento'],
                     ['direccion', 'Dirección']
                 ],
                 where: {
@@ -193,7 +189,6 @@ exports.BuscarNombre = async (req, res) => {
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
                 ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
                 ['direccion', 'Dirección']
             ],
             where: {
@@ -234,8 +229,8 @@ exports.Guardar = async (req, res) => {
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
         console.log(req);
-        const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
-        if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId) {
+        const { nombre, apellido, telefono, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+        if (!nombre || !apellido || !telefono || !direccion || !SucursalId || !CargoId || !UsuarioId) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarCargo = await Cargo.findOne({ where: { id: CargoId } });
@@ -254,7 +249,6 @@ exports.Guardar = async (req, res) => {
                             nombre,
                             apellido,
                             telefono,
-                            fechaNacimiento,
                             direccion,
                             CargoId,
                             SucursalId,
@@ -280,8 +274,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, apellido, telefono, fechaNacimiento, direccion, SucursalId, CargoId, UsuarioId } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !SucursalId || !CargoId || !UsuarioId || !id) {
+    const { nombre, apellido, telefono, direccion, SucursalId, CargoId, UsuarioId } = req.body;
+    if (!nombre || !apellido || !telefono || !direccion || !SucursalId || !CargoId || !UsuarioId || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarEmpleado = await Empleado.findOne({ where: { id: id } });
@@ -303,7 +297,6 @@ exports.Editar = async (req, res) => {
                         buscarEmpleado.nombre = nombre;
                         buscarEmpleado.apellido = apellido;
                         buscarEmpleado.telefono = telefono;
-                        buscarEmpleado.fechaNacimiento = fechaNacimiento;
                         buscarEmpleado.direccion = direccion;
                         buscarEmpleado.SucursalId = SucursalId;
                         buscarEmpleado.CargoId = CargoId;

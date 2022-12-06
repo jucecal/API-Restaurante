@@ -37,18 +37,6 @@ const Clientes = db.define(
             }
         },
 
-        //TIPO DE FECHA
-        //DE NACIMIENTO  == AAAA-MM-DD
-        fechaNacimiento: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-            validate: {
-                isDate: true,
-                notEmpty: true,
-                isBefore: today.format('YYYY-MM-DD')
-            }
-        },
-
         direccion: {
             type: DataTypes.STRING(250),
             allowNull: true,

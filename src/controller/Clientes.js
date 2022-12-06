@@ -57,7 +57,6 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
                     apellido: "Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
                     telefono: "Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
-                    fechaNacimiento: "Fecha enviado al cliente. Obligatorio",
                     correo: "Correo electrónico del cliente, va junto con el usuario. Obligatorio",
                     direccion: "Dato de identificación del cliente. Obligatorio",
                     UsuarioId: "Usuario del Cliente. Obligatorio"
@@ -71,7 +70,6 @@ exports.Inicio = (req, res) => {
                     nombre: "Nombre que se manda a las tablas nesesarias para una venta. Obligatorio",
                     apellido: "Apellido que se manda a las tablas nesesarias para una venta. Obligatorio",
                     telefono: "Teléfono que se manda para comunicación en caso de reservaciones. Obligatorio",
-                    fechaNacimiento: "Fecha enviado al cliente. Obligatorio",
                     correo: "Correo electrónico del cliente, va junto con el usuario. Obligatorio",
                     direccion: "Dato de identificación del cliente. Obligatorio",
                     UsuarioId: "Usuario del Cliente. Obligatorio"
@@ -97,7 +95,6 @@ exports.Listar = async (req, res) => {
             ['nombre', 'Nombre'],
             ['apellido', 'Apellido'],
             ['telefono', 'Telefono'],
-            ['fechaNacimiento', 'Fecha de Nacimiento'],
             ['imagen', 'Foto'],
             ['direccion', 'Direccion']
         ],
@@ -129,7 +126,6 @@ exports.BuscarId = async (req, res) => {
                     ['nombre', 'Nombre'],
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],
-                    ['fechaNacimiento', 'Fecha de Nacimiento'],
                     ['direccion', 'Dirección']
                 ],
                 where: {
@@ -161,8 +157,7 @@ exports.BuscarNombre = async (req, res) => {
                 ['id', 'Id'],
                 ['nombre', 'Nombre'],
                 ['apellido', 'Apellido'],
-                ['telefono', 'Telefono'],
-                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['telefono', 'Telefono']
                 ['direccion', 'Direccion']
             ],
             where: {
@@ -188,8 +183,8 @@ exports.Guardar = async (req, res) => {
         console.log(validacion.errors);
         res.json({ msj: 'Errores en los datos enviados' });
     } else {
-        const { nombre, apellido, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
-        if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion) {
+        const { nombre, apellido, telefono, direccion, UsuarioId } = req.body;
+        if (!nombre || !apellido || !telefono || !direccion) {
             res.json({ msj: 'Debe enviar los datos completos' });
         } else {
             var buscarUsuario = await Usuario.findOne({ where: { id: UsuarioId } });
@@ -200,7 +195,6 @@ exports.Guardar = async (req, res) => {
                     nombre,
                     apellido,
                     telefono,
-                    fechaNacimiento,
                     direccion,
                     UsuarioId
                 }).then(data => {
@@ -221,8 +215,8 @@ exports.Guardar = async (req, res) => {
 
 exports.Editar = async (req, res) => {
     const { id } = req.query;
-    const { nombre, apellido, telefono, fechaNacimiento, direccion, UsuarioId } = req.body;
-    if (!nombre || !apellido || !telefono || !fechaNacimiento || !direccion || !id) {
+    const { nombre, apellido, telefono, direccion, UsuarioId } = req.body;
+    if (!nombre || !apellido || !telefono || !direccion || !id) {
         res.json({ msj: 'Debe enviar los datos completos' });
     } else {
         var buscarCliente = await Clientes.findOne({ where: { id: id } });
@@ -236,7 +230,6 @@ exports.Editar = async (req, res) => {
                 buscarCliente.nombre = nombre;
                 buscarCliente.apellido = apellido;
                 buscarCliente.telefono = telefono;
-                buscarCliente.fechaNacimiento = fechaNacimiento;
                 buscarCliente.direccion = direccion;
                 buscarCliente.UsuarioId = UsuarioId;
                 await buscarCliente.save()

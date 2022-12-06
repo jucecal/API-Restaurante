@@ -159,7 +159,7 @@ exports.BuscarNombre = async (req, res) => {
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],
                     ['precio', 'Precio'],
-                    ['descripcion', 'Descripción'],
+                    ['descripcion', 'Descripcion'],
                     ['imagen', 'Imagen']
                 ],
                 where: {
