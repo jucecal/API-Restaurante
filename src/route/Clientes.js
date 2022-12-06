@@ -31,8 +31,8 @@ ruta.get('/buscarId',
     controladorClientes.BuscarId);
 
 ruta.get('/buscarNombre',
-    query('nombre').isAlpha('es-ES', { ignore: ' ' }).withMessage('Solo se permiten letras para el nombre del cliente'),
     ValidarAutenticado,
+    query('nombre'),
     controladorClientes.BuscarNombre);
 
 ruta.post('/guardar',

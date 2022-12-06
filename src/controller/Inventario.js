@@ -52,7 +52,7 @@ exports.Inicio = (req, res) => {
 exports.Listar = async (req, res) => {
     const listarInventario = await Inventario.findAll({
         attributes: [
-            ['stock', 'Stock']
+            ['stock', 'Stock'],
         ],
         include: [
             {
@@ -73,43 +73,38 @@ exports.Listar = async (req, res) => {
 }
 
 exports.BuscarPorSucursal = async (req, res) => {
-    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
         res.json({ msj: 'errores en los datos enviados' })
     }
     else {
-        var buscarSucursal = await Sucursal.findOne({ where: { nombre: nombre } });
-        if (!buscarSucursal) {
-            res.send('La sucursal no existe');
-        } else {
-            const listarInventario = await Inventario.findAll({
-                attributes: [
-                    ['stock', 'Stock']
-                ],
-                include: [
-                    {
-                        model: Insumo,
-                        attributes: [
-                            ['nombre', 'Producto']
-                        ]
-                    },
-                    {
-                        model: Sucursal,
-                        attributes: [
-                            ['nombre', 'Sucursal']
-                        ],
-                        where: {
-                            nombre: {
-                                [Op.like]: nombre
-                            }
+        const { nombre } = req.query;
+        const listarInventario = await Inventario.findAll({
+            attributes: [
+                ['stock', 'Stock']
+            ],
+            include: [
+                {
+                    model: Insumo,
+                    attributes: [
+                        ['nombre', 'Producto']
+                    ]
+                },
+                {
+                    model: Sucursal,
+                    attributes: [
+                        ['nombre', 'Sucursal']
+                    ],
+                    where: {
+                        nombre: {
+                            [Op.like]: nombre
                         }
                     }
-                ],
-            });
-            res.json(listarInventario);
-        }
+                }
+            ],
+        });
+        res.json(listarInventario);
     }
 }
 

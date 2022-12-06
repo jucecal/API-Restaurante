@@ -61,7 +61,7 @@ exports.Listar = async (req, res) => {
             ['id', 'Id'],
             ['proveedor', 'Proveedor'],
             ['nombreContacto', 'Contacto'],
-            ['telefono', 'Teléfono']
+            ['telefono', 'Telefono']
         ]
     });
     res.json(listarProveedor);
@@ -83,7 +83,7 @@ exports.buscarId = async (req, res) => {
                     ['id', 'Id'],
                     ['proveedor', 'Proveedor'],
                     ['nombreContacto', 'Contacto'],
-                    ['telefono', 'Teléfono']
+                    ['telefono', 'Telefono']
                 ],
                 where: {
                     id
@@ -95,31 +95,28 @@ exports.buscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
-    const { proveedor } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        var buscarProveedor = await Proveedor.findOne({ where: { proveedor: proveedor } });
-        if (!buscarProveedor) {
-            res.send('El proveedor no existe');
-        } else {
-            const listarProveedor = await Proveedor.findOne({
-                attributes: [
-                    ['id', 'Id'],
-                    ['proveedor', 'Proveedor'],
-                    ['nombreContacto', 'Contacto'],
-                    ['telefono', 'Teléfono']
-                ],
-                where: {
-                    proveedor: {
-                        [Op.like]: proveedor
-                    }
-                },
-            });
-            res.json(listarProveedor);
-        }
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { proveedor } = req.query;
+        const listarProveedor = await Proveedor.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['proveedor', 'Proveedor'],
+                ['nombreContacto', 'Contacto'],
+                ['telefono', 'Telefono']
+            ],
+            where: {
+
+                proveedor: { [Op.like]: proveedor},
+
+            }
+
+        });
+        res.json(listarProveedor);
     }
 }
 

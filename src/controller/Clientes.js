@@ -99,12 +99,12 @@ exports.Listar = async (req, res) => {
             ['telefono', 'Telefono'],
             ['fechaNacimiento', 'Fecha de Nacimiento'],
             ['imagen', 'Foto'],
-            ['direccion', 'Dirección']
+            ['direccion', 'Direccion']
         ],
         include: [{
             model: Usuario,
             attributes: [
-                ['nombre', 'Nombre de Usuario'],
+                ['nombre', 'Nombre'],
                 ['estado', 'Estado']
             ]
         }]
@@ -130,6 +130,7 @@ exports.BuscarId = async (req, res) => {
                     ['apellido', 'Apellido'],
                     ['telefono', 'Telefono'],
                     ['fechaNacimiento', 'Fecha de Nacimiento'],
+                    ['imagen', 'Foto'],
                     ['direccion', 'Dirección']
                 ],
                 where: {
@@ -150,40 +151,36 @@ exports.BuscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
-    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
+        res.json({ msj: 'Errores en los datos enviados' })
     } else {
-        var buscarClientes = await Clientes.findOne({ where: { nombre: nombre } });
-        if (!buscarClientes) {
-            res.send('El nombre del cliente no existe');
-        } else {
-            const listarClientes = await Clientes.findAll({
+        const { nombre } = req.query;
+        const listarClientes = await Clientes.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['nombre', 'Nombre'],
+                ['apellido', 'Apellido'],
+                ['telefono', 'Telefono'],
+                ['imagen', 'Foto'],
+                ['fechaNacimiento', 'Fecha de Nacimiento'],
+                ['direccion', 'Direccion']
+            ],
+            where: {
+                nombre: {
+                    [Op.like]: nombre
+                }
+            },
+            include: [{
+                model: Usuario,
                 attributes: [
-                    ['id', 'Id'],
                     ['nombre', 'Nombre'],
-                    ['apellido', 'Apellido'],
-                    ['telefono', 'Telefono'],
-                    ['fechaNacimiento', 'Fecha de Nacimiento'],
-                    ['direccion', 'Dirección']
-                ],
-                where: {
-                    nombre: {
-                        [Op.like]: nombre
-                    }
-                },
-                include: [{
-                    model: Usuario,
-                    attributes: [
-                        ['nombre', 'Nombre de Usuario'],
-                        ['estado', 'Estado']
-                    ]
-                }]
-            });
-            res.json(listarClientes);
-        }
+                    ['estado', 'Estado']
+                ]
+            }]
+        });
+        res.json(listarClientes);
     }
 }
 
