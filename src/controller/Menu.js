@@ -96,13 +96,13 @@ exports.Listar = async (req, res) => {
             ['id', 'Id'],
             ['nombre', 'Nombre'],
             ['precio', 'Precio'],
-            ['descripcion', 'Descripción'],
+            ['descripcion', 'Descripcion'],
             ['imagen', 'Imagen']
         ],
         include: [{
             model: Categoria,
             attributes: [
-                ['categoria', 'Categoría']
+                ['categoria', 'Categoria']
             ]
         }]
     });
@@ -125,7 +125,7 @@ exports.BuscarId = async (req, res) => {
                     ['id', 'Id'],
                     ['nombre', 'Nombre'],
                     ['precio', 'Precio'],
-                    ['descripcion', 'Descripción'],
+                    ['descripcion', 'Descripcion'],
                     ['imagen', 'Imagen']
                 ],
                 where: {
@@ -134,7 +134,7 @@ exports.BuscarId = async (req, res) => {
                 include: [{
                     model: Categoria,
                     attributes: [
-                        ['categoria', 'Categoría']
+                        ['categoria', 'Categoria']
                     ]
                 }]
             });
@@ -144,40 +144,32 @@ exports.BuscarId = async (req, res) => {
 }
 
 exports.BuscarNombre = async (req, res) => {
-    const { nombre } = req.query;
     const validacion = validationResult(req);
     if (!validacion.isEmpty()) {
         console.log(validacion.errors);
-        res.json({ msj: 'Errores en los datos enviados' });
-    } else {
-        var buscarMenu = await Menu.findOne({ where: { nombre: nombre } });
-        if (!buscarMenu) {
-            res.send('El nombre del menú no existe');
-        } else {
-            const listarMenu = await Menu.findOne({
-                attributes: [
-                    ['id', 'Id'],
-                    ['nombre', 'Nombre'],
-                    ['precio', 'Precio'],
-                    ['descripcion', 'Descripcion'],
-                    ['imagen', 'Imagen']
-                ],
-                where: {
-                    nombre: {
-                        [Op.like]: nombre
-                    }
-                },
-                include: [{
-                    model: Categoria,
-                    attributes: [
-                        ['categoria', 'Categoría']
-                    ]
-                }]
-            });
-            res.json(listarMenu);
-        }
+        res.json({ msj: 'errores en los datos enviados' })
+    }
+    else {
+        const { nombre } = req.query;
+        const listarMenu = await Menu.findAll({
+            attributes: [
+                ['id', 'Id'],
+                ['nombre', 'Nombre'],
+                ['precio', 'Precio'],
+                ['descripcion', 'Descripcion'],
+                ['imagen', 'Imagen']
+            ],
+            where: {
+
+                nombre: { [Op.like]: nombre},
+
+            }
+
+        });
+        res.json(listarMenu);
     }
 }
+
 
 exports.BuscarPorCategoria = async (req, res) => {
     const validacion = validationResult(req);
